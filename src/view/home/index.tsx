@@ -10,14 +10,24 @@ const Home = () => {
         setForm({ ...form, [e.currentTarget.name]: e.currentTarget.value })
     }
 
+    const rules = {
+        email: [
+            { required: true, message: '请输入正确的邮箱', type: 'email' }
+        ],
+        password: [
+            { required: true, message: '请输入正确的密码格式', type: 'string' },
+            { min: 6, message: '密码长度不低于6位' }
+        ]
+    }
+
     return <div className={styles.home}>
-        <Form model={form} rules='rules'>
+        <Form model={form} rules={rules}>
             <FormItem>
                 <Input value={form.email} onChange={handleChange} name='email'>
                 </Input>
             </FormItem>
-            <FormItem>
-                <Input value={form.email} onChange={handleChange} name='password'>
+            <FormItem prop='password'>
+                <Input value={form.password} onChange={handleChange} name='password'>
                 </Input>
             </FormItem>
         </Form>

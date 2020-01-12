@@ -1,17 +1,27 @@
 import React, { FC, createContext } from 'react'
 
-
-
-interface Props {
-    model?: Object
-    rules?: string
+interface Model {
+    [key: string]: string | number
 }
 
-export const FormContext = React.createContext<Props>({ model: undefined })
+interface Rules {
+    [key: string]: Array<Object>
+}
+
+interface Props {
+    model?: Model
+    rules?: Rules
+}
+
+export const FormContext = createContext<Props>({ model: undefined, rules: undefined })
 
 const Form: FC<Props> = ({ model, rules, children }) => {
 
-    return <FormContext.Provider value={{ model, rules }}><div>{children}</div></FormContext.Provider>
+    return (
+        <FormContext.Provider value={{ model, rules }}>
+            <div>{children}</div>
+        </FormContext.Provider>
+    )
 }
 
 export default Form
