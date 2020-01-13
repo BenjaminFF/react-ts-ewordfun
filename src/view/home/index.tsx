@@ -16,13 +16,23 @@ const Home = () => {
         ],
         password: [
             { required: true, message: '请输入正确的密码格式', type: 'string' },
-            { min: 6, message: '密码长度不低于6位' }
+            { min: 6, message: '密码长度不低于6位' },
+            {
+                validator: (rule: Object, value: string, callback: Function) => {
+                    if (value === 'abcd') {
+                        callback()
+                    } else {
+                        callback(new Error('自定义规则不匹配'))
+                    }
+                },
+                trigger: 'blur'
+            }
         ]
     }
 
     return <div className={styles.home}>
         <Form model={form} rules={rules}>
-            <FormItem>
+            <FormItem prop='email'>
                 <Input value={form.email} onChange={handleChange} name='email'>
                 </Input>
             </FormItem>

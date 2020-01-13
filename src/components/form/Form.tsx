@@ -1,4 +1,5 @@
 import React, { FC, createContext } from 'react'
+import style from './style.module.scss'
 
 interface Model {
     [key: string]: string | number
@@ -19,8 +20,8 @@ const Form: FC<Props> = ({ model, rules, children }) => {
 
     return (
         <FormContext.Provider value={{ model, rules }}>
-            <div>{children}</div>
-        </FormContext.Provider>
+            <div className="ef-form"> {children}</div>
+        </FormContext.Provider >
     )
 }
 
