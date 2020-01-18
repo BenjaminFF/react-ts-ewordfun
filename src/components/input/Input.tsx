@@ -1,4 +1,5 @@
 import React, { FC, FormEvent } from 'react'
+require('./style.scss')
 
 interface Props {
     value?: string
@@ -6,15 +7,15 @@ interface Props {
     name?: string
 }
 
-const Input: React.FC<Props> = ({ value, onChange, name }) => {
+const Input: FC<Props> = ({ value, onChange, name }) => {
 
     const handleChange = (e: FormEvent<HTMLInputElement>): void => {
         if (onChange) onChange(e)
     }
 
     return (
-        <div>
-            <input onChange={handleChange} name={name} />
+        <div className="ef-input-container">
+            <input onChange={handleChange} name={name} className="ef-input" autoComplete="off" />
         </div>
     )
 }

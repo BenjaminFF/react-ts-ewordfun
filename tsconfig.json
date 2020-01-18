@@ -8,9 +8,18 @@
     ],
     "baseUrl": "src",
     "paths": {
-      "@components/*": ["components/*"],
-      "@view/*": ["view/*"],
-      "@router/*": ["router/*"],
+      "@components/*": [
+        "components/*"
+      ],
+      "@view/*": [
+        "view/*"
+      ],
+      "@router/*": [
+        "router/*"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ],
     },
     "allowJs": true,
     "skipLibCheck": true,

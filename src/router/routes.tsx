@@ -1,5 +1,6 @@
-import home from '@view/home/index'
-import set from '@view/set/index'
+import home from '@view/home'
+import set from '@view/set'
+import login from '@view/login'
 
 let routes = [
     {
@@ -10,6 +11,11 @@ let routes = [
     {
         path: '/set',
         component: set,
+        exact: true
+    },
+    {
+        path: '/login',
+        component: login,
         exact: true
     }
 ]

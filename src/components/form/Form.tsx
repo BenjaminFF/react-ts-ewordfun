@@ -1,30 +1,62 @@
-import React, { FC, createContext } from 'react'
-import style from './style.module.scss'
+import React, { FC, createContext, useState, forwardRef, useImperativeHandle } from 'react'
+import AsyncValidator from 'async-validator'
+require('./style.scss')
 
-interface Model {
+export interface Model {
     [key: string]: string | number
 }
 
-interface Rules {
+export interface Rules {
     [key: string]: Array<Object>
 }
 
 interface Props {
     model?: Model
     rules?: Rules
+    children?: any
 }
 
-export const FormContext = createContext<Props>({ model: undefined, rules: undefined })
+interface Context {
+    model?: Model
+    rules?: Rules
+    triggerValidate: number
+}
 
-const Form: FC<Props> = ({ model, rules, children }) => {
+interface FormInstance {
+    validate: (cb?: Function) => void
+}
+
+export const FormContext = createContext<Context>({ model: undefined, rules: undefined, triggerValidate: 0 })
+
+const Form: FC<Props> = ({ model, rules, children }, ref) => {
+
+    const [triggerValidate, setTriggerValidate] = useState<number>(0)
+
+    useImperativeHandle(ref, () => ({
+        validate: (cb?: Function) => {
+            if (rules && model) {
+                const validator = new AsyncValidator(rules)
+                validator.validate(model).then(() => {
+                    if (cb) {
+                        cb(true)
+                    }
+                }).catch((error) => {
+                    setTriggerValidate(triggerValidate + 1)
+                    if (cb) {
+                        cb(false)
+                    }
+                })
+            }
+        }
+    }))
 
     return (
-        <FormContext.Provider value={{ model, rules }}>
+        <FormContext.Provider value={{ model, rules, triggerValidate }}>
             <div className="ef-form"> {children}</div>
         </FormContext.Provider >
     )
 }
 
-export default Form
+export default forwardRef<FormInstance, Props>(Form)
 
 
