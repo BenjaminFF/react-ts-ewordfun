@@ -3,6 +3,7 @@ import styles from './index.module.scss'
 import { Form, FormItem } from '@components/form'
 import Input from '@components/input'
 import { Login } from '@utils/api'
+import Button, { ButtonType, ButtonSize } from '@components/button'
 
 interface FormInstance {
     validate: (cb?: Function) => void
@@ -55,7 +56,7 @@ const Home: FC = () => {
                 </Input>
             </FormItem>
             <FormItem>
-                <button onClick={submit}>提交</button>
+                <Button type={ButtonType.Info} onClick={() => { console.log('onClick') }} matchParent> 提交</Button>
             </FormItem>
         </Form>
     </div >
