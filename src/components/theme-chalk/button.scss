@@ -155,5 +155,7 @@
 
   @include when(match-parent) {
     width: 100%;
+    letter-spacing: $--button-medium-font-size;
+    text-indent: $--button-medium-font-size;
   }
 }

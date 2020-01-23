@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FormContext, Model, Rules } from './Form'
 import AsyncValidator from 'async-validator'
+import classNames from 'classnames'
 
 interface Props {
     prop?: string
@@ -21,7 +22,6 @@ const validate = (trigger: string, rules?: Rules, prop?: string, model?: Model, 
         validator.validate({ [prop]: model[prop] }).then(() => {
             if (cb) cb(true)
         }).catch(({ errors }) => {
-
             if (cb) cb(false, errors[0].message)
         })
     }
@@ -33,6 +33,12 @@ const FormItem: React.FC<Props> = ({ children, prop }) => {
         [triggerChange, setTriggerChange] = useState<number>(0),
         [valid, setValid] = useState<boolean | null>(null),
         [errMsg, setErrMsg] = useState<string | undefined>('')
+
+    const classes = classNames('ef-form-item',
+        {
+            'is-error': !valid && valid != null
+        }
+    )
 
 
     useEffect(() => {
@@ -60,11 +66,11 @@ const FormItem: React.FC<Props> = ({ children, prop }) => {
                 setValid(valid)
                 setErrMsg(errMsg)
             })
-        }} className={`ef-form-item ${!valid && valid != null ? 'is-error' : ''}`}
+        }} className={classes}
             onChange={() => { setTriggerChange(triggerChange + 1) }}>
             {children}
-            < div className="err-msg" > {!valid && valid != null ? errMsg : ''}</div>
-        </div >
+            <div className="ef-form-item__error-msg"> {!valid && valid != null ? errMsg : ''}</div>
+        </div>
     )
 }
 

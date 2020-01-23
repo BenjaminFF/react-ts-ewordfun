@@ -6,6 +6,7 @@ const webpack = require('webpack')
 const resolve = require('resolve')
 const PnpWebpackPlugin = require('pnp-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin')
 const TerserPlugin = require('terser-webpack-plugin')
@@ -26,11 +27,13 @@ const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpack
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter')
 
 const postcssNormalize = require('postcss-normalize')
+const px2rem = require('postcss-px2rem')
 
 const appPackageJson = require(paths.appPackageJson)
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
-const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false'
+// const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false'
+const shouldUseSourceMap = false
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false'
@@ -107,6 +110,7 @@ module.exports = function (webpackEnv) {
               },
               stage: 3
             }),
+            px2rem({ remUnit: 16 }),
             // Adds PostCSS Normalize as the reset css with default options,
             // so that it honors browserslist config in package.json
             // which in turn let's users customize the target behavior as per their needs.
@@ -541,6 +545,26 @@ module.exports = function (webpackEnv) {
             : undefined
         )
       ),
+      // new HtmlWebpackExternalsPlugin({
+      //   externals: [
+      //     {
+      //       module: 'react',
+      //       entry: 'https://cdn.bootcss.com/react/16.10.2/cjs/react.production.min.js',
+      //       global: 'React',
+      //     },
+      //     {
+      //       module: 'react-router',
+      //       entry: 'https://cdn.bootcss.com/react-router/5.1.2/react-router.min.js',
+      //       global: 'ReactDOM',
+      //     },
+      //     {
+      //       module: 'axios',
+      //       entry: 'https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.min.js',
+      //       global: 'axios',
+      //     }
+      //   ],
+      // }),
+
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358

@@ -4,6 +4,7 @@ import { Form, FormItem } from '@components/form'
 import Input from '@components/input'
 import { Login } from '@utils/api'
 import Button, { ButtonType, ButtonSize } from '@components/button'
+import Card, { Front, Back } from '@components/card'
 
 interface FormInstance {
     validate: (cb?: Function) => void
@@ -37,7 +38,7 @@ const Home: FC = () => {
     }
 
     const submit = (): void => {
-        Login('a', 'a', 'a', 'a').then((res) => { console.log('gg') })
+        // Login('a', 'a', 'a', 'a').then((res) => { console.log('gg') })
         if (formRef.current) {
             formRef.current.validate((valid?: boolean) => {
                 console.log(valid)
@@ -46,20 +47,23 @@ const Home: FC = () => {
     }
 
     return <div className={styles.home}>
-        <Form model={form} rules={rules} ref={formRef}>
-            <FormItem prop='email'>
-                <Input value={form.email} onChange={handleChange} name='email'>
-                </Input>
-            </FormItem>
-            <FormItem prop='password'>
-                <Input value={form.password} onChange={handleChange} name='password'>
-                </Input>
-            </FormItem>
-            <FormItem>
-                <Button type={ButtonType.Info} onClick={() => { console.log('onClick') }} matchParent> 提交</Button>
-            </FormItem>
-        </Form>
-    </div >
+        <Card className={styles.card}>
+            <Front>
+                <Form model={form} rules={rules} ref={formRef}>
+                    <FormItem prop='email'>
+                        <Input value={form.email} onChange={handleChange} name='email'>
+                        </Input>
+                    </FormItem>
+                    <FormItem prop='password'>
+                        <Input value={form.password} onChange={handleChange} name='password'>
+                        </Input>
+                    </FormItem>
+                    <Button type={ButtonType.Primary} onClick={submit} matchParent> 提交</Button>
+                </Form>
+            </Front>
+            <Back>Back</Back>
+        </Card>
+    </div>
 }
 
 export default Home

@@ -1,0 +1,23 @@
+@import "common/var";
+@import "mixins/mixins";
+
+@include b(form) {
+}
+
+@include b(form-item) {
+  @include e(error-msg) {
+    color: $--color-danger;
+    width: 100%;
+    height: $--form-error-msg-height;
+    font-size: $--form-error-msg-font-size;
+    padding: $--form-error-msg-padding;
+  }
+
+  @include when(error) {
+    @include b(input) {
+      @include e(inner){
+        border-color: $--color-danger;
+      }
+    }
+  }
+}

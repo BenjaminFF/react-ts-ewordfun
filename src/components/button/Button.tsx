@@ -1,6 +1,5 @@
 import React, { FC, FormEvent, Children } from 'react'
-import className from 'classnames'
-require('@components/theme-chalk/button.scss')
+import classNames from 'classnames'
 
 
 export enum ButtonType {
@@ -28,7 +27,7 @@ export interface Props {
 
 const Button: FC<Props> = ({ type, loading, disabled, size, children, onClick, matchParent }) => {
 
-    const classes = className('ef-button', type ? `ef-button--${type}` : '', size ? `ef-button--${size}` : '',
+    const classes = classNames('ef-button', type ? `ef-button--${type}` : '', size ? `ef-button--${size}` : '',
         {
             'is-disabled': disabled,
             'is-loading': loading,

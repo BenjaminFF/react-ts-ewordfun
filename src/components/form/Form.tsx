@@ -1,6 +1,5 @@
 import React, { FC, createContext, useState, forwardRef, useImperativeHandle } from 'react'
 import AsyncValidator from 'async-validator'
-require('./style.scss')
 
 export interface Model {
     [key: string]: string | number
