@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, Children } from 'react'
+import React, { FC, FormEvent, Children, useState } from 'react'
 import classNames from 'classnames'
 
 export enum CardType {
@@ -12,20 +12,33 @@ export enum ShandowType {
     Never = 'never'
 }
 
-interface Props {
-    type?: CardType,
-    shadow?: ShandowType,
-    style?: Object
-    className?: string | Object
+export enum FilpType {
+    Hover = 'hover',
+    Click = 'click',
+    Press = 'press'
 }
 
-const Card: FC<Props> = ({ type = CardType.Normal, shadow = ShandowType.Always, children, style, className }) => {
+interface Props {
+    type?: CardType
+    shadow?: ShandowType
+    style?: Object
+    className?: string | Object
+    filp?: FilpType
+}
 
-    const classes = classNames('ef-card', 'is-shadow-' + shadow, className)
+const Card: FC<Props> = ({ type = CardType.Normal, shadow = ShandowType.Hover, children, style, className, filp = FilpType.Hover }) => {
+
+    const [filped, setFilp] = useState<Boolean>(false)
+
+    const classes = classNames('ef-card', className), sceneClasses = classNames('ef-card__scene', 'is-shadow-' + shadow, 'is-filp-' + filp, {
+        'is-filped': filped
+    })
 
     return (
         <div className={classes} style={style}>
-            {children}
+            <div className={sceneClasses} onClick={() => { if (filp === FilpType.Click) setFilp(!filped) }}>
+                {children}
+            </div>
         </div>
     )
 }
