@@ -1,9 +1,9 @@
-import React, { FC, FormEvent, Children, useState } from 'react'
+import React, { FC, FormEvent, Children, useState, forwardRef, useImperativeHandle } from 'react'
 import classNames from 'classnames'
 
 export enum CardType {
-    Normal,
-    Filp
+    Normal = 'normal',
+    Flip = 'flip'
 }
 
 export enum ShandowType {
@@ -12,36 +12,52 @@ export enum ShandowType {
     Never = 'never'
 }
 
-export enum FilpType {
+export enum FlipType {
     Hover = 'hover',
     Click = 'click',
-    Press = 'press'
+    Press = 'press',
+    Manual = 'manual'
 }
+
+export interface CardInstance {
+    flip: () => void
+}
+
+export const CardInstance = undefined
 
 interface Props {
     type?: CardType
     shadow?: ShandowType
     style?: Object
     className?: string | Object
-    filp?: FilpType
+    flip?: FlipType,
+    children?: any
 }
 
-const Card: FC<Props> = ({ type = CardType.Normal, shadow = ShandowType.Hover, children, style, className, filp = FilpType.Hover }) => {
+const Card: FC<Props> = ({ type = CardType.Normal, shadow = ShandowType.Always, children, style, className, flip = FlipType.Manual }, ref) => {
 
-    const [filped, setFilp] = useState<Boolean>(false)
+    const [fliped, setFlip] = useState<Boolean>(false)
 
-    const classes = classNames('ef-card', className), sceneClasses = classNames('ef-card__scene', 'is-shadow-' + shadow, 'is-filp-' + filp, {
-        'is-filped': filped
+    useImperativeHandle(ref, () => ({
+        flip: () => {
+            if (flip === FlipType.Manual && type === CardType.Flip) {
+                setFlip(!fliped)
+            }
+        }
+    }))
+
+    const classes = classNames('ef-card', className), sceneClasses = classNames('ef-card__scene', 'is-shadow-' + shadow, 'is-type-' + type, 'is-flip-' + flip, {
+        'is-fliped': fliped
     })
 
     return (
         <div className={classes} style={style}>
-            <div className={sceneClasses} onClick={() => { if (filp === FilpType.Click) setFilp(!filped) }}>
+            <div className={sceneClasses} onClick={() => { if (flip === FlipType.Click && type === CardType.Flip) setFlip(!fliped) }}>
                 {children}
             </div>
         </div>
     )
 }
 
-export default Card
+export default forwardRef<CardInstance, Props>(Card)
 

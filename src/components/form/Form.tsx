@@ -21,9 +21,11 @@ interface Context {
     triggerValidate: number
 }
 
-interface FormInstance {
+export interface FormInstance {
     validate: (cb?: Function) => void
 }
+
+export const FormInstance = undefined
 
 export const FormContext = createContext<Context>({ model: undefined, rules: undefined, triggerValidate: 0 })
 

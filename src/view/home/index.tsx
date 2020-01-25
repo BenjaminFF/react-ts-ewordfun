@@ -1,14 +1,10 @@
 import React, { useState, FormEvent, useRef, FC } from 'react'
 import styles from './index.module.scss'
-import { Form, FormItem } from '@components/form'
+import Form, { FormItem, FormInstance } from '@components/form'
 import Input from '@components/input'
 import { Login } from '@utils/api'
 import Button, { ButtonType, ButtonSize } from '@components/button'
-import Card, { Front, Back } from '@components/card'
-
-interface FormInstance {
-    validate: (cb?: Function) => void
-}
+import Card, { Front, Back, CardInstance } from '@components/card'
 
 const rules = {
     email: [
@@ -31,7 +27,7 @@ const rules = {
 }
 
 const Home: FC = () => {
-    const [form, setForm] = useState({ email: '', password: '' }), formRef = useRef<FormInstance>(null)
+    const [form, setForm] = useState({ email: '', password: '' }), formRef = useRef<FormInstance>(null), cardRef = useRef<CardInstance>(null)
 
     const handleChange = (e: FormEvent<HTMLInputElement>): void => {
         setForm({ ...form, [e.currentTarget.name]: e.currentTarget.value })
@@ -46,24 +42,33 @@ const Home: FC = () => {
         }
     }
 
-    return <div className={styles.home}>
-        <Card className={styles.card}>
-            <Front>
-                <Form model={form} rules={rules} ref={formRef}>
-                    <FormItem prop='email'>
-                        <Input value={form.email} onChange={handleChange} name='email'>
-                        </Input>
-                    </FormItem>
-                    <FormItem prop='password'>
-                        <Input value={form.password} onChange={handleChange} name='password'>
-                        </Input>
-                    </FormItem>
-                    <Button type={ButtonType.Primary} onClick={submit} matchParent> 提交</Button>
-                </Form>
-            </Front>
-            <Back>Back</Back>
-        </Card>
-    </div>
+    const flip = (): void => {
+        if (cardRef.current) {
+            cardRef.current.flip()
+        }
+    }
+
+    return (
+        <div className={styles.home}>
+            <Card className={styles.card} ref={cardRef}>
+                <Front>
+                    <Form model={form} rules={rules} ref={formRef}>
+                        <FormItem prop='email'>
+                            <Input value={form.email} onChange={handleChange} name='email'>
+                            </Input>
+                        </FormItem>
+                        <FormItem prop='password'>
+                            <Input value={form.password} onChange={handleChange} name='password'>
+                            </Input>
+                        </FormItem>
+                        <Button type={ButtonType.Primary} onClick={submit} matchParent> 提交</Button>
+                    </Form>
+                </Front>
+                <Back>Back</Back>
+            </Card>
+            <Button type={ButtonType.Primary} onClick={flip}>提交</Button>
+        </div>
+    )
 }
 
 export default Home
