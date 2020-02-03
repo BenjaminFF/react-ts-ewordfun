@@ -33,31 +33,29 @@ const Cardstack: FC<Props> = ({ children, stackedOption = StackedOption.Top, rot
         return (index: number) => (visibleCardNum > curIndex ? 1 - (curIndex - index) * 0.05 : 1 - (visibleCardNum - 1 - index) * 0.05)
     }, [curIndex])
 
-    const onmousedown = (event: MouseEvent, index: number) => {
-        console.log(isCurCard(index))
+    const cardStartMove = (index: number, x: number, y: number) => {
         if (isCurCard(index)) {
             setDraging(true)
             setPos({
-                ...pos,
+                ...pos, x, y,
                 dx: 0,
-                dy: 0,
-                x: event.clientX,
-                y: event.clientY
+                dy: 0
+
             })
         }
     }
 
-    const onmousemove = (event: MouseEvent, index: number) => {
+    const cardOnMove = (index: number, x: number, y: number) => {
         if (isDraging && isCurCard(index)) {
             setPos({
                 ...pos,
-                dx: event.clientX - pos.x,
-                dy: event.clientY - pos.y
+                dx: x - pos.x,
+                dy: y - pos.y
             })
         }
     }
 
-    const onmouseup = (event: MouseEvent, index: number) => {
+    const cardMoveOver = (index: number) => {
         if (isCurCard(index) && isDraging) {
             if (Math.abs(pos.dx) > slideLimit) {
                 const start = pos.dx, end = pos.dx > 0 ? pos.dx + 200 : pos.dx - 200
@@ -104,9 +102,15 @@ const Cardstack: FC<Props> = ({ children, stackedOption = StackedOption.Top, rot
                             ` : `translateY(-${(1 - cardScale(i) - pos.dz) * 100}%) scale3d(${cardScale(i) + pos.dz},${cardScale(i) + pos.dz},1)`,
                         filter: !isCurCard(i) && blur && isDraging ? 'blur(3px)' : ''
                     }}
-                    onMouseDown={(event) => { onmousedown(event, i) }}
-                    onMouseMove={(event) => { onmousemove(event, i) }}
-                    onMouseUp={(event) => { onmouseup(event, i) }} onMouseOut={(event) => { onmouseup(event, i) }} onClickCapture={onClickCapture}>
+                    onMouseDown={(event) => { cardStartMove(i, event.clientX, event.clientY) }}
+                    onMouseMove={(event) => { cardOnMove(i, event.clientX, event.clientY) }}
+                    onMouseUp={(event) => { cardMoveOver(i) }}
+                    onMouseOut={(event) => { cardMoveOver(i) }}
+                    onClickCapture={onClickCapture}
+                    onTouchStart={(event) => { cardStartMove(i, event.touches[0].clientX, event.touches[0].clientY) }}
+                    onTouchMove={(event) => { cardOnMove(i, event.touches[0].clientX, event.touches[0].clientY) }}
+                    onTouchEnd={(event) => { cardMoveOver(i) }}
+                >
                     {child}
                 </div>
             ))

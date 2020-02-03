@@ -55,12 +55,12 @@ const Home: FC = () => {
 
     return (
         <div className={styles.home}>
-            <Cardstack width='20rem' height='20rem'>
+            <Cardstack width='20rem' height='20rem' blur={false}>
                 {
                     cardList.map((cardItem) => (
                         <Card className={styles.card} ref={cardRef} type={CardType.Flip} flip={FlipType.Click} key={cardItem} shadow={ShandowType.Never}>
                             <Front>
-                                <div style={{fontSize:'5rem'}}>{cardItem}</div>
+                                <div style={{ fontSize: '5rem' }}>{cardItem}</div>
                             </Front>
                             <Back>Back</Back>
                         </Card>
