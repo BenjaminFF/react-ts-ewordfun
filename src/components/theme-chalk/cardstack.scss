@@ -1,0 +1,23 @@
+@import "common/var";
+@import "mixins/mixins";
+
+@include b(cardstack) {
+  position: relative;
+
+  @include e(child-container) {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    box-sizing: border-box;
+    user-select: none;
+    left: 0;
+    top: 0;
+    border: none;
+  }
+
+  @include b(card) {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}

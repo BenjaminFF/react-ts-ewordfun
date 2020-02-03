@@ -5,6 +5,9 @@ import Input from '@components/input'
 import { Login } from '@utils/api'
 import Button, { ButtonType, ButtonSize } from '@components/button'
 import Card, { Front, Back, CardInstance } from '@components/card'
+import { CardType, FlipType } from '@components/card'
+import Cardstack from '@components/cardstack'
+import { ShandowType } from '@components/card/Card'
 
 const rules = {
     email: [
@@ -25,6 +28,8 @@ const rules = {
         }
     ]
 }
+
+const cardList = [1, 2, 3, 4, 5, 6, 7]
 
 const Home: FC = () => {
     const [form, setForm] = useState({ email: '', password: '' }), formRef = useRef<FormInstance>(null), cardRef = useRef<CardInstance>(null)
@@ -50,23 +55,18 @@ const Home: FC = () => {
 
     return (
         <div className={styles.home}>
-            <Card className={styles.card} ref={cardRef}>
-                <Front>
-                    <Form model={form} rules={rules} ref={formRef}>
-                        <FormItem prop='email'>
-                            <Input value={form.email} onChange={handleChange} name='email'>
-                            </Input>
-                        </FormItem>
-                        <FormItem prop='password'>
-                            <Input value={form.password} onChange={handleChange} name='password'>
-                            </Input>
-                        </FormItem>
-                        <Button type={ButtonType.Primary} onClick={submit} matchParent> 提交</Button>
-                    </Form>
-                </Front>
-                <Back>Back</Back>
-            </Card>
-            <Button type={ButtonType.Primary} onClick={flip}>提交</Button>
+            <Cardstack width='20rem' height='20rem'>
+                {
+                    cardList.map((cardItem) => (
+                        <Card className={styles.card} ref={cardRef} type={CardType.Flip} flip={FlipType.Click} key={cardItem} shadow={ShandowType.Never}>
+                            <Front>
+                                <div style={{fontSize:'5rem'}}>{cardItem}</div>
+                            </Front>
+                            <Back>Back</Back>
+                        </Card>
+                    ))
+                }
+            </Cardstack>
         </div>
     )
 }
