@@ -8,6 +8,8 @@ import Card, { Front, Back, CardInstance } from '@components/card'
 import { CardType, FlipType } from '@components/card'
 import Cardstack from '@components/cardstack'
 import { ShandowType } from '@components/card/Card'
+import { shuffle, splitStr } from '@utils/util'
+import Squaregrid, { GridStatus } from '@components/squaregrid'
 
 const rules = {
     email: [
@@ -29,10 +31,11 @@ const rules = {
     ]
 }
 
-const cardList = [1, 2, 3, 4, 5, 6, 7]
+const cardList = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9])
 
 const Home: FC = () => {
-    const [form, setForm] = useState({ email: '', password: '' }), formRef = useRef<FormInstance>(null), cardRef = useRef<CardInstance>(null)
+    const [form, setForm] = useState({ email: '', password: '' }), formRef = useRef<FormInstance>(null), cardRef = useRef<CardInstance>(null),
+        [status, setStatus] = useState(GridStatus.Normal)
 
     const handleChange = (e: FormEvent<HTMLInputElement>): void => {
         setForm({ ...form, [e.currentTarget.name]: e.currentTarget.value })
@@ -55,19 +58,8 @@ const Home: FC = () => {
 
     return (
         <div className={styles.home}>
-            <Cardstack width='20rem' height='20rem' blur={false}>
-                {
-                    cardList.map((cardItem) => (
-                        <Card className={styles.card} ref={cardRef} type={CardType.Flip} flip={FlipType.Click} key={cardItem} shadow={ShandowType.Never}>
-                            <Front>
-                                <div style={{ fontSize: '5rem' }}>{cardItem}</div>
-                            </Front>
-                            <Back>Back</Back>
-                        </Card>
-                    ))
-                }
-            </Cardstack>
-        </div>
+            <Squaregrid arr={cardList} cellSize={'4rem'} row={3} status={status} onItemCallback={(item) => { if (item === 9) setStatus(GridStatus.Error) }}></Squaregrid>
+        </div >
     )
 }
 

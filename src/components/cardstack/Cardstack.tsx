@@ -3,24 +3,25 @@ import classNames from 'classnames'
 import TWEEN from '@utils/tween'
 
 export enum StackedOption {
-    Top,
-    Bottom,
-    None
+    Top = -1,
+    Bottom = 1,
+    None = 0
 }
 
 interface Props {
-    stackedOption?: StackedOption,
-    rotate?: Boolean,
-    blur?: Boolean,
+    stackedOption?: StackedOption
+    rotate?: Boolean
+    blur?: Boolean
     visibleCardNum?: number
     width: string
     height: string
+    slideLimit?: number
 }
 
 //后面还要添加focus,blur,input等事件
-const Cardstack: FC<Props> = ({ children, stackedOption = StackedOption.Top, rotate = true, blur = true, visibleCardNum = 3, width, height }) => {
+const Cardstack: FC<Props> = ({ children, stackedOption = StackedOption.Top, rotate = true, blur = true, visibleCardNum = 3, width, height, slideLimit = 200 }) => {
 
-    const childrenCount = Children.count(children), slideLimit = 200,
+    const childrenCount = Children.count(children),
         [pos, setPos] = useState({ x: 0, y: 0, dx: 0, dy: 0, dz: 0 }),
         [isDraging, setDraging] = useState(false),
         [curIndex, setCurIndex] = useState(childrenCount - 1)
@@ -99,15 +100,15 @@ const Cardstack: FC<Props> = ({ children, stackedOption = StackedOption.Top, rot
                         transform: isCurCard(i) ?
                             `translate3D(${pos.dx}px, ${pos.dy}px, 0) 
                             rotate(${rotate ? (Math.abs(pos.dx) > slideLimit ? slideLimit * pos.dx / Math.abs(pos.dx) : pos.dx) / 10 : 0}deg)
-                            ` : `translateY(-${(1 - cardScale(i) - pos.dz) * 100}%) scale3d(${cardScale(i) + pos.dz},${cardScale(i) + pos.dz},1)`,
-                        filter: !isCurCard(i) && blur && isDraging ? 'blur(3px)' : ''
+                            ` : `translateY(${stackedOption * (1 - cardScale(i) - pos.dz) * 100}%) scale3d(${cardScale(i) + pos.dz},${cardScale(i) + pos.dz},1)`,
+                        filter: !isCurCard(i) && blur && isDraging ? 'blur(4px)' : ''
                     }}
                     onMouseDown={(event) => { cardStartMove(i, event.clientX, event.clientY) }}
                     onMouseMove={(event) => { cardOnMove(i, event.clientX, event.clientY) }}
                     onMouseUp={(event) => { cardMoveOver(i) }}
                     onMouseOut={(event) => { cardMoveOver(i) }}
                     onClickCapture={onClickCapture}
-                    onTouchStart={(event) => { cardStartMove(i, event.touches[0].clientX, event.touches[0].clientY) }}
+                    onTouchStart={(event) => { cardStartMove(i, event.touches[0].clientX, event.touches[0].clientY); console.log('gg') }}
                     onTouchMove={(event) => { cardOnMove(i, event.touches[0].clientX, event.touches[0].clientY) }}
                     onTouchEnd={(event) => { cardMoveOver(i) }}
                 >

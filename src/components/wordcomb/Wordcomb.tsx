@@ -1,5 +1,5 @@
 import React, { FC, FormEvent } from 'react'
-require('./style.scss')
+
 
 interface Props {
     value?: string
@@ -11,7 +11,7 @@ const Wordcomb: React.FC<Props> = ({ value, onChange, name }) => {
 
     return (
         <div>
-
+            
         </div>
     )
 }
