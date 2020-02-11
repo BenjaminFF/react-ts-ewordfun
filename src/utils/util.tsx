@@ -20,12 +20,11 @@ const mixStr = (str: string): string => {
             mixedChars[randomPos] = randomChar
             mixTime--
         }
-        if (mixedChars.join("") != str) return mixedChars.join("")
+        if (mixedChars.join("") !== str) return mixedChars.join("")
     }
 }
 
-// mode!==1表示拆分的次数固定为4
-const splitStr = (str: string): Array<string> => {
+const splitStr = (str: string, maxSplitNum: number = 8): Array<string> => {
     str = str.trim()
     const strLen = str.length, minSubStrLen = strLen <= 6 ? 1 : (strLen < 13 ? 2 : 3)
     while (true) {
@@ -36,7 +35,7 @@ const splitStr = (str: string): Array<string> => {
             subStrArr.push(str.substring(strLen - count, strLen - count + subStrLen))
             count -= subStrLen
         }
-        if (subStrArr.length < 8) return subStrArr
+        if (subStrArr.length < maxSplitNum) return subStrArr
     }
 }
 

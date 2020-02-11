@@ -16,14 +16,16 @@
     border: 1px solid $--square-grid-border-color;
     background-color: $--color-white;
     color: $--color-text-primary;
-    box-shadow: $--box-shadow-light;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
+    font-size: $--font-size-medium;
+    box-shadow: $--box-shadow-light;
 
     &:hover {
       color: $--color-text-primary;
       border-color: $--color-info-light;
-      background-color: $--color-info-lighter;
+      background-color: $--color-info-light;
+      box-shadow: none !important;
     }
 
     @include when(disable-hover) {
@@ -36,18 +38,22 @@
       color: $--square-grid-active-color;
       border-color: $--square-grid-active-border-color;
       background-color: $--square-grid-active-background-color;
+      transition: all 0.3s ease-in-out;
+      box-shadow: none;
     }
 
     @include when(success) {
       color: $--color-white;
       border-color: $--color-success;
       background-color: $--color-success;
+      transition: all 0.3s ease-in-out;
     }
 
     @include when(error) {
       color: $--color-white;
       border-color: $--color-danger;
       background-color: $--color-danger;
+      transition: all 0.3s ease-in-out;
     }
   }
 }

@@ -17,6 +17,7 @@ class Tween {
     private easingFunc!: EasingFunc
     private requestID!: number
     private startTime: number | undefined
+    private delayTime: number | undefined
 
     constructor(pos?: Pos) {
         if (pos) {
@@ -42,9 +43,16 @@ class Tween {
         return this
     }
 
+    delay(delayTime: number) {
+        this.delayTime = delayTime
+        return this
+    }
+
     start() {
         if (this.startPos) {
-            this.requestID = requestAnimationFrame(this.update.bind(this))
+            setTimeout(() => {
+                this.requestID = requestAnimationFrame(this.update.bind(this))
+            }, this.delayTime)
             return this
         }
     }
@@ -57,6 +65,8 @@ class Tween {
         if (this.startTime === undefined) {
             this.startTime = curTime
         }
+
+
 
         if (curTime - this.startTime > this.duration) {
             this.curPos = { ...this.endPos }

@@ -1,0 +1,41 @@
+@import "common/var";
+@import "mixins/mixins";
+
+@include b(message-box) {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+
+  @include e(toast) {
+    width: 15rem;
+    padding: 0.8rem 1.2rem;
+    font-size: $--font-size-base;
+    border-radius: $--border-radius-base;
+    border: $--border-base;
+
+    @include m(success) {
+      background-color: $--color-success-lighter;
+      color: $--color-success;
+      border-color: $--color-success-light;
+    }
+
+    @include m(info) {
+      background-color: $--color-info-lighter;
+      color: $--color-info;
+      border-color: $--color-info-light;
+    }
+
+    @include m(warning) {
+      background-color: $--color-warning-lighter;
+      color: $--color-warning;
+      border-color: $--color-warning-light;
+    }
+
+    @include m(error) {
+      background-color: $--color-danger-lighter;
+      color: $--color-danger;
+      border-color: $--color-danger-light;
+    }
+  }
+}

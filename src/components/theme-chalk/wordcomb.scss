@@ -1,0 +1,15 @@
+@import "common/var";
+@import "mixins/mixins";
+
+@include b(wordcomb) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include e(def) {
+    margin: 2rem 0;
+    color: $--color-info;
+    font-size: $--font-size-large;
+    width: 22rem;
+    text-align: center;
+  }
+}

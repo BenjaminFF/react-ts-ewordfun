@@ -5,7 +5,7 @@ const Login: FC = () => {
 
     return (
         <div>
-            Login
+            
         </div>
     )
 }

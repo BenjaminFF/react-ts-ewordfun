@@ -1,0 +1,40 @@
+@import "common/var";
+@import "mixins/mixins";
+
+@include b(underscore) {
+  display: flex;
+
+  @include e(item) {
+    width: 1.5rem;
+    height: 28px;
+    line-height: 28px;
+    letter-spacing: 2px;
+    border-bottom: 2px solid $--color-info;
+    margin: 0 5px;
+    font-size: $--font-size-extra-large;
+    user-select: none;
+    color: transparent;
+    box-sizing: border-box;
+
+    @include when(active) {
+      border-color: transparent;
+      margin: 0;
+      width: fit-content;
+      color: $--color-primary;
+    }
+
+    @include when(success) {
+      color: $--color-success;
+    }
+
+    @include when(error) {
+      color: $--color-danger;
+    }
+
+    @include when(space) {
+      border-color: transparent;
+      margin: 0;
+      width: 1.2rem;
+    }
+  }
+}

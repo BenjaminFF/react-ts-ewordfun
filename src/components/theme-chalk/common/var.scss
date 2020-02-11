@@ -100,7 +100,7 @@ $--fill-base: $--color-white !default;
 $--font-path: "fonts" !default;
 $--font-display: "auto" !default;
 /// fontSize|1|Font Size|0
-$--font-size-extra-large: 20px !default;
+$--font-size-extra-large: 22px !default;
 /// fontSize|1|Font Size|0
 $--font-size-large: 18px !default;
 /// fontSize|1|Font Size|0
@@ -272,10 +272,10 @@ $--card-padding: 20px !default;
 
 /*Squaregrid
 -------------------------*/
-$--square-grid-border-color: $--border-color-lighter !default;
+$--square-grid-border-color: $--border-color-light !default;
 $--square-grid-border-radius: 4px !default;
 
 $--square-grid-active-color: $--color-text-primary;
-$--square-grid-active-border-color: $--color-info-light;
-$--square-grid-active-background-color: $--color-info-light;
+$--square-grid-active-border-color: mix($--color-white, $--color-info, 60%);
+$--square-grid-active-background-color: mix($--color-white, $--color-info, 60%);
 
