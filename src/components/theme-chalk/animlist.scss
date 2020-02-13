@@ -1,0 +1,13 @@
+@import "common/var";
+@import "mixins/mixins";
+
+@include b(animlist) {
+  display: flex;
+  width: 50rem;
+  @include when(vertical) {
+    flex-direction: column;
+  }
+  @include when(horizontal) {
+    flex-direction: row;
+  }
+}

@@ -2,7 +2,7 @@ interface Pos {
     [propName: string]: number
 }
 
-interface EasingFunc {
+export interface EasingFunc {
     (t: number, b: number, c: number, d: number): number
 }
 
@@ -110,7 +110,31 @@ class Tween {
 const Easing = {
     Linear(t: number, b: number, c: number, d: number): number {
         return c * t / d + b
-    }
+    },
+    Quad: {
+        easeIn(t: number, b: number, c: number, d: number): number {
+            return c * (t /= d) * t + b
+        },
+        easeOut(t: number, b: number, c: number, d: number): number {
+            return -c * (t /= d) * (t - 2) + b
+        },
+        easeInOut(t: number, b: number, c: number, d: number): number {
+            if ((t /= d / 2) < 1) return c / 2 * t * t + b
+            return -c / 2 * ((--t) * (t - 2) - 1) + b
+        }
+    },
+    Cubic: {
+        easeIn(t: number, b: number, c: number, d: number): number {
+            return c * (t /= d) * t * t + b
+        },
+        easeOut(t: number, b: number, c: number, d: number): number {
+            return c * ((t = t / d - 1) * t * t + 1) + b
+        },
+        easeInOut(t: number, b: number, c: number, d: number): number {
+            if ((t /= d / 2) < 1) return c / 2 * t * t * t + b
+            return c / 2 * ((t -= 2) * t * t + 2) + b
+        }
+    },
 }
 
 const TWEEN = {
