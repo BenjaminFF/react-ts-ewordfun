@@ -16,7 +16,7 @@ const Home: FC = () => {
             {/* <animated.div style={props}>
                 <Wordcomb term={list[curIndex].term} definition={list[curIndex].definition} row={3} callBack={wcCallback}></Wordcomb>
             </animated.div> */}
-            <Button onClick={() => { setArr([1, ...arr]); animListRef.current?.deleteNotify(0) }}>splice</Button>
+            <Button onClick={() => { setArr([1, ...arr]); animListRef.current?.appendNotify(0) }}>splice</Button>
             <Animlist ref={animListRef}>
                 {arr.map((item) => (
                     <div style={{ width: '5rem', height: item + 1 + 'rem', backgroundColor: 'black', margin: '1rem' }} key={item}></div>
