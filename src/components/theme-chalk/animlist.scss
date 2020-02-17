@@ -3,7 +3,6 @@
 
 @include b(animlist) {
   display: flex;
-  width: 50rem;
   @include when(vertical) {
     flex-direction: column;
   }

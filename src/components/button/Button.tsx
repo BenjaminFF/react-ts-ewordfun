@@ -7,7 +7,8 @@ export enum ButtonType {
     Success = "success",
     Danger = "danger",
     Warning = "warning",
-    Info = "info"
+    Info = "info",
+    Text = "text"
 }
 
 export enum ButtonSize {

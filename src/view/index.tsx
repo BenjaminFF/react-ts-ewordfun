@@ -4,11 +4,16 @@ import routes from '@router/routes'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
 require('@components/theme-chalk/index.scss')
 
 const App = () => {
+
+    useEffect(() => {
+        console.log('app')
+    })
+
     return (
         <Router>
             <Switch>

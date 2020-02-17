@@ -1,28 +1,24 @@
 import React, { useState, FC, useEffect, useRef } from 'react'
 import styles from './index.module.scss'
-import Wordcomb, { Status } from '@components/wordcomb'
-import { animated, useSpring } from 'react-spring'
 import Message from '@components/message'
-import Animlist, { AnimListInstance } from '@components/animlist'
 import Button from '@components/button'
+import { login } from '@utils/api'
 
 
 const Home: FC = () => {
+    const [count, setCount] = useState(0)
 
-    const [arr, setArr] = useState([1, 2, 3, 4, 5, 6]), animListRef = useRef<AnimListInstance>(null)
+    useEffect(() => {
+        login('aa', 'aa', 'aa', 'aa')
+    }, [])
 
     return (
         <div className={styles.home}>
+            <Button onClick={() => { Message({ message: 'gg' }); setCount(count + 1) }}>add</Button>
             {/* <animated.div style={props}>
                 <Wordcomb term={list[curIndex].term} definition={list[curIndex].definition} row={3} callBack={wcCallback}></Wordcomb>
             </animated.div> */}
-            <Button onClick={() => { setArr([1, ...arr]); animListRef.current?.appendNotify(0) }}>splice</Button>
-            <Animlist ref={animListRef}>
-                {arr.map((item) => (
-                    <div style={{ width: '5rem', height: item + 1 + 'rem', backgroundColor: 'black', margin: '1rem' }} key={item}></div>
-                ))}
-            </Animlist>
-        </div >
+        </div>
     )
 }
 

@@ -31,7 +31,7 @@ export const AnimListInstance = undefined
 
 const getTransitionInfo = (orientation: Orientation, animateType: AnimateType, offsetX: number, offsetY: number) => {
     const mMap = new Map([
-        [{ orientation: Orientation.Vertical, animateType: AnimateType.Slide }, { attr: 'dx', start: 0, end: offsetX }],
+        [{ orientation: Orientation.Vertical, animateType: AnimateType.Slide }, { attr: 'dx', start: 0, end: -offsetX }],
         [{ orientation: Orientation.Vertical, animateType: AnimateType.Zoom }, { attr: 'scaley', start: 1, end: 0 }],
         [{ orientation: Orientation.Horizontal, animateType: AnimateType.Slide }, { attr: 'dy', start: 0, end: offsetY }],
         [{ orientation: Orientation.Horizontal, animateType: AnimateType.Zoom }, { attr: 'scalex', start: 1, end: 0 }]

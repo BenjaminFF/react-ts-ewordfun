@@ -9,7 +9,7 @@ let routes = [
         exact: true
     },
     {
-        path: '/set',
+        path: '/user/set',
         component: set,
         exact: true
     },

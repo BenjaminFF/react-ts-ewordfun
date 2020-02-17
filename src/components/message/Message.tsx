@@ -1,6 +1,7 @@
 import React, { createElement } from 'react'
 import ReactDOM, { render } from 'react-dom'
 import Toast from './Toast'
+import Animlist from '@components/animlist'
 
 export enum Type {
     Success = 'success',
@@ -32,7 +33,6 @@ const Message = (props: Props) => {
     props.willUnMount = () => {
         console.log('willUnMount')
     }
-
     const comp = createElement(Toast, Object.assign(props))
 
     render(comp, messageContainer)
