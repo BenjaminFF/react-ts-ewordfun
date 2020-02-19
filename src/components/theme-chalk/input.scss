@@ -7,6 +7,22 @@
   width: 100%;
   vertical-align: bottom;
   font-size: $--font-size-base;
+  display: flex;
+  align-items: center;
+
+  @include e(prefix-icon) {
+    position: absolute;
+    font-size: 20px;
+    left: 8px;
+    color: $--color-text-placeholder;
+  }
+
+  @include e(suffix-icon) {
+    position: absolute;
+    font-size: 20px;
+    right: 8px;
+    color: $--color-text-placeholder;
+  }
 
   @include e(inner) {
     -webkit-appearance: none;
@@ -24,6 +40,14 @@
     padding: 0 15px;
     transition: $--border-transition-base;
     width: 100%;
+
+    @include when(prefix-icon) {
+      padding-left: 34px;
+    }
+
+    @include when(suffix-icon) {
+      padding-right: 34px;
+    }
 
     &::placeholder {
       color: $--input-placeholder-color;

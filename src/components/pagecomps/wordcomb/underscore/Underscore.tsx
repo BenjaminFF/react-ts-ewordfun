@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Status, Item } from '@components/wordcomb'
+import { Status, Item } from '@components/pagecomps/wordcomb'
 import classNames from 'classnames'
 
 interface Props {

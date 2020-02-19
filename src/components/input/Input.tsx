@@ -6,19 +6,29 @@ interface Props {
     onChange?: any
     name?: string
     disabled?: boolean
+    prefixIcon?: string
+    suffixIcon?: string
+    type?: string
 }
 
 
 //后面还要添加focus,blur,input等事件
-const Input: FC<Props> = ({ value, onChange, name, disabled }) => {
+const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixIcon, type = 'text' }) => {
 
     const handleChange = (e: FormEvent<HTMLInputElement>): void => {
         if (onChange) onChange(e)
     }
 
+    const innerClasses = classNames('ef-input__inner', {
+        'is-prefix-icon': prefixIcon,
+        'is-suffix-icon': suffixIcon
+    })
+
     return (
         <div className={`ef-input ${disabled ? 'is-disabled' : ''}`}>
-            <input onChange={handleChange} name={name} className="ef-input__inner" autoComplete="off" disabled={disabled} />
+            {prefixIcon && <i className={`ef-input__prefix-icon ewordfun ${prefixIcon}`}></i>}
+            <input onChange={handleChange} name={name} className={innerClasses} autoComplete="off" disabled={disabled} type={type} />
+            {suffixIcon && <i className={`ef-input__suffix-icon ewordfun ${suffixIcon}`}></i>}
         </div>
     )
 }

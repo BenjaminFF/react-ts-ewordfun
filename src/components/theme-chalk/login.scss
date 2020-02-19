@@ -1,0 +1,23 @@
+@import "common/var";
+@import "mixins/mixins";
+
+@include b(login) {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include e(card) {
+    width: 350px;
+    height: 400px;
+  }
+
+  @include e(title) {
+    text-align: center;
+    font-size: 22px;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    color: $--color-primary;
+  }
+}
