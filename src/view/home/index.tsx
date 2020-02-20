@@ -3,13 +3,15 @@ import styles from './index.module.scss'
 import Message from '@components/message'
 import Button from '@components/button'
 import { login } from '@utils/api'
+import { useTranslation } from '@locale/I18n'
 
 
 const Home: FC = () => {
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(0), [t, i18n] = useTranslation()
 
     useEffect(() => {
-        login('aa', 'aa', 'aa', 'aa')
+        console.log(t)
+        // login('aa', 'aa', 'aa', 'aa')
     }, [])
 
     return (

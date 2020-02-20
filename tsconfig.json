@@ -20,6 +20,9 @@
       "@utils/*": [
         "utils/*"
       ],
+      "@locale/*": [
+        "locale/*"
+      ]
     },
     "allowJs": true,
     "skipLibCheck": true,

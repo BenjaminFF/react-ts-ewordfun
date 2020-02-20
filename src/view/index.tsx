@@ -1,32 +1,30 @@
 import ReactDOM from 'react-dom'
 import * as serviceWorker from '../serviceWorker'
 import routes from '@router/routes'
-
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-
 import React, { useEffect } from 'react'
-
+import I18n, { I18nContext } from '@locale/I18n'
+import resource from '@locale/resource'
 require('@components/theme-chalk/index.scss')
 
+const i18nInstance = new I18n(resource, 'en')
+
 const App = () => {
-
-    useEffect(() => {
-        console.log('app')
-    })
-
     return (
-        <Router>
-            <Switch>
-                {routes.map((route, index) => (
-                    <Route
-                        key={index}
-                        path={route.path}
-                        exact={route.exact}
-                        component={route.component}
-                    />
-                ))}
-            </Switch>
-        </Router>
+        <I18nContext.Provider value={{ i18n: i18nInstance }}>
+            <Router>
+                <Switch>
+                    {routes.map((route, index) => (
+                        <Route
+                            key={index}
+                            path={route.path}
+                            exact={route.exact}
+                            component={route.component}
+                        />
+                    ))}
+                </Switch>
+            </Router>
+        </I18nContext.Provider>
     )
 }
 
