@@ -1,13 +1,13 @@
 const resources = {
     'en': {
-        login: {
+        'login': {
             'signin': 'sign in',
             'signup': 'sign up',
             'forget pw': 'forget pw'
         }
     },
     'cn': {
-        login: {
+        'login': {
             'signin': '注册',
             'signup': '登录',
             'forget pw': '忘记密码'

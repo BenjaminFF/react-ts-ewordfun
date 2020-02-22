@@ -1,30 +1,30 @@
-export interface Resource {
+//@ts-nocheck
+interface Resource {
     [propName: string]: Object
 }
 
 class I18n {
 
-    private lang: string
-    private res: Resource
-    constructor(res: Resource, lang: string) {
+    lang: string | undefined
+    private res: Resource | undefined
+
+    init(res: Resource, lang: string) {
         this.lang = lang
         this.res = res
-    }
-
-    getT() {
-        const curLangRes = this.res[this.lang]
-        return curLangRes
-        // return (key: string) => {
-        //     const arr = key.split(':')
-        //     // @ts-ignore 
-        //     return arr.length === 2 ? curLangRes[arr[0]][arr[1]] : curLangRes[arr[0]]
-        // }
+        return this
     }
 
 
+    getT(key: string): string {
+        const curRes = this.res && this.lang ? this.res[this.lang] : null,
+            arr = key.split(':')
+        const curValue = key.length !== 0 && curRes ? (arr.length === 1 ? curRes[arr[0]] : curRes[arr[0]][[arr[1]]]) : key
+        return curValue || key
+
+    }
 
     changeLang(lang: string) {
-
+        this.lang = lang
     }
 
 }

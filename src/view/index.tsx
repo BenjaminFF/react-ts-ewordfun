@@ -7,11 +7,11 @@ import I18n, { I18nContext } from '@locale/I18n'
 import resource from '@locale/resource'
 require('@components/theme-chalk/index.scss')
 
-const i18nInstance = new I18n(resource, 'en')
+const i18nInstance: I18n = new I18n().init(resource, 'cn')
 
 const App = () => {
     return (
-        <I18nContext.Provider value={{ i18n: i18nInstance }}>
+        <I18nContext.Provider value={i18nInstance}>
             <Router>
                 <Switch>
                     {routes.map((route, index) => (

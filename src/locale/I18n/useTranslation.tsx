@@ -1,16 +1,22 @@
-import React, { useEffect, useContext, useState } from 'react'
+import React, { useEffect, useContext, useState, useCallback } from 'react'
 import I18nContext from './context'
 
-
 const useTransition = () => {
-    const i18nContext = useContext(I18nContext), [t, setT] = useState(i18nContext.i18n?.getT())
+    const i18nInstance = useContext(I18nContext),
+        [t, setT] = useState({ getT: i18nInstance.getT.bind(i18nInstance) }),
+        [lang, setLang] = useState(i18nInstance.lang)
+    const changeLang = useCallback(
+        (lang) => {
+            i18nInstance.changeLang(lang)
+            setLang(lang)
+        }, [lang]
+    )
 
-    // useEffect(() => {
-    //     setT(i18nContext.i18n?.getT())
-    // }, [])
+    useEffect(() => {
+        setT({ getT: i18nInstance.getT.bind(i18nInstance) })
+    }, [lang])
 
-    return [t, i18nContext.i18n]
-
+    return [t.getT, changeLang]
 }
 
 export default useTransition
