@@ -36,7 +36,10 @@ const Button: FC<Props> = ({ type, loading, disabled, size, children, onClick, m
         }
     )
     return (
-        <button className={classes} onClick={onClick}>{children}</button>
+        <button className={classes} onClick={onClick}>
+            {children}
+            {loading && <i className='ewordfun rte-loading ef-button__icon'></i>}
+        </button>
     )
 }
 

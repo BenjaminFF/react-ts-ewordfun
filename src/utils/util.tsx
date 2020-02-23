@@ -39,9 +39,19 @@ const splitStr = (str: string, maxSplitNum: number = 8): Array<string> => {
     }
 }
 
+const randomStr = (strLen: number = 6): string => {
+    const str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    let randomStr = ''
+    while (randomStr.length < strLen) {
+        randomStr += str[Math.floor(Math.random() * str.length)]
+    }
+    return randomStr
+}
+
 
 export {
     shuffle,
     mixStr,
-    splitStr
+    splitStr,
+    randomStr
 }

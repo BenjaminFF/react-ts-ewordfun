@@ -44,13 +44,13 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
     const [mArr, setMArr] = useState(Array.from(Children.toArray(children), (child, i) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child }))),
         [notify, setNotify] = useState({ type: 'delete', index: -1 })
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (notify.index >= 0 && notify.index < children.length) {
             notify.type === 'delete' ? deleteTransition(notify.index) : appendTransition(notify.index)
         }
     }, [children])
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (notify.index >= 0 && notify.index < mArr.length && notify.type === 'append') {
             appendTransition(notify.index)
         }

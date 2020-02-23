@@ -7,7 +7,7 @@ import I18n, { I18nContext } from '@locale/I18n'
 import resource from '@locale/resource'
 require('@components/theme-chalk/index.scss')
 
-const i18nInstance: I18n = new I18n().init(resource, 'cn')
+const lang = localStorage.getItem('lang') || 'cn', i18nInstance = new I18n().init(resource, lang)
 
 const App = () => {
     return (
