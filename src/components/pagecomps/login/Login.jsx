@@ -6,14 +6,18 @@ import Form, { FormItem } from '@components/form'
 import Input from '@components/input'
 import Button, { ButtonType, ButtonSize } from '@components/button'
 import { useTranslation } from '@locale/I18n'
+import Message from '@components/message'
+import { Type } from '@components/message/Message'
 
 const Login = () => {
 
-    const cardRef = useRef(), formRef = useRef(), [t, changeLang] = useTranslation(), [form, setForm] = useState({ email: '', password: '' }),
+    const cardRef = useRef(), formRef = useRef(), [t, changeLang] = useTranslation(), [form, setForm] = useState({ email: 'sadfjdsk@qq.com', password: 'dsafsafasf' }),
+        [loading, setLoading] = useState(false),
         rules = {
             email: [
                 { required: true, trigger: 'blur', message: t('login:emailValidate')[0] },
-                { type: 'email', trigger: 'blur', message: t('login:emailValidate')[1] }
+                { type: 'email', trigger: 'blur', message: t('login:emailValidate')[1] },
+                {}
             ],
             password: [
                 { required: true, trigger: 'blur', message: t('login:pwValidate')[0] },
@@ -30,9 +34,16 @@ const Login = () => {
     const validateForm = () => {
         formRef.current.validate((validate) => {
             if (validate) {
+                setLoading(true)
                 const timestamp = Date.now(), nonce = randomStr(12), { email, password } = form
-                Login(timestamp, nonce, email, password).then((res) => {
-                    console.log(res)
+                login(timestamp, nonce, email, password).then((res) => {
+                    setLoading(false)
+                    const { error, errmsg } = res.data
+                    if (error === 0) {
+                        //登录成功，跳转处理
+                    } else {
+                        Message({ message: errmsg, type: Type.Error, duration: 3000 })
+                    }
                 })
             }
         })
@@ -48,13 +59,13 @@ const Login = () => {
                             <Input prefixIcon='rte-mine' placeholder={t('login:emailplaceholder')} value={form.email} onChange={onChange} name='email'></Input>
                         </FormItem>
                         <FormItem prop='password'>
-                            <Input prefixIcon='rte-password' type='password' placeholder={t('login:pwplaceholder')} value={form.pw} onChange={onChange} name='password'></Input>
+                            <Input prefixIcon='rte-password' type='password' placeholder={t('login:pwplaceholder')} value={form.password} onChange={onChange} name='password'></Input>
                         </FormItem>
                     </Form>
-                    <Button matchParent type={ButtonType.Primary} onClick={validateForm} loading>{t('login:signup')}</Button>
+                    <Button matchParent type={ButtonType.Primary} onClick={validateForm} loading={loading}>{t('login:signup')}</Button>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
                         <Button type={ButtonType.Text}>{t('login:forgetpw')}</Button>
-                        <Button type={ButtonType.Text} onClick={() => { cardRef.current.flip() }}>{t('login:signin')}</Button>
+                        <Button type={ButtonType.Text} onClick={() => { }}>{t('login:signin')}</Button>
                     </div>
                 </Front>
                 <Back>

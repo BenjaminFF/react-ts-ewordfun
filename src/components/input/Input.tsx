@@ -28,7 +28,7 @@ const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixI
     return (
         <div className={`ef-input ${disabled ? 'is-disabled' : ''}`}>
             {prefixIcon && <i className={`ef-input__prefix-icon ewordfun ${prefixIcon}`}></i>}
-            <input onChange={handleChange} name={name} className={innerClasses} autoComplete="off" disabled={disabled} type={type} placeholder={placeholder} />
+            <input onChange={handleChange} name={name} className={innerClasses} autoComplete="off" disabled={disabled} type={type} placeholder={placeholder} value={value} />
             {suffixIcon && <i className={`ef-input__suffix-icon ewordfun ${suffixIcon}`}></i>}
         </div>
     )

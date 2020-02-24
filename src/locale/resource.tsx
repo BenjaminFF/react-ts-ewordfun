@@ -7,7 +7,8 @@ const resources = {
             'emailplaceholder': 'email',
             'pwplaceholder': 'password',
             'emailValidate': ['please input email', 'please input valid email'],
-            'pwValidate': ['please input password', 'the password length at least 6']
+            'pwValidate': ['please input password', 'the password length at least 6', 'email or password is error']
+
         },
     },
     'cn': {
@@ -18,7 +19,7 @@ const resources = {
             'emailplaceholder': '邮箱',
             'pwplaceholder': '密码',
             'emailValidate': ['请输入邮箱', '请输入正确的邮箱'],
-            'pwValidate': ['请输入密码', '密码长度不低于6位']
+            'pwValidate': ['请输入密码', '密码长度不低于6位', '账号或密码错误']
         },
     }
 }

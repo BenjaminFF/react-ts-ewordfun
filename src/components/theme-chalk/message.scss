@@ -1,6 +1,16 @@
 @import "common/var";
 @import "mixins/mixins";
 
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
 @include b(message-box) {
   position: absolute;
   top: 2rem;
@@ -13,6 +23,7 @@
     font-size: $--font-size-base;
     border-radius: $--border-radius-base;
     border: $--border-base;
+    animation: slideIn linear .2s;
 
     @include m(success) {
       background-color: $--color-success-lighter;
