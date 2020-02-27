@@ -11,7 +11,7 @@ interface Props {
 
 const Toast: FC<Props> = ({ message, type = Type.Info, willUnMount, duration = 1000 }) => {
 
-    const classes = classNames('ef-message-box__toast', 'ef-message-box__toast--' + type), [visible, setVisible] = useState(true)
+    const classes = classNames('ef-message-box__toast', 'ef-message-box__toast--' + type)
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -20,11 +20,11 @@ const Toast: FC<Props> = ({ message, type = Type.Info, willUnMount, duration = 1
         }, duration >= 1000 ? duration : 1000)
     }, [])
 
-    return visible ? (
+    return (
         <div className={classes}>
             {message}
         </div>
-    ) : null
+    )
 }
 
 export default Toast

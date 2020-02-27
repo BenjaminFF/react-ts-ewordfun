@@ -27,16 +27,10 @@ service.interceptors.response.use(
     config => {
         const { errno } = config.data,
             { pathname } = window.location,
-            isLoginpage = pathname.indexOf('login'),
-            isProtectedPage = pathname.indexOf('user')
-        if (errno === 0 && isLoginpage) {
-            // 跳转到protected page
-            console.log('to protected page')
-        }
+            isProtectedPage = pathname.indexOf('user') !== -1
 
         if (errno === 405 && isProtectedPage) {
-            // 跳转到login page
-            console.log('to login page')
+            window.location.replace('/login')
         }
         return config
     },
@@ -45,7 +39,7 @@ service.interceptors.response.use(
     }
 )
 
-const post = (url: string, params: Object): Promise<Object> => {
+const post = (url: string, params?: Object): Promise<Object> => {
     return new Promise((resolve, reject) => {
         service.post(url, params).then((res) => {
             resolve(res)
@@ -55,13 +49,32 @@ const post = (url: string, params: Object): Promise<Object> => {
     })
 }
 
+const get = (url: string, params?: Object): Promise<Object> => {
+    return new Promise((resolve, reject) => {
+        service.get(url, { params }).then((res) => {
+            resolve(res)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
+
 
 // api
-const login = (timestamp: string, nonce: string, email: string, password: string) => post('/api/user/login', { timestamp, nonce, email, password })
 
+// user
+const login = (timestamp: string, nonce: string, email: string, password: string) => post('/api/user/login', { timestamp, nonce, email, password })
+const logout = () => post('/api/user/logout')
+
+// set
+const listSets = () => get('/api/set/list')
+const acquireSet = (sid: number, origin_id: string) => get('/api/set/acquire', { sid, origin_id })
 
 export {
-    login
+    login,
+    logout,
+    listSets,
+    acquireSet
 }
 
 

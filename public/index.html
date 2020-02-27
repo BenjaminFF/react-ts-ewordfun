@@ -28,6 +28,7 @@
     body {
       width: 100%;
       height: 100%;
+      position: relative;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif;
@@ -59,6 +60,17 @@
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
+  <!-- <div style="width: 100%;height: 100%;background-color: antiquewhite;position: absolute;left: 0;top: 0;" id='loading'> -->
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 优化白屏加载
+      // setTimeout(() => {
+      //   const loading = document.getElementById('loading')
+      //   document.getElementsByTagName('body')[0].removeChild(loading)
+      // }, 1000)
+    })
+  </script>
   <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

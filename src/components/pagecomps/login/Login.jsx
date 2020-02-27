@@ -8,10 +8,12 @@ import Button, { ButtonType, ButtonSize } from '@components/button'
 import { useTranslation } from '@locale/I18n'
 import Message from '@components/message'
 import { Type } from '@components/message/Message'
+import { useHistory } from 'react-router-dom'
 
 const Login = () => {
 
-    const cardRef = useRef(), formRef = useRef(), [t, changeLang] = useTranslation(), [form, setForm] = useState({ email: 'sadfjdsk@qq.com', password: 'dsafsafasf' }),
+    const cardRef = useRef(), formRef = useRef(), [t, changeLang] = useTranslation(), [form, setForm] = useState({ email: '', password: '' }),
+        history = useHistory(),
         [loading, setLoading] = useState(false),
         rules = {
             email: [
@@ -41,6 +43,7 @@ const Login = () => {
                     const { error, errmsg } = res.data
                     if (error === 0) {
                         //登录成功，跳转处理
+                        history.replace('/user/set')
                     } else {
                         Message({ message: errmsg, type: Type.Error, duration: 3000 })
                     }

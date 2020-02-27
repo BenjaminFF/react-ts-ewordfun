@@ -48,10 +48,25 @@ const randomStr = (strLen: number = 6): string => {
     return randomStr
 }
 
+const getCookie = (cname: string): string => {
+    const name = cname + "=", ca = decodeURIComponent(document.cookie).split(';')
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i]
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1)
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length)
+        }
+    }
+    return ""
+}
+
 
 export {
     shuffle,
     mixStr,
     splitStr,
-    randomStr
+    randomStr,
+    getCookie
 }
