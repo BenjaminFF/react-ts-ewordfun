@@ -24,22 +24,26 @@ export interface Props {
     size?: ButtonSize
     matchParent?: boolean
     onClick?: () => void
+    circle?: boolean
+    icon?: string
 }
 
-const Button: FC<Props> = ({ type, loading, disabled, size, children, onClick, matchParent }) => {
+const Button: FC<Props> = ({ type, loading, disabled, size, children, onClick, matchParent, circle = false, icon }) => {
 
     const classes = classNames('ef-button', type ? `ef-button--${type}` : '', size ? `ef-button--${size}` : '',
         {
             'is-disabled': disabled,
             'is-loading': loading,
-            'is-match-parent': matchParent
+            'is-match-parent': matchParent,
+            'is-circle': circle
         }
     )
     return (
         <button className={classes} onClick={onClick}>
             {children}
             {loading && <i className='ewordfun rte-loading ef-button__icon'></i>}
-        </button>
+            {icon && <i className={`ewordfun ${icon} ef-button__icon`}></i>}
+        </button >
     )
 }
 

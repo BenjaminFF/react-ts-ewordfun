@@ -3,23 +3,22 @@ import classNames from 'classnames'
 import Card, { Front, Back } from '@components/card'
 import Input from '@components/input'
 import Animlist from '@components/animlist'
-import Button from '@components/button'
+import Button, { ButtonType } from '@components/button'
 import { randomStr } from '@utils/util'
 
 const Setcreate = () => {
 
-    const [items, setItems] = useState([]), listRef = useRef(), initCount = 2
+    const [items, setItems] = useState([]), listRef = useRef(), initCount = 3
 
     useEffect(() => {
-        const mItems = []
         for (let i = 0; i < initCount; i++) {
-            mItems.push({
+            items.push({
                 id: randomStr(12),
                 term: '',
                 definition: ''
             })
         }
-        setItems(mItems)
+        setItems([...items])
     }, [])
 
     const onChange = (e, id, type) => {
@@ -36,7 +35,13 @@ const Setcreate = () => {
             },
             ...items
         ])
-        listRef.current.appendNotify(0)
+        listRef.current.appendNotify(pos)
+    }
+
+    const deleteItem = (pos) => {
+        items.splice(pos, 1)
+        setItems([...items])
+        listRef.current.deleteNotify(pos)
     }
 
     return (
@@ -51,7 +56,7 @@ const Setcreate = () => {
                     </Card>
                 )}
             </Animlist>
-            <Button matchParent onClick={addItem}>add</Button>
+            <Button circle icon='rte-add' type={ButtonType.Primary}></Button>
         </div>
     )
 }

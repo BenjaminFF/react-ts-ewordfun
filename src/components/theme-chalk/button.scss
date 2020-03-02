@@ -32,8 +32,6 @@
   @include e(icon) {
     display: inline-block;
     font-size: $--button-font-size;
-    margin-left: 5px;
-    animation: mRotate 2s linear infinite;
   }
 
   @include button-size(
@@ -101,6 +99,19 @@
       border-radius: inherit;
       background-color: rgba(255, 255, 255, 0.35);
     }
+
+    @include e(icon) {
+      display: inline-block;
+      font-size: $--button-font-size;
+      margin-left: 5px;
+      margin-right: 5px;
+      animation: mRotate 2s linear infinite;
+    }
+  }
+
+  @include when(circle) {
+    border-radius: 50%;
+    padding: $--button-padding-vertical;
   }
 
   @include m(primary) {
