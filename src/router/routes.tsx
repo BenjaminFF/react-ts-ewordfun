@@ -1,6 +1,7 @@
 import home from '@view/home'
 import set from '@view/set'
 import login from '@view/login'
+import createSet from '@view/createset'
 
 let routes = [
     {
@@ -11,6 +12,11 @@ let routes = [
     {
         path: '/user/set',
         component: set,
+        exact: true
+    },
+    {
+        path: '/user/createSet',
+        component: createSet,
         exact: true
     },
     {

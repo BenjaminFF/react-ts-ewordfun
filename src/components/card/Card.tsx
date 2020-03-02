@@ -30,7 +30,7 @@ interface Props {
     shadow?: ShandowType
     style?: Object
     className?: string | Object
-    flip?: FlipType,
+    flip?: FlipType
     children?: any
 }
 

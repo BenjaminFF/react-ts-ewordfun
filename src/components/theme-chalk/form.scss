@@ -15,8 +15,9 @@
 
   @include when(error) {
     @include b(input) {
-      @include e(inner){
+      @include e(inner) {
         border-color: $--color-danger;
+        // background-color: mix($--color-white, $--input-background-color, 50%);
       }
     }
   }

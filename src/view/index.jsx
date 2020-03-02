@@ -19,7 +19,7 @@ const App = () => {
         if (uid === '' && isProtectedPage) history.replace('/login')
         if (uid !== '' && !isProtectedPage) history.replace('/user/set')
         setLoading(false)
-    }, [])
+    }, [history.location.pathname])
 
     return !loading ? (
         <I18nContext.Provider value={i18nInstance}>

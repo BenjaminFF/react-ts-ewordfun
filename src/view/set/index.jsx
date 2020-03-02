@@ -1,15 +1,19 @@
 import React, { useEffect } from 'react'
 import { acquireSet } from '@utils/api'
+import Setcreate from '@components/pagecomps/setcreate'
+import style from './index.module.scss'
 
-function Set() {
+const state = {
+    items: [],
 
-    useEffect(() => {
-        acquireSet(51, '8msjznhieqi').then((res) => {
-            console.log(res)
-        })
-    }, [])
+}
+
+const Set = () => {
+
     return (
-        <div>Set</div>
+        <div className={style.set}>
+            <Setcreate></Setcreate>
+        </div>
     )
 }
 

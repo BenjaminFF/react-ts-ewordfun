@@ -41,14 +41,18 @@ const getTransitionInfo = (orientation: Orientation, animateType: AnimateType, o
 
 const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animateType = AnimateType.Slide, children, easing = TWEEN.Easing.Linear, duration = 400 }, ref) => {
 
-    const [mArr, setMArr] = useState(Array.from(Children.toArray(children), (child, i) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child }))),
+    const [mArr, setMArr] = useState(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child }))),
         [notify, setNotify] = useState({ type: 'delete', index: -1 })
+
+    useEffect(() => {
+        setMArr(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child })))
+    }, [children])
 
     useEffect(() => {
         if (notify.index >= 0 && notify.index < children.length) {
             notify.type === 'delete' ? deleteTransition(notify.index) : appendTransition(notify.index)
         }
-    }, [children])
+    }, [Children.count(children)])
 
     useEffect(() => {
         if (notify.index >= 0 && notify.index < mArr.length && notify.type === 'append') {
@@ -156,7 +160,7 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
     return (
         <div className={classes}>
             {mArr.map((item, index) => (
-                <div ref={item.ref} key={index} className='ef-animlist__item' style={{ transform: `translate3d(${item.dx}px,${item.dy}px,0px) scaleX(${item.scalex}) scaleY(${item.scaley})`, opacity: item.opacity, transformOrigin: '0 0 0' }}>
+                <div ref={item.ref} key={item.child.key} className='ef-animlist__item' style={{ transform: `translate3d(${item.dx}px,${item.dy}px,0px) scaleX(${item.scalex}) scaleY(${item.scaley})`, opacity: item.opacity, transformOrigin: '0 0 0' }}>
                     {item.child}
                 </div>
             ))

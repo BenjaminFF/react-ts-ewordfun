@@ -26,10 +26,10 @@
 
   @include e(inner) {
     -webkit-appearance: none;
-    background-color: $--input-background-color;
+    background-color: mix($--color-white, $--input-background-color, 10%);
     background-image: none;
     border-radius: $--input-border-radius;
-    border: $--input-border;
+    border: 1px solid mix($--color-white, $--input-background-color, 10%);
     box-sizing: border-box;
     color: $--input-font-color;
     display: inline-block;
@@ -59,7 +59,7 @@
 
     &:focus {
       outline: none;
-      border-color: $--input-focus-border;
+      border-color: $--input-hover-border;
     }
   }
 
@@ -73,6 +73,43 @@
       &::placeholder {
         color: $--input-disabled-placeholder-color;
       }
+    }
+  }
+}
+
+@include b(textarea) {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  vertical-align: bottom;
+  font-size: $--font-size-base;
+
+  @include e(inner) {
+    display: block;
+    resize: vertical;
+    padding: 10px 15px;
+    line-height: 1.5;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 20px;
+    color: $--input-font-color;
+    background-color: mix($--color-white, $--input-background-color, 10%);
+    border: $--input-border;
+    border-radius: $--input-border-radius;
+    transition: $--border-transition-base;
+    overflow: hidden;
+
+    &::placeholder {
+      color: $--input-placeholder-color;
+    }
+
+    &:hover {
+      border-color: $--input-hover-border;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $--input-hover-border;
     }
   }
 }

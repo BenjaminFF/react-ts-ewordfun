@@ -13,13 +13,11 @@ import { useHistory } from 'react-router-dom'
 const Login = () => {
 
     const cardRef = useRef(), formRef = useRef(), [t, changeLang] = useTranslation(), [form, setForm] = useState({ email: '', password: '' }),
-        history = useHistory(),
-        [loading, setLoading] = useState(false),
+        history = useHistory(), [loading, setLoading] = useState(false),
         rules = {
             email: [
                 { required: true, trigger: 'blur', message: t('login:emailValidate')[0] },
-                { type: 'email', trigger: 'blur', message: t('login:emailValidate')[1] },
-                {}
+                { type: 'email', trigger: 'blur', message: t('login:emailValidate')[1] }
             ],
             password: [
                 { required: true, trigger: 'blur', message: t('login:pwValidate')[0] },
@@ -40,8 +38,8 @@ const Login = () => {
                 const timestamp = Date.now(), nonce = randomStr(12), { email, password } = form
                 login(timestamp, nonce, email, password).then((res) => {
                     setLoading(false)
-                    const { error, errmsg } = res.data
-                    if (error === 0) {
+                    const { errno, errmsg } = res.data
+                    if (errno === 0) {
                         //登录成功，跳转处理
                         history.replace('/user/set')
                     } else {
@@ -68,10 +66,11 @@ const Login = () => {
                     <Button matchParent type={ButtonType.Primary} onClick={validateForm} loading={loading}>{t('login:signup')}</Button>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
                         <Button type={ButtonType.Text}>{t('login:forgetpw')}</Button>
-                        <Button type={ButtonType.Text} onClick={() => { }}>{t('login:signin')}</Button>
+                        <Button type={ButtonType.Text} onClick={() => { cardRef.current.flip() }}>{t('login:signin')}</Button>
                     </div>
                 </Front>
                 <Back>
+                    处理signin
                 </Back>
             </Card>
         </div >

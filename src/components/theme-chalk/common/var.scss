@@ -236,13 +236,13 @@ $--input-font-color: $--color-text-regular !default;
 $--input-width: 140px !default;
 /// height||Other|4
 $--input-height: 40px !default;
-$--input-border: $--border-base !default;
+$--input-border: 1px solid $--color-info-lighter !default;
 $--input-border-color: $--border-color-base !default;
 /// borderRadius||Border|2
 $--input-border-radius: $--border-radius-base !default;
 $--input-border-color-hover: $--border-color-hover !default;
 /// color||Color|0
-$--input-background-color: $--color-white !default;
+$--input-background-color: $--color-info-lighter !default;
 $--input-fill-disabled: $--disabled-fill-base !default;
 $--input-color-disabled: $--font-color-disabled-base !default;
 /// color||Color|0
@@ -278,4 +278,3 @@ $--square-grid-border-radius: 4px !default;
 $--square-grid-active-color: $--color-text-primary;
 $--square-grid-active-border-color: mix($--color-white, $--color-info, 60%);
 $--square-grid-active-background-color: mix($--color-white, $--color-info, 60%);
-
