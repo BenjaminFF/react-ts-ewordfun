@@ -15,7 +15,8 @@ const Setcreate = () => {
             items.push({
                 id: randomStr(12),
                 term: '',
-                definition: ''
+                definition: '',
+                addVisible: false
             })
         }
         setItems([...items])
@@ -31,7 +32,8 @@ const Setcreate = () => {
             {
                 id: randomStr(12),
                 term: '',
-                definition: ''
+                definition: '',
+                addVisible: false
             },
             ...items
         ])
@@ -44,6 +46,11 @@ const Setcreate = () => {
         listRef.current.deleteNotify(pos)
     }
 
+    const toggleButton = (pos) => {
+        items[pos].addVisible = !items[pos].addVisible
+        setItems([...items])
+    }
+
     return (
         <div className='ef-setcreate'>
             <Animlist ref={listRef}>
@@ -51,12 +58,14 @@ const Setcreate = () => {
                     <Card className='ef-setcreate__card' key={item.id}>
                         <div className='ef-setcreate__card-inner'>
                             <Input style={{ marginBottom: '1rem' }} value={item.term} onChange={(e) => { onChange(e, item.id, 'term') }} ></Input>
-                            <Input textarea style={{ resize: 'none' }} row={3} value={item.definition} onChange={(e) => { onChange(e, item.id, 'definition') }}></Input>
+                            <Input textarea style={{ resize: 'none' }} row={2} value={item.definition} onChange={(e) => { onChange(e, item.id, 'definition') }}></Input>
+                        </div>
+                        <div style={{ height: 'fit-content', position: 'absolute', width: '100%', textAlign: "center" }} onMouseOver={() => { toggleButton(item.id) }}>
+                            {item.addVisible && <Button circle icon='rte-add' type={ButtonType.Primary} shandow></Button>}
                         </div>
                     </Card>
                 )}
             </Animlist>
-            <Button circle icon='rte-add' type={ButtonType.Primary}></Button>
         </div>
     )
 }

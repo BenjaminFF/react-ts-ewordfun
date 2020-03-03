@@ -31,7 +31,7 @@
 
   @include e(icon) {
     display: inline-block;
-    font-size: $--button-font-size;
+    font-size: $--font-size-large;
   }
 
   @include button-size(
@@ -82,6 +82,10 @@
         color: $--button-disabled-font-color;
       }
     }
+  }
+
+  @include when(shandow) {
+    box-shadow: $--box-shadow-light;
   }
 
   @include when(loading) {

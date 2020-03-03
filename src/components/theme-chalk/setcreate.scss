@@ -13,10 +13,16 @@
   @include e(card) {
     width: 500px;
     height: fit-content;
-    margin-bottom: 30px;
+    margin-bottom: 44px;
   }
 
   @include e(card-inner) {
     padding: 20px;
+  }
+
+  @include e(card-bbox) {
+    height: fit-content;
+    width: 100%;
+    position: absolute;
   }
 }
