@@ -4,15 +4,15 @@ import Button from '@components/button'
 
 const Test = () => {
 
-    const [states, actions] = useStore(), { counter, num } = states, { addCounter } = actions
+    const [states, actions] = useStore(), { counter, b } = states, { addCounter } = actions
 
     useEffect(() => {
         console.log('gg')
-    })
+    }, [b.a])
 
     return (
         <div>
-            {counter}
+            {b.a}
             <Button onClick={() => { addCounter() }}>add</Button>
         </div>
     )

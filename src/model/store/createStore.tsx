@@ -4,13 +4,17 @@ interface Actions {
     [index: string]: Function
 }
 
+interface States {
+    [index: string]: any
+}
+
 class Model {
     private listeners: Array<Function>
-    private states: Object
+    private states: States
     private actions: Actions
 
 
-    constructor(initStates: Object, actions: Actions) {
+    constructor(initStates: States, actions: Actions) {
         this.listeners = []
         this.states = initStates
         Object.keys(actions).forEach(key => {
@@ -21,8 +25,14 @@ class Model {
         this.actions = actions
     }
 
-    setState(newStates: Object) {
-        this.states = { ...this.states, ...newStates }
+    setState(newStates: States) {
+        let shandowEqual = true
+        Object.keys(newStates).forEach(key => {
+            if (newStates[key] !== this.states[key]) {
+                shandowEqual = false
+            }
+        })
+        this.states = shandowEqual ? this.states : { ...this.states, ...newStates }
         this.listeners.forEach((listener) => {
             listener(this.states)
         })
@@ -41,7 +51,7 @@ class Model {
     }
 }
 
-const createStore = (states: Object, actions: Actions) => {
+const createStore = (states: States, actions: Actions) => {
     const model = new Model(states, actions)
     return model.useStore.bind(model)
 }

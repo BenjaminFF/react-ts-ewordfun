@@ -2,12 +2,12 @@ import { createStore } from "./store"
 
 const states = {
     counter: 0,
-    num: 0
+    b: { a: 1 }
 }
 
 const actions = {
     addCounter: (store, newCounter) => {
-        store.setState({ counter: 1 })
+        store.setState({ b: { a: 2 } })
     }
 }
 
