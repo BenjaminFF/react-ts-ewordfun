@@ -21,8 +21,9 @@
   }
 
   @include e(card-bbox) {
-    height: fit-content;
+    height: 44px;
     width: 100%;
     position: absolute;
+    text-align: center;
   }
 }

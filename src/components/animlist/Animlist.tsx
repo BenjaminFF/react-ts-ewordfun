@@ -100,7 +100,7 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
     const appendTransition = (curIndex: number) => {
         if (mArr.length !== Children.count(children)) {
             const arr = [...mArr]
-            arr.splice(curIndex, 0, { dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 0, ref: createRef<HTMLDivElement>(), child: Children.toArray(children)[curIndex] })
+            arr.splice(curIndex, 0, { dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child: Children.toArray(children)[curIndex] })
             setMArr([...arr])
         } else {
             const curNode = mArr[curIndex].ref.current
@@ -119,21 +119,23 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
                 }
             })
             mArr[curIndex] = {
-                ...mArr[curIndex], ...{ [transInfo.attr]: transInfo.end, opacity: transInfo.attr === 'scalex' || transInfo.attr === 'scaley' ? 1 : 0 }
+                ...mArr[curIndex], ...{ [transInfo.attr]: transInfo.end, opacity: transInfo.attr === 'scalex' || transInfo.attr === 'scaley' || curIndex === mArr.length - 1 ? 1 : 0 }
             }
             setMArr([...mArr])
 
-            new TWEEN.Tween().from({ dy: -offsetY, dx: -offsetX }).to({ dy: 0, dx: 0 }, duration).easing(easing).onUpdate(({ dy, dx }) => {
-                mArr.forEach((item, index) => {
-                    if (index > curIndex) {
-                        orientation === Orientation.Vertical ? item.dy = dy : item.dx = dx
-                    }
-                })
-                setMArr([...mArr])
-            }).onStop(() => {
-                mArr[curIndex].opacity = 1
-                setMArr([...mArr])
-            }).start()
+            if (curIndex !== mArr.length - 1) {
+                new TWEEN.Tween().from({ dy: -offsetY, dx: -offsetX }).to({ dy: 0, dx: 0 }, duration).easing(easing).onUpdate(({ dy, dx }) => {
+                    mArr.forEach((item, index) => {
+                        if (index > curIndex) {
+                            orientation === Orientation.Vertical ? item.dy = dy : item.dx = dx
+                        }
+                    })
+                    setMArr([...mArr])
+                }).onStop(() => {
+                    mArr[curIndex].opacity = 1
+                    setMArr([...mArr])
+                }).start()
+            }
 
             const delayTime = animateType === AnimateType.Zoom || curIndex === mArr.length - 1 ? 0 : duration
             new TWEEN.Tween().from({ [transInfo.attr]: transInfo.end }).to({ [transInfo.attr]: transInfo.start }, duration).delay(delayTime).easing(easing).onUpdate((value) => {
