@@ -11,7 +11,7 @@ const Setcreate = () => {
     const [states, actions] = useStore(), { items } = states, { init, addItem, deleteItem, setAddVisible, onTextChange } = actions, listRef = useRef()
 
     useEffect(() => {
-        init()
+        init(listRef)
     }, [])
 
     return (
@@ -24,7 +24,7 @@ const Setcreate = () => {
                             <Input textarea style={{ resize: 'none' }} row={2} value={item.definition} onChange={(e) => { onTextChange(e, item.id, 'definition') }}></Input>
                         </div>
                         <div className='ef-setcreate__card-bbox' onMouseEnter={() => { setAddVisible(index, true) }} onMouseLeave={(e) => { setAddVisible(index, false) }}>
-                            {item.addVisible && <Button circle icon='rte-add' type={ButtonType.Primary} shandow onClick={() => { addItem(index + 1, listRef) }}></Button>}
+                            {item.addVisible && <Button circle icon='rte-add' type={ButtonType.Primary} shandow onClick={() => { deleteItem(items.length - 1, listRef) }}></Button>}
                         </div>
                     </Card>
                 )}
