@@ -5,8 +5,7 @@ const createNewItem = () => {
     return {
         id: randomStr(12),
         term: '',
-        definition: '',
-        addVisible: false
+        definition: ''
     }
 }
 
@@ -39,13 +38,6 @@ const actions = {
         items.splice(pos, 1)
         store.setState({ items: [...items] })
         listRef.current.deleteNotify(pos)
-    },
-    setAddVisible(store, pos, addVisible) {
-        const { items } = store.states
-        if (items[pos]) {
-            items[pos].addVisible = addVisible
-            store.setState({ items: [...items] })
-        }
     },
     onTextChange(store, e, id, type) {
         const { items } = store.states

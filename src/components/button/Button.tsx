@@ -28,11 +28,12 @@ export interface Props {
     icon?: string
     shandow?: boolean
     style?: Object
+    className?: Object | string
 }
 
-const Button: FC<Props> = ({ type, loading, disabled, size, children, onClick, matchParent, circle = false, icon, shandow = false, style }) => {
+const Button: FC<Props> = ({ type, loading, disabled, size, children, onClick, matchParent, circle = false, icon, shandow = false, style, className }) => {
 
-    const classes = classNames('ef-button', type ? `ef-button--${type}` : '', size ? `ef-button--${size}` : '',
+    const classes = classNames('ef-button', type ? `ef-button--${type}` : '', size ? `ef-button--${size}` : '', className,
         {
             'is-disabled': disabled,
             'is-loading': loading,

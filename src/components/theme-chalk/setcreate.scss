@@ -14,10 +14,27 @@
     width: 500px;
     height: fit-content;
     margin-bottom: 44px;
+    position: relative;
+    &:hover {
+      @include e(card-close){
+        visibility: visible;
+      }
+    }
+  }
+
+  @include e(card-close) {
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: $--font-size-large;
+    color: mix($--color-white, $--color-info, 60%);
+    cursor: pointer;
+    padding: 4px;
   }
 
   @include e(card-inner) {
-    padding: 20px;
+    padding: 25px 20px;
   }
 
   @include e(card-bbox) {
@@ -25,5 +42,14 @@
     width: 100%;
     position: absolute;
     text-align: center;
+    &:hover {
+      @include e(card-add){
+        visibility: visible;
+      }
+    }
+  }
+
+  @include e(card-add){
+    visibility: hidden;
   }
 }

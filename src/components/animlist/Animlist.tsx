@@ -45,14 +45,8 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
     const [mArr, setMArr] = useState(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child }))),
         [notify, setNotify] = useState({ type: '', index: -1 }), isTransitting = useRef(false)
 
-    useEffect(() => {
-        if (Children.count(children) === mArr.length) {
-            setMArr(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child })))
-        }
-    }, [children])
-
-    useEffect(() => {
-        if (notify.index >= 0 && !isTransitting.current) {
+    useLayoutEffect(() => {
+        if (notify.index >= 0) {
             notify.type === 'delete' ? deleteTransition(notify.index) : appendTransition(notify.index)
         }
         if (notify.index === -2) {
@@ -61,15 +55,20 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
         }
     }, [notify.index])
 
-    useEffect(() => {
-        if (notify.index >= 0 && notify.index < mArr.length && notify.type === 'append' && !isTransitting.current) {
+    useLayoutEffect(() => {
+        if (notify.type === 'append') {
             appendTransition(notify.index)
         }
     }, [mArr.length])
 
+    useLayoutEffect(() => {
+        if (Children.count(children) === mArr.length && !isTransitting.current) {
+            setMArr(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child })))
+        }
+    }, [children])
+
     const deleteTransition = (curIndex: number) => {
         if (mArr.length === 0) throw new Error(('children count is zero'))
-        isTransitting.current = true
         const curNode = mArr[curIndex].ref.current
         let offsetX = 0, offsetY = 0
         if (curNode) {
@@ -96,9 +95,9 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
             })
             setMArr([...mArr])
         }).onStop(() => {
+            isTransitting.current = false
             setMArr(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child })))
             setNotify({ type: '', index: -1 })
-            isTransitting.current = false
         }).start()
     }
 
@@ -108,7 +107,6 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
             arr.splice(curIndex, 0, { dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child: children[curIndex] })
             setMArr([...arr])
         } else {
-            isTransitting.current = true
             const curNode = mArr[curIndex].ref.current
             let offsetX = 0, offsetY = 0
             if (curNode) {
@@ -148,17 +146,19 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
                 mArr[curIndex] = { ...mArr[curIndex], ...value }
                 setMArr([...mArr])
             }).onStop(() => {
-                setNotify({ type: '', index: -1 })
                 isTransitting.current = false
+                setNotify({ type: '', index: -1 })
             }).start()
         }
     }
 
     useImperativeHandle(ref, () => ({
         deleteNotify: (pos: number) => {
+            isTransitting.current = true
             setNotify({ type: 'delete', index: pos })
         },
         appendNotify: (pos: number) => {
+            isTransitting.current = true
             setNotify({ type: 'append', index: pos })
         },
         initNotify: () => {
@@ -172,7 +172,7 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
     })
 
     return (
-        <div className={classes}>
+        <div className={classes} style={{ pointerEvents: !isTransitting.current ? "auto" : "none" }}>
             {mArr.map((item, index) => (
                 <div ref={item.ref} key={index} className='ef-animlist__item' style={{ transform: `translate3d(${item.dx}px,${item.dy}px,0px) scaleX(${item.scalex}) scaleY(${item.scaley})`, opacity: item.opacity, transformOrigin: '0 0 0' }}>
                     {item.child}
