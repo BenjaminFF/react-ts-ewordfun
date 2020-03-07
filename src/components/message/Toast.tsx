@@ -15,7 +15,6 @@ const Toast: FC<Props> = ({ message, type = Type.Info, willUnMount, duration = 1
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            // setVisible(false)
             willUnMount()
         }, duration >= 1000 ? duration : 1000)
     }, [])

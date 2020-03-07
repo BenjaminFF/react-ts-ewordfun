@@ -96,7 +96,8 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
             setMArr([...mArr])
         }).onStop(() => {
             isTransitting.current = false
-            setMArr(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child })))
+            //为了保持index同步
+            setMArr(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child })))  
             setNotify({ type: '', index: -1 })
         }).start()
     }
@@ -147,6 +148,8 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
                 setMArr([...mArr])
             }).onStop(() => {
                 isTransitting.current = false
+                //为了保持index同步
+                setMArr(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child }))) 
                 setNotify({ type: '', index: -1 })
             }).start()
         }

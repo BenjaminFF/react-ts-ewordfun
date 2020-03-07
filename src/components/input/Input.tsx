@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useState, useRef } from 'react'
+import React, { FC, FormEvent, useState, useRef, useEffect } from 'react'
 import classNames from 'classnames'
 
 interface Props {
@@ -13,13 +13,14 @@ interface Props {
     textarea?: boolean
     style?: Object
     row?: number
+    focus?: boolean
 }
 
 
 //后面还要添加focus,blur,input等事件
-const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixIcon, type = 'text', placeholder = '', textarea = false, style, row = 2 }) => {
+const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixIcon, type = 'text', placeholder = '', textarea = false, style, row = 2, focus = false }) => {
 
-    const [taHeight, setTaHeight] = useState<string | number>(), initHeight = useRef<number>(-1)
+    const [taHeight, setTaHeight] = useState<string | number>(), initHeight = useRef<number>(-1), inputRef = useRef(null)
 
     const handleChange = (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         if (onChange) onChange(e)
@@ -30,6 +31,11 @@ const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixI
         }
     }
 
+    useEffect(() => {
+        //@ts-ignore
+        if (focus && inputRef !== null) inputRef.current.focus()
+    }, [focus])
+
     const innerClasses = classNames('ef-input__inner', {
         'is-prefix-icon': prefixIcon,
         'is-suffix-icon': suffixIcon
@@ -38,12 +44,12 @@ const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixI
     return !textarea ? (
         <div className={`ef-input ${disabled ? 'is-disabled' : ''}`} style={style}>
             {prefixIcon && <i className={`ef-input__prefix-icon ewordfun ${prefixIcon}`}></i>}
-            <input onChange={handleChange} name={name} className={innerClasses} autoComplete="off" disabled={disabled} type={type} placeholder={placeholder} value={value} />
+            <input onChange={handleChange} name={name} className={innerClasses} autoComplete="off" disabled={disabled} type={type} placeholder={placeholder} value={value} ref={inputRef} />
             {suffixIcon && <i className={`ef-input__suffix-icon ewordfun ${suffixIcon}`}></i>}
         </div>
     ) : <div className={`ef-textarea ${disabled ? 'is-disabled' : ''}`} style={style}>
             <textarea className='ef-textarea__inner' disabled={disabled} placeholder={placeholder} value={value} rows={row}
-                onChange={handleChange} style={{ height: taHeight, ...style }}>
+                onChange={handleChange} style={{ height: taHeight, ...style }} ref={inputRef}>
             </textarea>
         </div >
 }

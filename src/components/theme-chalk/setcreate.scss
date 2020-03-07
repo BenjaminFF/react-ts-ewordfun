@@ -10,13 +10,14 @@
   padding: 100px;
   position: absolute;
   box-sizing: border-box;
+  overflow-y: scroll;
   @include e(card) {
     width: 500px;
     height: fit-content;
     margin-bottom: 44px;
     position: relative;
     &:hover {
-      @include e(card-close){
+      @include e(card-close) {
         visibility: visible;
       }
     }
@@ -43,13 +44,32 @@
     position: absolute;
     text-align: center;
     &:hover {
-      @include e(card-add){
+      @include e(card-add) {
         visibility: visible;
       }
     }
   }
 
-  @include e(card-add){
+  @include e(card-add) {
     visibility: hidden;
+  }
+
+  @include e(create-button) {
+    position: fixed;
+    bottom: 100px;
+    right: 50%;
+    transform: translateX(380px);
+  }
+
+   &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $--color-info-light;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: mix($--color-white, $--color-info, 60%);
   }
 }

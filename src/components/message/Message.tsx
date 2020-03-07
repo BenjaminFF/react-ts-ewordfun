@@ -40,12 +40,15 @@ const Message = (props: Props) => {
 
         new TWEEN.Tween().from({ offsetY: 0, opacity: 1 }).to({ offsetY: -offsetHeight - 10, opacity: 0 }, 200).easing(TWEEN.Easing.Linear).onUpdate(({ offsetY, opacity }) => {
             for (let i = 0; i < messageBox.children.length; i++) {
-                //@ts-ignore
-                messageBox.children[curIndex].style.opacity = `${opacity}`
-                if (i >= curIndex) {
+                if (messageBox.children[curIndex]) {
                     //@ts-ignore
-                    messageBox.children[i].style.transform = `translateY(${offsetY}px)`
+                    messageBox.children[curIndex].style.opacity = `${opacity}`
+                    if (i >= curIndex) {
+                        //@ts-ignore
+                        messageBox.children[i].style.transform = `translateY(${offsetY}px)`
+                    }
                 }
+
             }
 
         }).onStop(() => {
