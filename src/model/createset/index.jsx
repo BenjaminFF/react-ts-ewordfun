@@ -14,8 +14,8 @@ const createNewItem = () => {
 
 const checkEmpty = (items) => {
     for (let i = 0; i < items.length; i++) {
-        if (items[i].term === '') return { hasEmpty: true, type: 'term' }
-        if (items[i].definition === '') return { hasEmpty: true, type: 'definition' }
+        if (items[i].term === '') return { hasEmpty: true, type: 'term', index: i }
+        if (items[i].definition === '') return { hasEmpty: true, type: 'definition', index: i }
     }
     return { hasEmpty: false }
 }
@@ -60,10 +60,20 @@ const actions = {
         items.filter((item) => item.id === id)[0][type] = e.currentTarget.value
         store.setState({ items: [...items] })
     },
-    createSet(store) {
+    onTextFocus(store, id, type) {
         const { items } = store.states
-        if (checkEmpty(items).hasEmpty) {
-            // Message({ type: Type.Error, duration: 1500 })   
+        items.forEach((item) => { item.focus = [false, false] })
+        items.filter((item) => item.id === id)[0].focus[type === 'term' ? 0 : 1] = true
+        store.setState({ items: [...items] })
+    },
+    createSet(store, t) {
+        const { items } = store.states, checkInfo = checkEmpty(items)
+        if (checkInfo.hasEmpty) {
+            Message({ type: Type.Error, duration: 1500, message: t('setcreate:item', { pos: checkInfo.index + 1 })[checkInfo.type === 'term' ? 1 : 2] })
+            items.forEach((item) => { item.focus = [false, false] })
+            items[checkInfo.index].focus[checkInfo.type === 'term' ? 0 : 1] = true
+            store.setState({ items: [...items] })
+            return
         }
     }
 }

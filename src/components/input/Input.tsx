@@ -14,11 +14,12 @@ interface Props {
     style?: Object
     row?: number
     focus?: boolean
+    onFocus?: any
 }
 
 
 //后面还要添加focus,blur,input等事件
-const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixIcon, type = 'text', placeholder = '', textarea = false, style, row = 2, focus = false }) => {
+const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixIcon, type = 'text', placeholder = '', textarea = false, style, row = 2, focus = false, onFocus }) => {
 
     const [taHeight, setTaHeight] = useState<string | number>(), initHeight = useRef<number>(-1), inputRef = useRef(null)
 
@@ -34,7 +35,7 @@ const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixI
     useEffect(() => {
         //@ts-ignore
         if (focus && inputRef !== null) inputRef.current.focus()
-    }, [focus])
+    })
 
     const innerClasses = classNames('ef-input__inner', {
         'is-prefix-icon': prefixIcon,
@@ -44,12 +45,12 @@ const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixI
     return !textarea ? (
         <div className={`ef-input ${disabled ? 'is-disabled' : ''}`} style={style}>
             {prefixIcon && <i className={`ef-input__prefix-icon ewordfun ${prefixIcon}`}></i>}
-            <input onChange={handleChange} name={name} className={innerClasses} autoComplete="off" disabled={disabled} type={type} placeholder={placeholder} value={value} ref={inputRef} />
+            <input onChange={handleChange} name={name} className={innerClasses} autoComplete="off" disabled={disabled} type={type} placeholder={placeholder} value={value} ref={inputRef} onFocus={onFocus} />
             {suffixIcon && <i className={`ef-input__suffix-icon ewordfun ${suffixIcon}`}></i>}
         </div>
     ) : <div className={`ef-textarea ${disabled ? 'is-disabled' : ''}`} style={style}>
             <textarea className='ef-textarea__inner' disabled={disabled} placeholder={placeholder} value={value} rows={row}
-                onChange={handleChange} style={{ height: taHeight, ...style }} ref={inputRef}>
+                onChange={handleChange} style={{ height: taHeight, ...style }} ref={inputRef} onFocus={onFocus}>
             </textarea>
         </div >
 }
