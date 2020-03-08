@@ -22,7 +22,8 @@ const checkEmpty = (items) => {
 
 const states = {
     items: [],
-    initCount: 3
+    initCount: 3,
+    showDialog: true
 }
 
 const actions = {

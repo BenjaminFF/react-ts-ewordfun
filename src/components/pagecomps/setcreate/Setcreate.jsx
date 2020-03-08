@@ -7,10 +7,11 @@ import Button, { ButtonType } from '@components/button'
 import useStore from '@model/createset'
 import { useTranslation } from '@locale/I18n'
 import { AnimateType } from '@components/animlist/Animlist'
+import Dialog from '@components/dialog'
 
 const Setcreate = () => {
 
-    const [states, actions] = useStore(), { items, initCount } = states, { init, addItem, deleteItem, setAddVisible, onTextChange, setCloseVisible, createSet, onTextFocus } = actions,
+    const [states, actions] = useStore(), { items, initCount, showDialog } = states, { init, addItem, deleteItem, setAddVisible, onTextChange, setCloseVisible, createSet, onTextFocus } = actions,
         listRef = useRef(), [t, changeLang] = useTranslation()
 
     useEffect(() => {
@@ -34,6 +35,7 @@ const Setcreate = () => {
                 )}
             </Animlist>
             <Button circle icon='rte-add' type={ButtonType.Primary} shandow onClick={() => { createSet(t) }} className='ef-setcreate__create-button'></Button>
+            <Dialog show={showDialog}></Dialog>
         </div >
     )
 }
