@@ -13,17 +13,27 @@ const createNewItem = () => {
 }
 
 const checkEmpty = (items) => {
+    let curTerms = []
     for (let i = 0; i < items.length; i++) {
         if (items[i].term === '') return { hasEmpty: true, type: 'term', index: i }
         if (items[i].definition === '') return { hasEmpty: true, type: 'definition', index: i }
+
+        if (curTerms.filter((term) => items[i].term === term).length > 0) {
+            return { hasEmpty: true, type: 'duplicate', index: i }
+        }
+
+        curTerms.push(items[i].term)
     }
     return { hasEmpty: false }
 }
 
 const states = {
+    name: '',
+    description: '',
     items: [],
     initCount: 3,
-    showDialog: true
+    uploading: false,
+    inputUpdater: 0
 }
 
 const actions = {
@@ -43,6 +53,8 @@ const actions = {
     addItem(store, pos, listRef) {
         const { items } = store.states
         items.splice(pos, 0, createNewItem())
+        items.forEach((item) => { item.focus = [false, false] })
+        items[pos].focus[0] = true
         store.setState({ items: [...items] })
         listRef.current.appendNotify(pos)
     },
@@ -61,21 +73,35 @@ const actions = {
         items.filter((item) => item.id === id)[0][type] = e.currentTarget.value
         store.setState({ items: [...items] })
     },
-    onTextFocus(store, id, type) {
-        const { items } = store.states
-        items.forEach((item) => { item.focus = [false, false] })
-        items.filter((item) => item.id === id)[0].focus[type === 'term' ? 0 : 1] = true
-        store.setState({ items: [...items] })
-    },
-    createSet(store, t) {
-        const { items } = store.states, checkInfo = checkEmpty(items)
+    openDialog(store, t, dialogRef) {
+        const { items, inputUpdater } = store.states, checkInfo = checkEmpty(items)
+
         if (checkInfo.hasEmpty) {
-            Message({ type: Type.Error, duration: 1500, message: t('setcreate:item', { pos: checkInfo.index + 1 })[checkInfo.type === 'term' ? 1 : 2] })
+            if (checkInfo.type === 'duplicate') {
+                Message({ type: Type.Error, duration: 1500, message: t('setcreate:item')[3] })
+            } else {
+                Message({ type: Type.Error, duration: 1500, message: t('setcreate:item', { pos: checkInfo.index + 1 })[checkInfo.type === 'term' ? 1 : 2] })
+            }
             items.forEach((item) => { item.focus = [false, false] })
-            items[checkInfo.index].focus[checkInfo.type === 'term' ? 0 : 1] = true
-            store.setState({ items: [...items] })
+            items[checkInfo.index].focus[checkInfo.type === 'definition' ? 1 : 0] = true
+            store.setState({ items: [...items], inputUpdater: inputUpdater + 1 })
             return
         }
+
+        dialogRef.current.setVisible(true)
+    },
+    onDialogTextChange(store, e, type) {
+        store.setState({ [type]: e.currentTarget.value })
+    },
+    createSetToServer(store, t, dialogRef) {
+        const { name, description } = store.states
+        if (name === '') {
+            Message({ type: Type.Error, duration: 1500, message: t('setcreate:dialog')['err'][0] })
+            return
+        }
+        store.setState({ uploading: true })
+        dialogRef.current.setClickDisabled(true)
+        //上传数据到服务器
     }
 }
 

@@ -11,9 +11,16 @@ const resources = {
 
         },
         'setcreate': {
-            'item': ['item length at least %{count}', 'term in the %{pos} cannot be empty.', 'definition in the %{pos} cannot be empty.'],
+            'item': ['item length at least %{count}!', 'term in the %{pos} cannot be empty!', 'definition in the %{pos} cannot be empty!','term cannot be duplicate!'],
             'term': 'term',
-            'definition': 'definition'
+            'definition': 'definition',
+            'dialog': {
+                'title': 'NEW SET!',
+                'name': 'set name',
+                'description': 'description',
+                'create': 'create',
+                'err': ['set name cannot be empty!']
+            }
         }
     },
     'cn': {
@@ -27,9 +34,16 @@ const resources = {
             'pwValidate': ['请输入密码', '密码长度不低于6位', '账号或密码错误']
         },
         'setcreate': {
-            'item': ['至少包含%{count}个项', '第%{pos}个术语不能为空！', '第%{pos}个术语定义不能为空！'],
+            'item': ['至少包含%{count}个项！', '第%{pos}个术语不能为空！', '第%{pos}个术语定义不能为空！', '术语不能重复！'],
             'term': '术语',
-            'definition': '定义'
+            'definition': '定义',
+            'dialog': {
+                'title': '新的单词集!',
+                'name': '单词集标题',
+                'description': '描述',
+                'create': '创建',
+                'err': ['单词集名字不能为空!']
+            }
         }
     }
 }

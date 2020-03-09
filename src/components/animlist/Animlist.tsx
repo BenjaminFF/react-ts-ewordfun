@@ -43,7 +43,7 @@ const getTransitionInfo = (orientation: Orientation, animateType: AnimateType, o
 const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animateType = AnimateType.Slide, children, easing = TWEEN.Easing.Linear, duration = 400 }, ref) => {
 
     const [mArr, setMArr] = useState(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child }))),
-        [notify, setNotify] = useState({ type: '', index: -1 }), isTransitting = useRef(false)
+        [notify, setNotify] = useState({ type: '', index: -1 }), isTransitting = useRef(false), callbackRef = useRef<Function | undefined>()
 
     useLayoutEffect(() => {
         if (notify.index >= 0) {
@@ -97,8 +97,9 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
         }).onStop(() => {
             isTransitting.current = false
             //为了保持index同步
-            setMArr(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child })))  
+            setMArr(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child })))
             setNotify({ type: '', index: -1 })
+            if (callbackRef.current) callbackRef.current()
         }).start()
     }
 
@@ -149,22 +150,25 @@ const Animlist: React.FC<Props> = ({ orientation = Orientation.Vertical, animate
             }).onStop(() => {
                 isTransitting.current = false
                 //为了保持index同步
-                setMArr(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child }))) 
+                setMArr(Array.from(Children.toArray(children), (child) => ({ dx: 0, dy: 0, scalex: 1, scaley: 1, opacity: 1, ref: createRef<HTMLDivElement>(), child })))
                 setNotify({ type: '', index: -1 })
+                if (callbackRef.current) callbackRef.current()
             }).start()
         }
     }
 
     useImperativeHandle(ref, () => ({
-        deleteNotify: (pos: number) => {
+        deleteNotify: (pos: number, callback?: Function) => {
+            callbackRef.current = callback
             isTransitting.current = true
             setNotify({ type: 'delete', index: pos })
         },
-        appendNotify: (pos: number) => {
+        appendNotify: (pos: number, callback?: Function) => {
+            callbackRef.current = callback
             isTransitting.current = true
             setNotify({ type: 'append', index: pos })
         },
-        initNotify: () => {
+        initNotify: (callback?: Function) => {
             setNotify({ type: 'init', index: -2 })
         }
     }))

@@ -61,7 +61,21 @@
     transform: translateX(380px);
   }
 
-   &::-webkit-scrollbar {
+  @include e(dialog) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    height: fit-content;
+  }
+
+  @include e(dialog-title) {
+    font-size: $--font-size-large;
+    color: $--color-primary;
+    letter-spacing: 5px;
+  }
+
+  &::-webkit-scrollbar {
     width: 12px;
   }
 

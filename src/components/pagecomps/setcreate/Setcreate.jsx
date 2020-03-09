@@ -8,11 +8,13 @@ import useStore from '@model/createset'
 import { useTranslation } from '@locale/I18n'
 import { AnimateType } from '@components/animlist/Animlist'
 import Dialog from '@components/dialog'
+import { Type } from '@components/message/Message'
 
 const Setcreate = () => {
 
-    const [states, actions] = useStore(), { items, initCount, showDialog } = states, { init, addItem, deleteItem, setAddVisible, onTextChange, setCloseVisible, createSet, onTextFocus } = actions,
-        listRef = useRef(), [t, changeLang] = useTranslation()
+    const [states, actions] = useStore(), { items, initCount, showDialog, uploading, name, description, inputUpdater } = states,
+        { init, addItem, deleteItem, setAddVisible, onTextChange, setCloseVisible, openDialog, createSetToServer, onDialogTextChange } = actions,
+        listRef = useRef(), [t, changeLang] = useTranslation(), dialogRef = useRef()
 
     useEffect(() => {
         init(listRef)
@@ -25,8 +27,8 @@ const Setcreate = () => {
                     <Card className='ef-setcreate__card' key={item.id}>
                         <i className={`ef-setcreate__card-close ewordfun rte-close`} onClick={() => { deleteItem(index, listRef, t('setcreate:item', { count: initCount })[0]) }}></i>
                         <div className='ef-setcreate__card-inner'>
-                            <Input style={{ marginBottom: '1rem' }} value={item.term} onChange={(e) => { onTextChange(e, item.id, 'term') }} focus={item.focus[0]} placeholder={t('setcreate:term')} onFocus={() => { onTextFocus(item.id, 'term') }}></Input>
-                            <Input textarea style={{ resize: 'none' }} row={2} value={item.definition} onChange={(e) => { onTextChange(e, item.id, 'definition') }} focus={item.focus[1]} placeholder={t('setcreate:definition')} onFocus={() => { onTextFocus(item.id, 'definition') }}></Input>
+                            <Input style={{ marginBottom: '1rem' }} value={item.term} onChange={(e) => { onTextChange(e, item.id, 'term') }} focus={item.focus[0]} placeholder={t('setcreate:term')} updater={inputUpdater}></Input>
+                            <Input textarea style={{ resize: 'none' }} row={2} value={item.definition} onChange={(e) => { onTextChange(e, item.id, 'definition') }} focus={item.focus[1]} placeholder={t('setcreate:definition')} updater={inputUpdater}></Input>
                         </div>
                         <div className='ef-setcreate__card-bbox'>
                             <Button circle icon='rte-add' type={ButtonType.Primary} shandow onClick={() => { addItem(index + 1, listRef) }} className='ef-setcreate__card-add'></Button>
@@ -34,8 +36,13 @@ const Setcreate = () => {
                     </Card>
                 )}
             </Animlist>
-            <Button circle icon='rte-add' type={ButtonType.Primary} shandow onClick={() => { createSet(t) }} className='ef-setcreate__create-button'></Button>
-            <Dialog show={showDialog}></Dialog>
+            <Button circle icon='rte-add' type={ButtonType.Primary} shandow onClick={() => { openDialog(t, dialogRef) }} className='ef-setcreate__create-button'></Button>
+            <Dialog ref={dialogRef} className='ef-setcreate__dialog'>
+                <div className='ef-setcreate__dialog-title'>{t('setcreate:dialog')['title']}</div>
+                <Input style={{ marginTop: '20px' }} placeholder={t('setcreate:dialog')['name']} value={name} onChange={(e) => { onDialogTextChange(e, 'name') }}></Input>
+                <Input style={{ marginTop: '10px', resize: 'none' }} textarea row={3} placeholder={t('setcreate:dialog')['description']} value={description} onChange={(e) => { onDialogTextChange(e, 'description') }}></Input>
+                <Button matchParent type={ButtonType.Primary} style={{ marginTop: '30px', marginBottom: '30px' }} loading={uploading} onClick={() => { createSetToServer(t, dialogRef) }}>{t('setcreate:dialog')['create']}</Button>
+            </Dialog>
         </div >
     )
 }

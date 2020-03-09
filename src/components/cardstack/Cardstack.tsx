@@ -108,7 +108,7 @@ const Cardstack: FC<Props> = ({ children, stackedOption = StackedOption.Top, rot
                     onMouseUp={(event) => { cardMoveOver(i) }}
                     onMouseOut={(event) => { cardMoveOver(i) }}
                     onClickCapture={onClickCapture}
-                    onTouchStart={(event) => { cardStartMove(i, event.touches[0].clientX, event.touches[0].clientY); console.log('gg') }}
+                    onTouchStart={(event) => { cardStartMove(i, event.touches[0].clientX, event.touches[0].clientY)}}
                     onTouchMove={(event) => { cardOnMove(i, event.touches[0].clientX, event.touches[0].clientY) }}
                     onTouchEnd={(event) => { cardMoveOver(i) }}>
                     {child}

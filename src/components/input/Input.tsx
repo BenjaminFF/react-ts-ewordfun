@@ -15,11 +15,12 @@ interface Props {
     row?: number
     focus?: boolean
     onFocus?: any
+    updater?: number
 }
 
 
 //后面还要添加focus,blur,input等事件
-const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixIcon, type = 'text', placeholder = '', textarea = false, style, row = 2, focus = false, onFocus }) => {
+const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixIcon, type = 'text', placeholder = '', textarea = false, style, row = 2, focus = false, onFocus, updater = 0 }) => {
 
     const [taHeight, setTaHeight] = useState<string | number>(), initHeight = useRef<number>(-1), inputRef = useRef(null)
 
@@ -35,7 +36,8 @@ const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixI
     useEffect(() => {
         //@ts-ignore
         if (focus && inputRef !== null) inputRef.current.focus()
-    })
+        console.log('gg')
+    }, [updater])
 
     const innerClasses = classNames('ef-input__inner', {
         'is-prefix-icon': prefixIcon,
