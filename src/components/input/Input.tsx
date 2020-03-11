@@ -36,7 +36,6 @@ const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixI
     useEffect(() => {
         //@ts-ignore
         if (focus && inputRef !== null) inputRef.current.focus()
-        console.log('gg')
     }, [updater])
 
     const innerClasses = classNames('ef-input__inner', {

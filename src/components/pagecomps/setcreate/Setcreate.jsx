@@ -9,12 +9,13 @@ import { useTranslation } from '@locale/I18n'
 import { AnimateType } from '@components/animlist/Animlist'
 import Dialog from '@components/dialog'
 import { Type } from '@components/message/Message'
+import { useHistory } from 'react-router-dom'
 
 const Setcreate = () => {
 
     const [states, actions] = useStore(), { items, initCount, showDialog, uploading, name, description, inputUpdater } = states,
         { init, addItem, deleteItem, setAddVisible, onTextChange, setCloseVisible, openDialog, createSetToServer, onDialogTextChange } = actions,
-        listRef = useRef(), [t, changeLang] = useTranslation(), dialogRef = useRef()
+        listRef = useRef(), [t, changeLang] = useTranslation(), dialogRef = useRef(), history = useHistory()
 
     useEffect(() => {
         init(listRef)
@@ -41,9 +42,9 @@ const Setcreate = () => {
                 <div className='ef-setcreate__dialog-title'>{t('setcreate:dialog')['title']}</div>
                 <Input style={{ marginTop: '20px' }} placeholder={t('setcreate:dialog')['name']} value={name} onChange={(e) => { onDialogTextChange(e, 'name') }}></Input>
                 <Input style={{ marginTop: '10px', resize: 'none' }} textarea row={3} placeholder={t('setcreate:dialog')['description']} value={description} onChange={(e) => { onDialogTextChange(e, 'description') }}></Input>
-                <Button matchParent type={ButtonType.Primary} style={{ marginTop: '30px', marginBottom: '30px' }} loading={uploading} onClick={() => { createSetToServer(t, dialogRef) }}>{t('setcreate:dialog')['create']}</Button>
+                <Button matchParent type={ButtonType.Primary} style={{ marginTop: '30px', marginBottom: '30px' }} loading={uploading} onClick={() => { createSetToServer(t, dialogRef, history) }}>{t('setcreate:dialog')['create']}</Button>
             </Dialog>
-        </div >
+        </div>
     )
 }
 

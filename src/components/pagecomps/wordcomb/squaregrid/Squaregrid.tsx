@@ -1,32 +1,31 @@
 import React, { FC } from 'react'
-import { Status, Item } from '@components/pagecomps/wordcomb'
+import { Status } from '@components/pagecomps/wordcomb'
 import classNames from 'classnames'
+import useStore from '@model/wordcomb'
 
 interface Props {
-    arr: Array<Item>
     cellSize: string
     row: number
-    status: Status
-    onItemCallBack?: (index: number) => void
 }
 
-const Squaregrid: FC<Props> = ({ arr, cellSize, row, status, onItemCallBack }) => {
+interface Item {
+    active: boolean
+    t: string
+}
 
-    const onItemClick = (index: number) => {
-        if (arr[index].active || status !== Status.Normal) return
+const Squaregrid: FC<Props> = ({ cellSize, row }) => {
 
-        if (onItemCallBack) onItemCallBack(index)
-    }
+    const [states, actions] = useStore(), { sgArr, status } = states, { onCellClick } = actions
 
     return (
         <div style={{ grid: `repeat(${row},${cellSize})/repeat(${row},${cellSize})` }} className='ef-squaregrid'>
-            {arr.map((item, i) => (
+            {sgArr.map((item: Item, i: number) => (
                 <div key={i} className={classNames('ef-squaregrid__item', {
                     'is-active': status === Status.Normal && item.active,
                     'is-success': status === Status.Success && item.active,
                     'is-error': status === Status.Error && item.active,
                     'is-disable-hover': status !== Status.Normal
-                })} onClick={() => { onItemClick(i) }} > {item.t}</div>
+                })} onClick={() => { onCellClick(i) }} > {item.t}</div>
             ))
             }
         </div>

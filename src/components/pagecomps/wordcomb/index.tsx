@@ -1,5 +1,5 @@
-import Wordcomb, { Status, Item } from './Wordcomb'
+import Wordcomb, { Status } from './Wordcomb'
 
-export { Status, Item }
+export { Status }
 
 export default Wordcomb

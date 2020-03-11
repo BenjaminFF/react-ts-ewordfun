@@ -2,6 +2,7 @@ import { randomStr } from '@utils/util'
 import { createStore } from '@model/statebox'
 import Message from '@components/message'
 import { Type } from '@components/message/Message'
+import { createSet } from '@utils/api'
 
 const createNewItem = () => {
     return {
@@ -90,18 +91,32 @@ const actions = {
 
         dialogRef.current.setVisible(true)
     },
-    onDialogTextChange(store, e, type) {
+    onDialogTextChange(store, e, type, history) {
         store.setState({ [type]: e.currentTarget.value })
     },
-    createSetToServer(store, t, dialogRef) {
-        const { name, description } = store.states
+    createSetToServer(store, t, dialogRef, history) {
+        const { name, description, items } = store.states, terms = Array.from(items, (item) => ({ term: item.term, definition: item.definition }))
         if (name === '') {
             Message({ type: Type.Error, duration: 1500, message: t('setcreate:dialog')['err'][0] })
             return
         }
         store.setState({ uploading: true })
         dialogRef.current.setClickDisabled(true)
-        //上传数据到服务器
+        createSet(name, description, JSON.stringify(terms)).then((res) => {
+            const { errno, errmsg } = res.data
+            if (errno === 0) {
+                store.setState({ uploading: false })
+                dialogRef.current.setClickDisabled(false)
+                Message({ type: Type.Success, duration: 1500, message: t('setcreate:dialog')['createSuccess'] })
+                history.push('/set')
+            } else {
+                Message({ type: Type.Error, duration: 1500, message: errmsg })
+            }
+        }).catch((err) => {
+            store.setState({ uploading: false })
+            dialogRef.current.setClickDisabled(false)
+            Message({ type: Type.Error, duration: 1500, message: '创建失败' })
+        })
     }
 }
 

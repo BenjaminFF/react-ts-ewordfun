@@ -1,19 +1,26 @@
 import React, { FC } from 'react'
-import { Status, Item } from '@components/pagecomps/wordcomb'
+import { Status } from '@components/pagecomps/wordcomb'
 import classNames from 'classnames'
+import useStore from '@model/wordcomb'
 
-interface Props {
-    arr: Array<Item>
-    status: Status
-    onCallback: () => void
+interface Item {
+    active: boolean
+    t: string
+    isSpace?: boolean
 }
 
-const Underscore: React.FC<Props> = ({ arr, status, onCallback }) => {
+interface Props {
+
+}
+
+const Underscore: React.FC<Props> = () => {
+
+    const [states, actions] = useStore(), { usArr, status } = states, { onUSClick } = actions
 
     return (
-        <div className='ef-underscore' onClick={() => { onCallback() }}>
+        <div className='ef-underscore' onClick={() => { onUSClick() }}>
             {
-                arr.map((item, index) => (
+                usArr.map((item: Item, index: number) => (
                     <div key={index} className={classNames('ef-underscore__item', {
                         'is-active': item.active,
                         'is-space': item.isSpace,

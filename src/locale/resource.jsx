@@ -11,7 +11,7 @@ const resources = {
 
         },
         'setcreate': {
-            'item': ['item length at least %{count}!', 'term in the %{pos} cannot be empty!', 'definition in the %{pos} cannot be empty!','term cannot be duplicate!'],
+            'item': ['item length at least %{count}!', 'term in the %{pos} cannot be empty!', 'definition in the %{pos} cannot be empty!', 'term cannot be duplicate!'],
             'term': 'term',
             'definition': 'definition',
             'dialog': {
@@ -19,7 +19,8 @@ const resources = {
                 'name': 'set name',
                 'description': 'description',
                 'create': 'create',
-                'err': ['set name cannot be empty!']
+                'err': ['set name cannot be empty!'],
+                'createSuccess': 'create success！'
             }
         }
     },
@@ -42,7 +43,8 @@ const resources = {
                 'name': '单词集标题',
                 'description': '描述',
                 'create': '创建',
-                'err': ['单词集名字不能为空!']
+                'err': ['单词集名字不能为空!'],
+                'createSuccess': '创建成功！'
             }
         }
     }

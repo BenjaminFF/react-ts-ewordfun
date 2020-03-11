@@ -69,12 +69,14 @@ const logout = () => post('/api/user/logout')
 // set
 const listSets = () => get('/api/set/list')
 const acquireSet = (sid: number, origin_id: string) => get('/api/set/acquire', { sid, origin_id })
+const createSet = (name: string, description: string, terms: string) => post('/api/set/create', { name, description, terms })
 
 export {
     login,
     logout,
     listSets,
-    acquireSet
+    acquireSet,
+    createSet
 }
 
 
