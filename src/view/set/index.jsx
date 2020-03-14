@@ -1,16 +1,32 @@
 import React, { useEffect } from 'react'
 import { acquireSet } from '@utils/api'
 import style from './index.module.scss'
-import Wordcomb from '@components/pagecomps/wordcomb'
-import Multichoice from '@components/pagecomps/multichoice'
+import Input from '@components/input'
+import useStore from '@model/set'
+import Pagination from '@components/pagination'
+import Button, { ButtonType } from '@components/button'
+import { useHistory } from 'react-router-dom'
 
 const Set = () => {
 
-    const options = ['term1', 'term2', 'term3']
+    const [states, actions] = useStore(), { sets, curSets, page } = states, { init, onCurChange } = actions, history = useHistory()
+
+    useEffect(() => {
+        init()
+    }, [])
 
     return (
         <div className={style.set}>
-            <Multichoice otherOptions={options} term='hello world' definition='你好,世界' callBack={(status) => { console.log(status) }}></Multichoice>
+            <div className={style.inner}>
+                <Input></Input>
+                <div className={style.container}>
+                    {curSets && curSets.map((set, index) => (
+                        <div key={index} className={style.setContainer}>{set.name}</div>
+                    ))}
+                </div>
+                <Pagination num={page.num} cur={page.cur} style={{ marginTop: '40px' }} onCurChange={onCurChange}></Pagination>
+                <Button circle icon='rte-add' type={ButtonType.Primary} shandow className={style.addButton} onClick={() => { history.push('/user/createSet') }}></Button>
+            </div>
         </div>
     )
 }

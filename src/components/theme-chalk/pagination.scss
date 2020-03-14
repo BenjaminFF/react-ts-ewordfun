@@ -1,0 +1,22 @@
+@import "common/var";
+@import "mixins/mixins";
+
+@include b(pagination) {
+  display: flex;
+  justify-content: center;
+  @include e(item) {
+    width: 50px;
+    height: 10px;
+    background-color: $--color-info-light;
+    margin: 0 5px;
+    transition: 0.2s ease-in all;
+    &:hover {
+      background-color: $--color-info;
+      cursor: pointer;
+    }
+
+    @include when(active) {
+      background-color: $--color-info;
+    }
+  }
+}
