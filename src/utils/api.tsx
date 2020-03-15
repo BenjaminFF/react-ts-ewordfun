@@ -1,6 +1,6 @@
 import config from './config'
 import axios from 'axios'
-import Message from '@components/message'
+import Message, { Type } from '@components/message'
 
 // ## errno for service
 
@@ -25,16 +25,24 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
     config => {
-        const { errno } = config.data,
+
+        const { errno, errmsg } = config.data,
             { pathname } = window.location,
             isProtectedPage = pathname.indexOf('user') !== -1
 
         if (errno === 405 && isProtectedPage) {
             window.location.replace('/login')
         }
-        return config
+
+        if (errno !== 0) {
+            Message({ message: errmsg, type: Type.Error })
+            return Promise.reject(errmsg)
+        } else {
+            return config
+        }
     },
     error => {
+        Message({ message: '服务器错误', type: Type.Error, duration: 3000 })
         return Promise.reject(error)
     }
 )

@@ -21,7 +21,7 @@ const Set = () => {
                 <Input></Input>
                 <div className={style.container}>
                     {curSets && curSets.map((set, index) => (
-                        <div key={index} className={style.setContainer}>{set.name}</div>
+                        <div key={index} className={style.setContainer} onClick={() => { history.push(`/user/learn/${set.origin_id}/${set.sid}`)}}>{set.name}</div>
                     ))}
                 </div>
                 <Pagination num={page.num} cur={page.cur} style={{ marginTop: '40px' }} onCurChange={onCurChange}></Pagination>

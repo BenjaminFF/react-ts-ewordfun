@@ -37,14 +37,9 @@ const Login = () => {
                 setLoading(true)
                 const timestamp = Date.now(), nonce = randomStr(12), { email, password } = form
                 login(timestamp, nonce, email, password).then((res) => {
+                    history.replace('/user/set')
+                }).catch(() => {
                     setLoading(false)
-                    const { errno, errmsg } = res.data
-                    if (errno === 0) {
-                        //登录成功，跳转处理
-                        history.replace('/user/set')
-                    } else {
-                        Message({ message: errmsg, type: Type.Error, duration: 3000 })
-                    }
                 })
             }
         })

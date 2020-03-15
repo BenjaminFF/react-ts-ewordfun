@@ -2,6 +2,7 @@ import home from '@view/home'
 import set from '@view/set'
 import login from '@view/login'
 import createSet from '@view/createset'
+import learn from '@view/learn'
 
 let routes = [
     {
@@ -22,6 +23,11 @@ let routes = [
     {
         path: '/login',
         component: login,
+        exact: true
+    },
+    {
+        path: '/user/learn/:origin_id/:sid',
+        component: learn,
         exact: true
     }
 ]
