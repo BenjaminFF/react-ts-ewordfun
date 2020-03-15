@@ -46,7 +46,7 @@ const Card: FC<Props> = ({ type = CardType.Normal, shadow = ShandowType.Always, 
         }
     }))
 
-    const classes = classNames('ef-card', className), sceneClasses = classNames('ef-card__scene', 'is-shadow-' + shadow, 'is-type-' + type, 'is-flip-' + flip, {
+    const classes = classNames('ef-card'), sceneClasses = classNames('ef-card__scene', 'is-shadow-' + shadow, 'is-type-' + type, 'is-flip-' + flip, className, {
         'is-fliped': fliped
     })
 

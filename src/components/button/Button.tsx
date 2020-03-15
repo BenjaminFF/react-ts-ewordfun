@@ -29,9 +29,10 @@ export interface Props {
     shandow?: boolean
     style?: Object
     className?: Object | string
+    retangle?: boolean
 }
 
-const Button: FC<Props> = ({ type, loading, disabled, size, children, onClick, matchParent, circle = false, icon, shandow = false, style, className }) => {
+const Button: FC<Props> = ({ type, loading, disabled, size, children, onClick, matchParent, circle = false, icon, shandow = false, style, className, retangle = false }) => {
 
     const classes = classNames('ef-button', type ? `ef-button--${type}` : '', size ? `ef-button--${size}` : '', className,
         {
@@ -39,6 +40,7 @@ const Button: FC<Props> = ({ type, loading, disabled, size, children, onClick, m
             'is-loading': loading,
             'is-match-parent': matchParent,
             'is-circle': circle,
+            'is-retangle': retangle,
             'is-shandow': shandow
         }
     )

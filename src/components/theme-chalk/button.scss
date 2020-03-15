@@ -118,6 +118,13 @@
     padding: $--button-padding-vertical;
   }
 
+  @include when(retangle) {
+    padding: 25px;
+    & i {
+      font-size: 30px;
+    }
+  }
+
   @include m(primary) {
     @include button-variant(
       $--button-primary-font-color,

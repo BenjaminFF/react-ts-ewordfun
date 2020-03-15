@@ -49,6 +49,11 @@
       padding-right: 34px;
     }
 
+    @include when(uneditable) {
+      background-color: transparent;
+      border-color: transparent;
+    }
+
     &::placeholder {
       color: $--input-placeholder-color;
     }
@@ -101,6 +106,11 @@
 
     &::placeholder {
       color: $--input-placeholder-color;
+    }
+
+    @include when(uneditable) {
+      background-color: transparent;
+      border-color: transparent;
     }
 
     &:hover {

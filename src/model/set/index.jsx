@@ -23,7 +23,7 @@ const actions = {
             total = sets.length
             num = Math.ceil(total / numPerPage)
             const curSets = sets.slice(cur * numPerPage, (cur + 1) * numPerPage)
-            store.setState({ sets, curSets, page: { ...page, num, total, } })
+            store.setState({ sets, curSets, page: { ...page, num, total } })
         })
     },
     onCurChange(store, cur) {

@@ -79,12 +79,16 @@ const listSets = () => get('/api/set/list')
 const acquireSet = (sid: number, origin_id: string) => get('/api/set/acquire', { sid, origin_id })
 const createSet = (name: string, description: string, terms: string) => post('/api/set/create', { name, description, terms })
 
+//term
+const updateTerm = (tid: number, term: string, definition: string) => post('/api/term/update', { tid, term, definition })
+
 export {
     login,
     logout,
     listSets,
     acquireSet,
-    createSet
+    createSet,
+    updateTerm
 }
 
 

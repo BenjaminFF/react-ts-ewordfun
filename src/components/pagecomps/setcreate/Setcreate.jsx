@@ -37,7 +37,7 @@ const Setcreate = () => {
                     </Card>
                 )}
             </Animlist>
-            <Button circle icon='rte-add' type={ButtonType.Primary} shandow onClick={() => { openDialog(t, dialogRef) }} className='ef-setcreate__create-button'></Button>
+            <Button circle icon='rte-tick' type={ButtonType.Primary} shandow onClick={() => { openDialog(t, dialogRef) }} className='ef-setcreate__create-button'></Button>
             <Dialog ref={dialogRef} className='ef-setcreate__dialog'>
                 <div className='ef-setcreate__dialog-title'>{t('setcreate:dialog')['title']}</div>
                 <Input style={{ marginTop: '20px' }} placeholder={t('setcreate:dialog')['name']} value={name} onChange={(e) => { onDialogTextChange(e, 'name') }}></Input>
