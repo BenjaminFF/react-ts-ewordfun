@@ -81,6 +81,8 @@ const createSet = (name: string, description: string, terms: string) => post('/a
 
 //term
 const updateTerm = (tid: number, term: string, definition: string) => post('/api/term/update', { tid, term, definition })
+const updateSetRecord = (setRecord: string) => post('/api/set/updateRecord', { setRecord })
+const updateTermRecord = (termRecord: string) => post('/api/term/updateRecord', { termRecord })
 
 export {
     login,
@@ -88,7 +90,9 @@ export {
     listSets,
     acquireSet,
     createSet,
-    updateTerm
+    updateTerm,
+    updateSetRecord,
+    updateTermRecord
 }
 
 

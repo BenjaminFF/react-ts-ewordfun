@@ -1,0 +1,75 @@
+$--m-width: 500px;
+
+.combword {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  color: #909399;
+  position: absolute;
+  top: 30px;
+  font-size: 16px;
+
+  .close {
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 8px;
+    transition: background ease 0.3s;
+
+    &:hover {
+      background-color: mix(#909399, white, 10%);
+      cursor: pointer;
+    }
+  }
+
+  .progress {
+    width: $--m-width;
+    margin-right: 16px;
+  }
+}
+
+.errTerms {
+  animation: fadeIn 0.5s ease;
+}
+
+.errTitle {
+  color: #909399;
+  margin-bottom: 16px;
+}
+
+.errTerm {
+  width: $--m-width;
+  padding: 16px;
+  height: fit-content;
+  margin-bottom: 16px;
+  .term {
+    margin-bottom: 8px;
+  }
+  .def {
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

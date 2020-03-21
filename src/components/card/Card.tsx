@@ -50,13 +50,16 @@ const Card: FC<Props> = ({ type = CardType.Normal, shadow = ShandowType.Always, 
         'is-fliped': fliped
     })
 
-    return (
+    return type === CardType.Flip ? (
         <div className={classes} style={style}>
             <div className={sceneClasses} onClick={() => { if (flip === FlipType.Click && type === CardType.Flip) setFlip(!fliped) }}>
                 {children}
             </div>
         </div>
-    )
+    ) : (
+            <div className={sceneClasses}>
+                {children}
+            </div>)
 }
 
 export default forwardRef<CardInstance, Props>(Card)

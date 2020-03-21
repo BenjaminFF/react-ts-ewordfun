@@ -1,0 +1,29 @@
+@import "common/var";
+@import "mixins/mixins";
+
+@include b(progress) {
+  position: relative;
+  box-sizing: border-box;
+
+  .common {
+    position: absolute;
+    height: 100%;
+    border-radius: 100px;
+    width: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  @include e(bg) {
+    @extend .common;
+    background-color: mix($--color-white, $--input-background-color, 10%);
+    width: 100%;
+    overflow: hidden;
+  }
+
+  @include e(bar) {
+    @extend .common;
+    background-color: $--color-primary;
+    transition: width ease .6s;
+  }
+}

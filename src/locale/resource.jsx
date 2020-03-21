@@ -22,6 +22,13 @@ const resources = {
                 'err': ['set name cannot be empty!'],
                 'createSuccess': 'create success！'
             }
+        },
+        'learn': {
+            'termEmpty': 'term cannot be empty',
+            'defEmpty': 'definition cannot be empty',
+            'errTerms': 'Err Terms',
+            'nextRound': 'Next Round',
+            'reLearn': 'relearn'
         }
     },
     'cn': {
@@ -46,6 +53,13 @@ const resources = {
                 'err': ['单词集名字不能为空!'],
                 'createSuccess': '创建成功！'
             }
+        },
+        'learn': {
+            'termEmpty': '术语不能为空',
+            'defEmpty': '定义不能为空',
+            'errTerms': '错误回顾',
+            'nextRound': '下一轮',
+            'reLearn': '重新学习'
         }
     }
 }

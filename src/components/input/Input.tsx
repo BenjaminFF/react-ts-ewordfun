@@ -57,12 +57,12 @@ const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixI
     })
 
     return !textarea ? (
-        <div className={`ef-input ${disabled ? 'is-disabled' : ''}`} style={style}>
+        <div className={`ef-input ${disabled ? 'is-disabled' : ''}`}>
             {prefixIcon && <i className={`ef-input__prefix-icon ewordfun ${prefixIcon}`}></i>}
-            <input onChange={handleChange} name={name} className={innerClasses} autoComplete="off" disabled={disabled} readOnly={!editable} type={type} placeholder={placeholder} value={value} ref={inputRef} onFocus={onFocus} onBlur={onBlur} />
+            <input onChange={handleChange} name={name} className={innerClasses} autoComplete="off" disabled={disabled} readOnly={!editable} type={type} placeholder={placeholder} value={value} ref={inputRef} onFocus={onFocus} onBlur={onBlur} style={style} />
             {suffixIcon && <i className={`ef-input__suffix-icon ewordfun ${suffixIcon}`}></i>}
         </div>
-    ) : <div className={`ef-textarea ${disabled ? 'is-disabled' : ''}`} style={style}>
+    ) : <div className={`ef-textarea ${disabled ? 'is-disabled' : ''}`}>
             <textarea className={`ef-textarea__inner ${!editable ? 'is-uneditable' : ''}`} disabled={disabled} placeholder={placeholder} value={value} rows={row}
                 onChange={handleChange} style={{ height: taHeight, ...style }} ref={inputRef} onFocus={onFocus} readOnly={!editable} onBlur={onBlur}>
             </textarea>
