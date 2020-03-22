@@ -25,16 +25,16 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
     config => {
-
-        const { errno, errmsg } = config.data,
+        const { errno, errmsg } = config.data, { url } = config.config,
             { pathname } = window.location,
-            isProtectedPage = pathname.indexOf('user') !== -1
+            isProtectedPage = pathname.indexOf('user') !== -1,
+            isValidateUrl = url === '/api/validate'
 
         if (errno === 405 && isProtectedPage) {
             window.location.replace('/login')
         }
 
-        if (errno !== 0) {
+        if (errno !== 0 && !isValidateUrl) {
             Message({ message: errmsg, type: Type.Error })
             return Promise.reject(errmsg)
         } else {
@@ -72,7 +72,8 @@ const get = (url: string, params?: Object): Promise<Object> => {
 
 // user
 const login = (timestamp: string, nonce: string, email: string, password: string) => post('/api/user/login', { timestamp, nonce, email, password })
-const logout = () => post('/api/user/logout')
+const validate = () => post('/api/validate')
+// const logout = () => post('/api/user/logout')
 
 // set
 const listSets = () => get('/api/set/list')
@@ -86,10 +87,10 @@ const updateTermRecord = (termRecord: string) => post('/api/term/updateRecord', 
 
 export {
     login,
-    logout,
+    validate,
     listSets,
-    acquireSet,
     createSet,
+    acquireSet,
     updateTerm,
     updateSetRecord,
     updateTermRecord

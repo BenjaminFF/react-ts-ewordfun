@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import I18n, { I18nContext } from '@locale/I18n'
 import resource from '@locale/resource'
 import { getCookie } from '@utils/util'
+import { validate } from '@utils/api'
 require('@components/theme-chalk/index.scss')
 
 const lang = localStorage.getItem('lang') || 'cn', i18nInstance = new I18n().init(resource, lang)
@@ -16,9 +17,12 @@ const App = () => {
 
     useEffect(() => {
         const uid = getCookie('uid'), { pathname } = history.location, isProtectedPage = pathname.indexOf('user') !== -1
-        if (uid === '' && isProtectedPage) history.replace('/login')
-        if (uid !== '' && !isProtectedPage) history.replace('/user/set')
-        setLoading(false)
+        validate().then((res) => {
+            const { errno } = res.data
+            if (errno !== 0 && isProtectedPage) history.replace('/login')
+            if (errno === 0 && !isProtectedPage) history.replace('/user/set')
+            setLoading(false)
+        })
     }, [history.location.pathname])
 
     return !loading ? (

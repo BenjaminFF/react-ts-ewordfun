@@ -35,12 +35,12 @@ const actions = {
             }, 1500)
         }
     },
-    onRoundClick(store, terms) {
+    onRoundClick(store, terms, sid) {
         let { progress, errTerms } = store.states, curTerms = []
         if (errTerms.length === 0) {
             //服务器术语初始化
             updateTermRecord(JSON.stringify({ sid, spell_comb_learned: 0 }))
-            
+
             terms.forEach((term) => { term.spell_comb_learned = false })
             curTerms = [...shuffle(terms)]
         } else {
