@@ -46,6 +46,12 @@ $--m-width: 500px;
 
 .errTerms {
   animation: fadeIn 0.5s ease;
+  width: $--m-width;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .errTitle {
@@ -72,4 +78,20 @@ $--m-width: 500px;
   to {
     opacity: 1;
   }
+}
+
+.listContainer {
+  width: $--m-width;
+  height: 50%;
+  overflow-y: scroll;
+  padding: 16px;
+  padding-bottom: 0;
+  margin-bottom: 16px;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+  // box-shadow: inset 0 -0.5rem 0.6rem -10px rgba(0, 0, 0, 0.1);
+}
+
+.listContainer::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }

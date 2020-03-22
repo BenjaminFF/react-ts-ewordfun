@@ -27,19 +27,21 @@ const Combword = () => {
             {curTerms && cur < curTerms.length && <Wordcomb term={curTerms[cur].term} definition={curTerms[cur].definition} callBack={(correct) => { goNext(correct, set.sid) }}></Wordcomb>}
             {curTerms && cur === curTerms.length && errTerms && (
                 <div className={styles.errTerms}>
-                    {errTerms.length !== 0 && <div className={styles.errTitle}>{t('learn:errTerms')}</div>}
-                    {errTerms.map((item, index) => (
-                        <Card className={styles.errTerm} key={index}>
-                            <div className={styles.term}>{item.term}</div>
-                            <div className={styles.def}>{item.definition}</div>
-                        </Card>
-                    ))}
-                    {errTerms.length === 0 && terms.map((item, index) => (
-                        <Card className={styles.errTerm} key={index}>
-                            <div className={styles.term}>{item.term}</div>
-                            <div className={styles.def}>{item.definition}</div>
-                        </Card>
-                    ))}
+                    <div className={styles.listContainer}>
+                        {errTerms.length !== 0 && <div className={styles.errTitle}>{t('learn:errTerms')}</div>}
+                        {errTerms.map((item, index) => (
+                            <Card className={styles.errTerm} key={index}>
+                                <div className={styles.term}>{item.term}</div>
+                                <div className={styles.def}>{item.definition}</div>
+                            </Card>
+                        ))}
+                        {errTerms.length === 0 && terms.map((item, index) => (
+                            <Card className={styles.errTerm} key={index}>
+                                <div className={styles.term}>{item.term}</div>
+                                <div className={styles.def}>{item.definition}</div>
+                            </Card>
+                        ))}
+                    </div>
                     <Button type={ButtonType.Primary} matchParent shandow onClick={() => { onRoundClick(terms, set.sid) }}>{errTerms.length === 0 ? t('learn:reLearn') : t('learn:nextRound')}</Button>
                 </div>
             )}
