@@ -38,4 +38,7 @@ $--m-width: 500px;
   padding: 16px;
   background-color: transparent;
   margin-bottom: 16px;
+  &:nth-child(1){
+    margin-top: 16px;
+  }
 }

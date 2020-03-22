@@ -10,7 +10,8 @@ import Button, { ButtonType } from '@components/button'
 
 const Combword = () => {
 
-    const [{ terms, set }, { setPlay }] = useLearnStore(), [{ progress, curTerms, errTerms }, { init, goNext, onRoundClick }] = useStore(), { cur, total } = progress, [t] = useTranslation()
+    const [{ terms, set }, { setPlay }] = useLearnStore(), [{ progress, curTerms, errTerms }, { init, goNext, onRoundClick }] = useStore(),
+        { cur, total } = progress, [t] = useTranslation()
 
     useEffect(() => {
         init(terms)

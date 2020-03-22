@@ -9,6 +9,7 @@ import { useTranslation } from '@locale/I18n'
 import Progress from '@components/progress'
 import Wordcomb from '@components/pagecomps/wordcomb'
 import Combword from './combword'
+import { cleanup } from '@testing-library/react'
 
 
 const Learn = () => {
@@ -30,7 +31,7 @@ const Learn = () => {
             </div>
             <div className={styles.listContainer}>
                 {terms && terms.map((item, index) => (
-                    <Card className={styles.item} key={index}>
+                    <Card className={styles.item} key={item.tid}>
                         <Input value={item.term} editable={item.editable[0]} style={{ fontSize: '16px', padding: '4px 4px', lineHeight: '20px' }} onFocus={() => { onInputFocus(index, 'term') }} onBlur={() => { onInputBlur(index, 'term', t) }} onChange={(e) => { onInputChange(index, 'term', e) }}></Input>
                         <Input style={{ resize: 'none', fontSize: '16px', padding: '4px 4px' }} textarea value={item.definition} editable={item.editable[1]} onFocus={() => { onInputFocus(index, 'definition') }} onBlur={() => { onInputBlur(index, 'definition', t) }} onChange={(e) => { onInputChange(index, 'definition', e) }}></Input>
                     </Card>
