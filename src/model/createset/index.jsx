@@ -28,25 +28,45 @@ const checkEmpty = (items) => {
     return { hasEmpty: false }
 }
 
+const onOfflineHandle = (items) => {
+    let localItems = []
+    items.forEach((item) => {
+        if (item.definition !== '' || item.term !== '') {
+            localItems.push({ term: item.term, definition: item.definition })
+        }
+    })
+    localStorage.setItem('localItems', localItems)
+}
+
 const states = {
     name: '',
     description: '',
     items: [],
     initCount: 3,
     uploading: false,
-    inputUpdater: 0
+    inputUpdater: 0,
+    offLine: null,
+    createSuccess: false
 }
 
 const actions = {
     init(store, listRef) {
-        const { initCount } = store.states
+        const { initCount } = store.states, localItemsStr = localStorage.getItem('localItems')
         let items = []
+        if (localItemsStr) {
+            const localItems = JSON.parse(localItemsStr)
+            localItems.forEach((item) => {
+                items.push({ ...createNewItem(), term: item.term, definition: item.definition })
+            })
+        }
         while (items.length < initCount) {
             items.push(createNewItem())
         }
         items[0].focus[0] = true
-        store.setState({ items })
+        const onOffline = onOfflineHandle.bind(null, items)
+        store.setState({ items, onOffline })
         listRef.current.initNotify()
+        window.addEventListener('offline', onOffline)
     },
     setItems(store, items) {
         store.setState({ items: [...items] })
@@ -105,8 +125,9 @@ const actions = {
         createSet(name, description, JSON.stringify(terms)).then((res) => {
             const { errno, errmsg } = res.data
             if (errno === 0) {
-                store.setState({ uploading: false })
-                dialogRef.current.setClickDisabled(false)
+                store.setState({ uploading: false, createSuccess: true })
+                localStorage.removeItem('localItems')
+                // dialogRef.current.setClickDisabled(false)
                 Message({ type: Type.Success, duration: 1500, message: t('setcreate:dialog')['createSuccess'] })
                 history.push('/set')
             } else {
@@ -117,6 +138,19 @@ const actions = {
             dialogRef.current.setClickDisabled(false)
             Message({ type: Type.Error, duration: 1500, message: '创建失败' })
         })
+    },
+    cleanup(store) {
+        const { onOffline, items, createSuccess } = store.states
+        window.removeEventListener('offline', onOffline)
+        if (!createSuccess) {
+            let localItems = []
+            items.forEach((item) => {
+                if (item.definition !== '' || item.term !== '') {
+                    localItems.push({ term: item.term, definition: item.definition })
+                }
+            })
+            if (localItems.length > 0) localStorage.setItem('localItems', JSON.stringify(localItems))
+        }
     }
 }
 

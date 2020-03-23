@@ -24,7 +24,7 @@ const Combword = () => {
                 <Progress percentage={cur / total * 100} className={styles.progress}></Progress>
                 {cur + '/' + total}
             </div>}
-            {curTerms && cur < curTerms.length && <Wordcomb term={curTerms[cur].term} definition={curTerms[cur].definition} callBack={(correct) => { goNext(correct, set.sid) }}></Wordcomb>}
+            {curTerms && cur < curTerms.length && <Wordcomb term={curTerms[cur].term} definition={curTerms[cur].definition} callBack={(correct) => { goNext(correct, set.sid, set.spell_comb_learncount) }}></Wordcomb>}
             {curTerms && cur === curTerms.length && errTerms && (
                 <div className={styles.errTerms}>
                     <div className={styles.listContainer}>

@@ -82,7 +82,7 @@ const createSet = (name: string, description: string, terms: string) => post('/a
 
 //term
 const updateTerm = (tid: number, term: string, definition: string) => post('/api/term/update', { tid, term, definition })
-const updateSetRecord = (setRecord: string) => post('/api/set/updateRecord', { setRecord })
+const updateSetRecord = (set: string) => post('/api/set/updateRecord', { set })
 const updateTermRecord = (termRecord: string) => post('/api/term/updateRecord', { termRecord })
 
 export {

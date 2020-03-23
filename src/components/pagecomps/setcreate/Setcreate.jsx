@@ -14,11 +14,12 @@ import { useHistory } from 'react-router-dom'
 const Setcreate = () => {
 
     const [states, actions] = useStore(), { items, initCount, showDialog, uploading, name, description, inputUpdater } = states,
-        { init, addItem, deleteItem, setAddVisible, onTextChange, setCloseVisible, openDialog, createSetToServer, onDialogTextChange } = actions,
+        { init, addItem, deleteItem, setAddVisible, onTextChange, setCloseVisible, openDialog, createSetToServer, onDialogTextChange, cleanup } = actions,
         listRef = useRef(), [t, changeLang] = useTranslation(), dialogRef = useRef(), history = useHistory()
 
     useEffect(() => {
         init(listRef)
+        return () => { cleanup() }
     }, [])
 
     return (

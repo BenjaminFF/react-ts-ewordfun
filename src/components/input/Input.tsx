@@ -39,7 +39,6 @@ const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixI
         if (inputRef) {
             //@ts-ignore
             const { scrollHeight, offsetHeight } = inputRef.current
-            console.log(scrollHeight > offsetHeight)
             if (scrollHeight > offsetHeight) {
                 setTaHeight(scrollHeight)
             }
