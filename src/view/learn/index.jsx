@@ -13,14 +13,14 @@ import { cleanup } from '@testing-library/react'
 
 
 const Learn = () => {
-    const { origin_id, sid } = useParams(), [states, actions] = useStore(), { terms, playList } = states, { init, onInputFocus, onInputBlur, onInputChange, setPlay } = actions,
+    const { origin_id, sid } = useParams(), [states, actions] = useStore(), { terms, loading, playList } = states, { init, onInputFocus, onInputBlur, onInputChange, setPlay } = actions,
         [t] = useTranslation(), { combword } = playList
 
     useEffect(() => {
         init(sid, origin_id)
     }, [])
 
-    return (
+    return !loading ? (
         <div className={styles.learn}>
             <div className={styles.tool}>
                 <Button retangle icon='rte-add' shandow onClick={() => { setPlay('combword', true) }}></Button>
@@ -39,7 +39,7 @@ const Learn = () => {
                 {combword && <Combword></Combword>}
             </div>
         </div>
-    )
+    ) : null
 }
 
 export default Learn

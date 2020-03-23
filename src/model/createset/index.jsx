@@ -28,14 +28,14 @@ const checkEmpty = (items) => {
     return { hasEmpty: false }
 }
 
-const onOfflineHandle = (items) => {
+const saveItemsToLS = (items) => {
     let localItems = []
     items.forEach((item) => {
         if (item.definition !== '' || item.term !== '') {
             localItems.push({ term: item.term, definition: item.definition })
         }
     })
-    localStorage.setItem('localItems', localItems)
+    if (localItems.length > 0) localStorage.setItem('localItems', JSON.stringify(localItems))
 }
 
 const states = {
@@ -45,7 +45,7 @@ const states = {
     initCount: 3,
     uploading: false,
     inputUpdater: 0,
-    offLine: null,
+    onItemsSave: null,
     createSuccess: false
 }
 
@@ -63,10 +63,11 @@ const actions = {
             items.push(createNewItem())
         }
         items[0].focus[0] = true
-        const onOffline = onOfflineHandle.bind(null, items)
-        store.setState({ items, onOffline })
+        const onItemsSave = saveItemsToLS.bind(null, items)
+        store.setState({ items, onItemsSave })
         listRef.current.initNotify()
-        window.addEventListener('offline', onOffline)
+        window.addEventListener('offline', onItemsSave)
+        window.addEventListener('beforeunload', onItemsSave)
     },
     setItems(store, items) {
         store.setState({ items: [...items] })
@@ -140,17 +141,10 @@ const actions = {
         })
     },
     cleanup(store) {
-        const { onOffline, items, createSuccess } = store.states
-        window.removeEventListener('offline', onOffline)
-        if (!createSuccess) {
-            let localItems = []
-            items.forEach((item) => {
-                if (item.definition !== '' || item.term !== '') {
-                    localItems.push({ term: item.term, definition: item.definition })
-                }
-            })
-            if (localItems.length > 0) localStorage.setItem('localItems', JSON.stringify(localItems))
-        }
+        const { onItemsSave, items, createSuccess } = store.states
+        window.removeEventListener('offline', onItemsSave)
+        window.removeEventListener('beforeunload', onItemsSave)
+        if (!createSuccess) saveItemsToLS(items)
     }
 }
 

@@ -5,6 +5,7 @@ import Message, { Type } from "@components/message"
 const states = {
     terms: [],
     set: null,
+    loading: true,
     playList: {
         combword: false
     }
@@ -15,7 +16,7 @@ const actions = {
         acquireSet(sid, origin_id).then((res) => {
             const { data } = res.data, { terms, set } = data
             terms.forEach((item) => { item.editable = [false, false] })
-            store.setState({ terms, set })
+            store.setState({ terms, set, loading: false })
         })
     },
     onInputFocus(store, cur, type) {

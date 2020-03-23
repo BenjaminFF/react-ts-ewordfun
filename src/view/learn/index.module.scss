@@ -7,6 +7,7 @@ $--m-width: 500px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  animation: fadeIn 0.5s ease;
 }
 
 .tool {
@@ -40,5 +41,15 @@ $--m-width: 500px;
   margin-bottom: 16px;
   &:nth-child(1){
     margin-top: 16px;
+  }
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
