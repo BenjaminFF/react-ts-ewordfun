@@ -1,5 +1,5 @@
-import Animlist, { Orientation, AnimListInstance } from './Animlist'
+import Animlist, { Orientation, AnimListInstance, AnimateType } from './Animlist'
 
-export { Orientation, AnimListInstance }
+export { Orientation, AnimListInstance, AnimateType }
 
 export default Animlist

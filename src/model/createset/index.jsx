@@ -31,8 +31,9 @@ const checkEmpty = (items) => {
 const saveItemsToLS = (items) => {
     let localItems = []
     items.forEach((item) => {
-        if (item.definition !== '' || item.term !== '') {
-            localItems.push({ term: item.term, definition: item.definition })
+        const definition = item.definition.trim(), term = item.term.trim()
+        if (definition !== '' || term !== '') {
+            localItems.push({ term, definition })
         }
     })
     if (localItems.length > 0) localStorage.setItem('localItems', JSON.stringify(localItems))
