@@ -24,7 +24,9 @@ const states = {
     loading: true,
     playList: {
         combword: false
-    }
+    },
+    learnMode: ['learn', 'wordcomb', 'multichoice', 'wordspell'],
+    curMode: ''
 }
 
 const actions = {

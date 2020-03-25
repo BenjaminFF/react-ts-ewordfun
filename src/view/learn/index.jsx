@@ -11,6 +11,7 @@ import Wordcomb from '@components/pagecomps/wordcomb'
 import Combword from './combword'
 import { cleanup } from '@testing-library/react'
 import Animlist, { AnimateType } from '@components/animlist'
+import RoundBuilder from './roundbuilder'
 
 
 const Learn = () => {
@@ -43,7 +44,7 @@ const Learn = () => {
             <div className={styles.buttonContainer}>
                 <Button type={ButtonType.Primary} matchParent shandow onClick={() => { addItem(0, listRef) }}>添加</Button>
             </div>
-            {combword && <Combword></Combword>}
+            {/* <RoundBuilder></RoundBuilder> */}
         </div>
     ) : null
 }
