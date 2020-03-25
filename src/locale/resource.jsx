@@ -28,7 +28,8 @@ const resources = {
             'defEmpty': 'definition cannot be empty',
             'errTerms': 'Err Terms',
             'nextRound': 'Next Round',
-            'reLearn': 'relearn'
+            'reLearn': 'relearn',
+            'duplicateTerm': 'duplicate term existed!'
         }
     },
     'cn': {
@@ -59,7 +60,8 @@ const resources = {
             'defEmpty': '定义不能为空',
             'errTerms': '错误回顾',
             'nextRound': '下一轮',
-            'reLearn': '重新学习'
+            'reLearn': '重新学习',
+            'duplicateTerm': '不能有重复的术语'
         }
     }
 }

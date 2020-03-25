@@ -14,7 +14,7 @@ import Animlist, { AnimateType } from '@components/animlist'
 
 
 const Learn = () => {
-    const { origin_id, sid } = useParams(), [states, actions] = useStore(), { terms, loading, playList } = states, { init, onInputFocus, onInputBlur, onInputChange, setPlay, addItem } = actions,
+    const { origin_id, sid } = useParams(), [states, actions] = useStore(), { terms, loading, playList } = states, { init, onInputFocus, onInputBlur, onInputChange, setPlay, addItem, filterTerms } = actions,
         [t] = useTranslation(), { combword } = playList, listRef = useRef()
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const Learn = () => {
     return !loading ? (
         <div className={styles.learn}>
             <div className={styles.tool}>
-                <Button retangle icon='rte-add' shandow onClick={() => { setPlay('combword', true) }}></Button>
+                <Button retangle icon='rte-add' shandow onClick={() => { setPlay('combword', true); filterTerms(listRef) }}></Button>
                 <Button retangle icon='rte-close' shandow></Button>
                 <Button retangle icon='rte-loading' shandow></Button>
                 <Button retangle icon='rte-password' shandow></Button>

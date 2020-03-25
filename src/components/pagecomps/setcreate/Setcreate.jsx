@@ -26,6 +26,7 @@ const Setcreate = () => {
             <Animlist ref={listRef} animateType={AnimateType.Zoom}>
                 {items && items.map((item, index) =>
                     <Card className='ef-setcreate__card' key={item.id}>
+                        <div className='ef-setcreate__card-sn'>{index + 1}</div>
                         <i className={`ef-setcreate__card-close ewordfun rte-close`} onClick={() => { deleteItem(index, listRef, t('setcreate:item', { count: initCount })[0]) }}></i>
                         <div className='ef-setcreate__card-inner'>
                             <Input style={{ marginBottom: '1rem' }} value={item.term} onChange={(e) => { onTextChange(e, item.id, 'term') }} focus={item.focus[0]} placeholder={t('setcreate:term')} updater={inputUpdater}></Input>

@@ -11,7 +11,7 @@ const createNewItem = () => {
         stared: 0,
         write_learned: 0,
         spell_comb_learned: 0,
-        editable: [true, false],
+        editable: [true, true],
         isNewTerm: true,
         updating: false
     }
@@ -67,7 +67,7 @@ const actions = {
         }
         const hasSameTerm = originTerms.filter((item) => item.tid !== tid && item.originTerm === term).length > 0
         if (hasSameTerm) {
-            Message({ type: Type.Error, message: '不能有重复的术语' })
+            Message({ type: Type.Error, message: t('learn:duplicateTerm') })
             if (!isNewTerm) {
                 terms[cur].term = originTerm
                 terms[cur].definition = originDefinition
@@ -101,6 +101,13 @@ const actions = {
         const { playList } = store.states
         playList[type] = isShow
         store.setState({ playList: { ...playList } })
+
+    },
+    filterTerms(store, listRef) {
+        let { terms } = store.states
+        terms = terms.filter((item) => !item.isNewTerm)
+        store.setState({ terms })
+        listRef.current.initNotify()
     },
     addItem(store, pos, listRef) {
         const { terms, originTerms } = store.states, newTerm = createNewItem(), { tid } = newTerm
