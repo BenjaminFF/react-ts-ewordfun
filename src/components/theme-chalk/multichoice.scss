@@ -45,5 +45,19 @@
       transition: all 0.3s ease-in-out;
       box-shadow: none;
     }
+
+    @include when(success) {
+      color: $--color-white;
+      border-color: $--color-success;
+      background-color: $--color-success;
+      transition: all 0.3s ease-in-out;
+    }
+
+    @include when(error) {
+      color: $--color-white;
+      border-color: $--color-danger;
+      background-color: $--color-danger;
+      transition: all 0.3s ease-in-out;
+    }
   }
 }

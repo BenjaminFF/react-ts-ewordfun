@@ -15,18 +15,19 @@ import RoundBuilder from './roundbuilder'
 
 
 const Learn = () => {
-    const { origin_id, sid } = useParams(), [states, actions] = useStore(), { terms, loading, playList } = states, { init, onInputFocus, onInputBlur, onInputChange, setPlay, addItem, filterTerms } = actions,
-        [t] = useTranslation(), { combword } = playList, listRef = useRef()
+    const { origin_id, sid } = useParams(), [states, actions] = useStore(), { terms, loading, showPlay } = states, { init, onInputFocus, onInputBlur, onInputChange, setPlay, addItem, filterTerms, cleanup } = actions,
+        [t] = useTranslation(), listRef = useRef()
 
     useEffect(() => {
         init(sid, origin_id, listRef)
+        return () => { cleanup() }
     }, [])
 
     return !loading ? (
         <div className={styles.learn}>
             <div className={styles.tool}>
-                <Button retangle icon='rte-add' shandow onClick={() => { setPlay('combword', true); filterTerms(listRef) }}></Button>
-                <Button retangle icon='rte-close' shandow></Button>
+                <Button retangle icon='rte-add' shandow onClick={() => { setPlay('wordcomb', true); filterTerms(listRef) }}></Button>
+                <Button retangle icon='rte-close' shandow onClick={() => { setPlay('multichoice', true); filterTerms(listRef) }}></Button>
                 <Button retangle icon='rte-loading' shandow></Button>
                 <Button retangle icon='rte-password' shandow></Button>
                 <Button retangle icon='rte-add' shandow></Button>
@@ -44,8 +45,8 @@ const Learn = () => {
             <div className={styles.buttonContainer}>
                 <Button type={ButtonType.Primary} matchParent shandow onClick={() => { addItem(0, listRef) }}>添加</Button>
             </div>
-            {/* <RoundBuilder></RoundBuilder> */}
-        </div>
+            {showPlay && < RoundBuilder ></RoundBuilder>}
+        </div >
     ) : null
 }
 

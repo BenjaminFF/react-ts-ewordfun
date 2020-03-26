@@ -22,11 +22,26 @@ const states = {
     terms: [],
     set: null,
     loading: true,
-    playList: {
-        combword: false
+    learnModes: {
+        // 'learn': {       learnmode单独处理
+        //     setRecordProp: 'learn_count',
+        //     termRecordProp: 'learned'
+        // },
+        'wordcomb': {
+            setRecordProp: 'wordcomb_learncount',
+            termRecordProp: 'wordcomb_learned',
+        },
+        'wordspell': {
+            setRecordProp: 'wordspell_learncount',
+            termRecordProp: 'wordspell_learned',
+        },
+        'multichoice': {
+            setRecordProp: 'multichoice_learncount',
+            termRecordProp: 'multichoice_learned'
+        },
     },
-    learnMode: ['learn', 'wordcomb', 'multichoice', 'wordspell'],
-    curMode: ''
+    curMode: '',
+    showPlay: false
 }
 
 const actions = {
@@ -99,11 +114,8 @@ const actions = {
         terms[cur][type] = value
         store.setState({ terms: [...terms] })
     },
-    setPlay(store, type, isShow) {
-        const { playList } = store.states
-        playList[type] = isShow
-        store.setState({ playList: { ...playList } })
-
+    setPlay(store, curMode, showPlay) {
+        store.setState({ showPlay, curMode })
     },
     filterTerms(store, listRef) {
         let { terms } = store.states
@@ -117,6 +129,9 @@ const actions = {
         originTerms.splice(pos, 0, { tid, originTerm: '', originDefinition: '' })
         store.setState({ terms: [...terms], originTerms })
         listRef.current.appendNotify(pos)
+    },
+    cleanup(store) {
+        store.setState({ originTerms: [], terms: [], loading: true, showPlay: false })
     }
 }
 

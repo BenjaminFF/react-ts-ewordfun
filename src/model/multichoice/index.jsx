@@ -3,7 +3,8 @@ import { shuffle } from '@utils/util'
 
 const states = {
     options: [],
-    term: ''
+    term: '',
+    status: 'normal'
 }
 
 const actions = {
@@ -14,11 +15,11 @@ const actions = {
 
     },
     onOptionClick(store, index, callBack) {
-        const { options, term } = store.states
+        const { options, term } = store.states, status = options[index].text === term ? 'success' : 'error'
         options.forEach((option) => option.active = false)
         options[index].active = true
-        store.setState({ options: [...options] })
-        if (callBack) callBack(options[index].text === term)
+        store.setState({ status, options: [...options] })
+        if (callBack) callBack(status)
     }
 }
 
