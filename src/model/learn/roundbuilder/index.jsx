@@ -67,7 +67,12 @@ const actions = {
         store.setState({ curTerms, errTerms: [], progress: { cur: 0, total: curTerms.length }, showRoundEnd: false })
     },
     cleanup(store) {
-        store.setState({ ...store.states })
+        store.setState({
+            errTerms: [], progress: {
+                cur: 0,
+                total: 0
+            },
+        })
     }
 }
 

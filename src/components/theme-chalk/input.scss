@@ -24,6 +24,12 @@
     color: $--color-text-placeholder;
   }
 
+  @include when(underline) {
+    @include e(suffix-icon) {
+      right: 0px;
+    }
+  }
+
   @include e(inner) {
     -webkit-appearance: none;
     background-color: mix($--color-white, $--input-background-color, 10%);
@@ -39,6 +45,16 @@
     padding: 0 15px;
     transition: $--border-transition-base;
     width: 100%;
+
+    @include when(underline) {
+      border: none;
+      border-bottom: 1px solid mix($--color-white, $--input-background-color, 10%);
+      border-radius: 0px;
+      background-color: transparent;
+      padding: 4px 0px;
+      font-size: 16px;
+      line-height: 24px;
+    }
 
     @include when(prefix-icon) {
       padding-left: 34px;

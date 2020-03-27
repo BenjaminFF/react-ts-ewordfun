@@ -1,0 +1,41 @@
+@import "common/var";
+@import "mixins/mixins";
+
+@include b(wordspell) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20rem;
+
+  @include e(def) {
+    margin-bottom: 5rem;
+    color: $--color-info;
+    font-size: $--font-size-large;
+    text-align: center;
+    word-break: break-all;
+  }
+
+  @include when(success) {
+    @include b(input) {
+      @include e(inner) {
+        border-color: $--color-success;
+        // background-color: mix($--color-white, $--input-background-color, 50%);
+      }
+      @include e(suffix-icon) {
+        color: $--color-success;
+      }
+    }
+  }
+
+  @include when(error) {
+    @include b(input) {
+      @include e(inner) {
+        border-color: $--color-danger;
+        // background-color: mix($--color-white, $--input-background-color, 50%);
+      }
+      @include e(suffix-icon) {
+        color: $--color-danger;
+      }
+    }
+  }
+}

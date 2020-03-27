@@ -9,6 +9,7 @@ import { useTranslation } from '@locale/I18n'
 import Button, { ButtonType } from '@components/button'
 import Multichoice from '@components/pagecomps/multichoice'
 import { shuffle } from '@utils/util'
+import Wordspell from '@components/pagecomps/wordspell'
 
 
 const RoundBuilder = () => {
@@ -33,6 +34,8 @@ const RoundBuilder = () => {
                     return <Wordcomb term={term} definition={definition} callBack={(isCorrect) => { goNext(isCorrect) }}></Wordcomb>
                 case 'multichoice':
                     return <Multichoice term={term} definition={definition} callBack={(isCorrect) => { goNext(isCorrect) }} otherOptions={shuffle(otherOptions)}></Multichoice>
+                case 'wordspell':
+                    return <Wordspell term={term} definition={definition} callBack={(isCorrect) => { goNext(isCorrect) }}></Wordspell>
             }
         }
         return null

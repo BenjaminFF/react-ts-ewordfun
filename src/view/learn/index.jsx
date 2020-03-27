@@ -8,8 +8,6 @@ import Input from '@components/input'
 import { useTranslation } from '@locale/I18n'
 import Progress from '@components/progress'
 import Wordcomb from '@components/pagecomps/wordcomb'
-import Combword from './combword'
-import { cleanup } from '@testing-library/react'
 import Animlist, { AnimateType } from '@components/animlist'
 import RoundBuilder from './roundbuilder'
 
@@ -28,7 +26,7 @@ const Learn = () => {
             <div className={styles.tool}>
                 <Button retangle icon='rte-add' shandow onClick={() => { setPlay('wordcomb', true); filterTerms(listRef) }}></Button>
                 <Button retangle icon='rte-close' shandow onClick={() => { setPlay('multichoice', true); filterTerms(listRef) }}></Button>
-                <Button retangle icon='rte-loading' shandow></Button>
+                <Button retangle icon='rte-loading' shandow onClick={() => { setPlay('wordspell', true); filterTerms(listRef) }}></Button>
                 <Button retangle icon='rte-password' shandow></Button>
                 <Button retangle icon='rte-add' shandow></Button>
             </div>
@@ -45,7 +43,7 @@ const Learn = () => {
             <div className={styles.buttonContainer}>
                 <Button type={ButtonType.Primary} matchParent shandow onClick={() => { addItem(0, listRef) }}>添加</Button>
             </div>
-            {showPlay && < RoundBuilder ></RoundBuilder>}
+            {showPlay && <RoundBuilder></RoundBuilder>}
         </div >
     ) : null
 }

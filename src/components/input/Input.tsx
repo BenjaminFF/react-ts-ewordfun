@@ -18,11 +18,14 @@ interface Props {
     updater?: number
     editable?: boolean
     onBlur?: any
+    onSuffixClick?: any
+    onKeyUp?: any
+    underline?: boolean
 }
 
 
 //后面还要添加focus,blur,input等事件
-const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixIcon, type = 'text', placeholder = '', textarea = false, style, row = 1, focus = false, onFocus, updater = 0, editable = true, onBlur }) => {
+const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixIcon, type = 'text', placeholder = '', textarea = false, style, row = 1, focus = false, onFocus, updater = 0, editable = true, onBlur, onSuffixClick, onKeyUp, underline = false }) => {
 
     const [taHeight, setTaHeight] = useState<string | number>(), initHeight = useRef<number>(-1), inputRef = useRef(null)
 
@@ -53,20 +56,22 @@ const Input: FC<Props> = ({ value, onChange, name, disabled, prefixIcon, suffixI
     const innerClasses = classNames('ef-input__inner', {
         'is-prefix-icon': prefixIcon,
         'is-suffix-icon': suffixIcon,
-        'is-uneditable': !editable
+        'is-uneditable': !editable,
+        'is-underline': underline
     })
 
     return !textarea ? (
-        <div className={`ef-input ${disabled ? 'is-disabled' : ''}`}>
+        <div className={`ef-input ${disabled ? 'is-disabled' : ''} ${underline ? 'is-underline' : ''}`}>
             {prefixIcon && <i className={`ef-input__prefix-icon ewordfun ${prefixIcon}`}></i>}
-            <input onChange={handleChange} name={name} className={innerClasses} autoComplete="off" disabled={disabled} readOnly={!editable} type={type} placeholder={placeholder} value={value} ref={inputRef} onFocus={onFocus} onBlur={onBlur} style={style} />
-            {suffixIcon && <i className={`ef-input__suffix-icon ewordfun ${suffixIcon}`}></i>}
+            <input onChange={handleChange} name={name} className={innerClasses} autoComplete="off" disabled={disabled} readOnly={!editable} type={type} placeholder={placeholder} value={value} ref={inputRef}
+                onFocus={onFocus} onBlur={onBlur} style={style} onKeyUp={onKeyUp} />
+            {suffixIcon && <i className={`ef-input__suffix-icon ewordfun ${suffixIcon}`} onClick={onSuffixClick}></i>}
         </div>
     ) : <div className={`ef-textarea ${disabled ? 'is-disabled' : ''}`}>
             <textarea className={`ef-textarea__inner ${!editable ? 'is-uneditable' : ''}`} disabled={disabled} placeholder={placeholder} value={value} rows={row}
-                onChange={handleChange} style={{ height: taHeight, ...style }} ref={inputRef} onFocus={onFocus} readOnly={!editable} onBlur={onBlur}>
+                onChange={handleChange} style={{ height: taHeight, ...style }} ref={inputRef} onFocus={onFocus} readOnly={!editable} onBlur={onBlur} onKeyUp={onKeyUp}>
             </textarea>
-        </div >
+        </div>
 }
 
 export default Input
