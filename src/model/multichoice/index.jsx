@@ -15,11 +15,16 @@ const actions = {
 
     },
     onOptionClick(store, index, callBack) {
-        const { options, term } = store.states, status = options[index].text === term ? 'success' : 'error'
+        let { options, term, status } = store.states
+        if (status !== 'normal') return
+        status = options[index].text === term ? 'success' : 'error'
         options.forEach((option) => option.active = false)
         options[index].active = true
         store.setState({ status, options: [...options] })
         if (callBack) callBack(status)
+    },
+    cleanup(store) {
+        store.setState({ status: 'normal' })
     }
 }
 

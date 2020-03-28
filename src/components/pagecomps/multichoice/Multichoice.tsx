@@ -22,10 +22,11 @@ interface Props {
 
 const Multichoice: React.FC<Props> = ({ term, definition, otherOptions, callBack }) => {
 
-    const [states, actions] = useStore(), { options, status } = states, { init, onOptionClick } = actions
+    const [states, actions] = useStore(), { options, status } = states, { init, onOptionClick, cleanup } = actions
 
     useEffect(() => {
         init(otherOptions, term)
+        return () => { cleanup() }
     }, [term])
 
     return (
@@ -33,7 +34,7 @@ const Multichoice: React.FC<Props> = ({ term, definition, otherOptions, callBack
             <div className='ef-multichoice__definition'>{definition}</div>
             {options && options.map((option: Option, index: number) => (
                 <div className={classNames('ef-multichoice__option', {
-                    'is-success': status === 'success' && option.active,
+                    'is-success': (status === 'success' && option.active) || (status === 'error' && option.text === term),
                     'is-error': status === 'error' && option.active
                 })}
                     key={index} onClick={() => { onOptionClick(index, callBack) }}>

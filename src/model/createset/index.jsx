@@ -146,6 +146,7 @@ const actions = {
         window.removeEventListener('offline', onItemsSave)
         window.removeEventListener('beforeunload', onItemsSave)
         if (!createSuccess) saveItemsToLS(items)
+        store.setState({ createSuccess: false })
     }
 }
 
