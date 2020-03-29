@@ -26,6 +26,7 @@ const actions = {
             set,
             setRecordProp,
             termRecordProp,
+            errTerms: [],
             showRoundEnd: learnedTerms.length === terms.length,
             progress: { cur: learnedTerms.length, total: terms.length },
             curTerms: [...learnedTerms, ...shuffle(unLearnedTerms)]
@@ -68,7 +69,7 @@ const actions = {
     },
     cleanup(store) {
         store.setState({
-            errTerms: [], progress: {
+            progress: {
                 cur: 0,
                 total: 0
             },

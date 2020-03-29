@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import styles from './index.module.scss'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import useStore from '@model/learn'
 import Button, { ButtonType } from '@components/button'
 import Card from '@components/card'
@@ -10,11 +10,12 @@ import Progress from '@components/progress'
 import Wordcomb from '@components/pagecomps/wordcomb'
 import Animlist, { AnimateType } from '@components/animlist'
 import RoundBuilder from './roundbuilder'
+import { isLearnByDate } from '@utils/util'
 
 
 const Learn = () => {
     const { origin_id, sid } = useParams(), [states, actions] = useStore(), { terms, loading, showPlay } = states, { init, onInputFocus, onInputBlur, onInputChange, setPlay, addItem, filterTerms, cleanup } = actions,
-        [t] = useTranslation(), listRef = useRef()
+        [t] = useTranslation(), listRef = useRef(), history = useHistory()
 
     useEffect(() => {
         init(sid, origin_id, listRef)
@@ -22,7 +23,11 @@ const Learn = () => {
     }, [])
 
     return !loading ? (
-        <div className={styles.learn}>
+        <div className={styles.learn} onDoubleClick={(e) => {
+            if (e.target.className.includes('learn_learn')) {
+                history.goBack(-1)
+            }
+        }}>
             <div className={styles.tool}>
                 <Button retangle icon='rte-add' shandow onClick={() => { setPlay('wordcomb', true); filterTerms(listRef) }}></Button>
                 <Button retangle icon='rte-close' shandow onClick={() => { setPlay('multichoice', true); filterTerms(listRef) }}></Button>

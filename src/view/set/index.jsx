@@ -10,7 +10,7 @@ import Wordspell from '@components/pagecomps/wordspell'
 
 const Set = () => {
 
-    const [states, actions] = useStore(), { sets, curSets, page } = states, { init, onCurChange } = actions, history = useHistory()
+    const [states, actions] = useStore(), { sets, curSets, page, filterText } = states, { init, onCurChange, onInputChange, filterSets } = actions, history = useHistory()
 
     useEffect(() => {
         init()
@@ -19,7 +19,9 @@ const Set = () => {
     return (
         <div className={style.set}>
             <div className={style.inner}>
-                <Input></Input>
+                <Input value={filterText} onChange={(e) => { onInputChange(e) }} onKeyUp={(e) => {
+                    if (e.key === 'Enter') filterSets()
+                }}></Input>
                 <div className={style.container}>
                     {curSets && curSets.map((set, index) => (
                         <div key={index} className={style.setContainer} onClick={() => { history.push(`/user/learn/${set.origin_id}/${set.sid}`) }}>{set.name}</div>
@@ -28,7 +30,7 @@ const Set = () => {
                 <Pagination num={page.num} cur={page.cur} style={{ marginTop: '40px' }} onCurChange={onCurChange}></Pagination>
                 <Button circle icon='rte-add' type={ButtonType.Primary} shandow className={style.addButton} onClick={() => { history.push('/user/createSet') }}></Button>
             </div>
-        </div>
+        </div >
     )
 }
 

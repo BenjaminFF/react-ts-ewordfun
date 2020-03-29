@@ -42,7 +42,12 @@ const RoundBuilder = () => {
     }
 
     return (
-        <div className={styles.roundBuilder}>
+        <div className={styles.roundBuilder} onDoubleClick={(e) => {
+            const { className } = e.target
+            if (className && className.includes('roundbuilder_roundBuilder') && showRoundEnd) {
+                setPlay('', false)
+            }
+        }}>
             {!showRoundEnd && <div className={styles.toolbar}>
                 <i className={`ewordfun rte-close ${styles.close}`} onClick={() => { setPlay('', false) }}></i>
                 <Progress percentage={cur / total * 100} className={styles.progress}></Progress>

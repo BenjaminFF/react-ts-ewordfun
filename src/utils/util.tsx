@@ -62,11 +62,18 @@ const getCookie = (cname: string): string => {
     return ""
 }
 
+const isLearnByDate = (startTS: number): boolean => {
+    const learnPlans = [0, 1, 2, 4, 7, 11, 15, 25, 30], startDate = new Date(startTS),
+        intervalDays = Math.floor((Date.now() - startDate.getTime()) / (3600 * 24 * 1000))
+    return learnPlans.filter((item) => item === intervalDays).length > 0
+}
+
 
 export {
     shuffle,
     mixStr,
     splitStr,
     randomStr,
-    getCookie
+    getCookie,
+    isLearnByDate
 }

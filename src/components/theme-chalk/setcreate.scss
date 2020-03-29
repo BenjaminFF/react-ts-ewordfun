@@ -11,6 +11,7 @@
   position: absolute;
   box-sizing: border-box;
   overflow-y: scroll;
+  user-select: none;
   @include e(card) {
     width: 500px;
     height: fit-content;
