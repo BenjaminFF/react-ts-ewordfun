@@ -10,7 +10,7 @@ import Wordspell from '@components/pagecomps/wordspell'
 
 const Set = () => {
 
-    const [states, actions] = useStore(), { sets, curSets, page, filterText } = states, { init, onCurChange, onInputChange, filterSets } = actions, history = useHistory()
+    const [states, actions] = useStore(), { sets, curSets, page, filterText } = states, { init, onCurChange, onInputChange, onEnterClick } = actions, history = useHistory()
 
     useEffect(() => {
         init()
@@ -20,7 +20,7 @@ const Set = () => {
         <div className={style.set}>
             <div className={style.inner}>
                 <Input value={filterText} onChange={(e) => { onInputChange(e) }} onKeyUp={(e) => {
-                    if (e.key === 'Enter') filterSets()
+                    if (e.key === 'Enter') onEnterClick()
                 }}></Input>
                 <div className={style.container}>
                     {curSets && curSets.map((set, index) => (

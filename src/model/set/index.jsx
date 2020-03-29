@@ -3,6 +3,24 @@ import { listSets } from '@utils/api'
 import Message, { Type } from '@components/message'
 import { isLearnByDate } from '@utils/util'
 
+const getFilteredSets = (originSets, filterText) => {
+    let sets = []
+    if (filterText.length === 0) {
+        sets = [...originSets]
+    }
+    if (filterText.substring(0, 1) === '$') {
+        if (filterText.includes('plan')) {
+            sets = originSets.filter((set) => isLearnByDate(set.startplantime))
+        } else {
+            //没有找到的指令暂时为originSets
+            sets = [...originSets]
+        }
+    } else {
+        sets = originSets.filter((set) => set.name.includes(filterText))
+    }
+    return sets
+}
+
 const states = {
     sets: [],
     originSets: [],
@@ -18,14 +36,11 @@ const states = {
 
 const actions = {
     init(store) {
-        let { page, filterText } = store.states, { cur, num, total, numPerPage } = page, sets = []
+        let { page, filterText } = store.states, { cur, total, numPerPage } = page
         listSets().then((res) => {
-            const { data } = res.data
-            sets = data.sets
-            total = sets.length
-            num = Math.ceil(total / numPerPage)
-            const curSets = sets.slice(cur * numPerPage, (cur + 1) * numPerPage)
-            store.setState({ sets, curSets, originSets: [...sets], page: { ...page, num, total } })
+            const { data } = res.data, originSets = data.sets, sets = getFilteredSets(originSets, filterText),
+                total = sets.length, num = Math.ceil(total / numPerPage), curSets = sets.slice(cur * numPerPage, (cur + 1) * numPerPage)
+            store.setState({ sets, curSets, originSets, page: { ...page, num, total } })
         })
     },
     onCurChange(store, cur) {
@@ -38,23 +53,13 @@ const actions = {
         const { value } = e.currentTarget
         store.setState({ filterText: value })
     },
-    filterSets(store) {
-        let { originSets, page, filterText } = store.states, { numPerPage } = page, sets = []
-        if (filterText.length === 0) {
-            sets = [...originSets]
-        }
-        if (filterText.substring(0, 1) === '$') {
-            if (filterText.includes('plan')) {
-                sets = originSets.filter((set) => isLearnByDate(set.startplantime))
-            } else {
-                //没有找到的指令暂时为originSets
-                sets = [...originSets]
-            }
-        } else {
-            sets = originSets.filter((set) => set.name.includes(filterText))
-        }
+
+    onEnterClick(store) {
+        let { originSets, page, filterText } = store.states, { numPerPage } = page,
+            sets = getFilteredSets(originSets, filterText)
         const total = sets.length, num = Math.ceil(total / numPerPage), cur = 0,
             curSets = sets.slice(cur * numPerPage, (cur + 1) * numPerPage)
+        console.log(curSets)
         store.setState({ sets, curSets, page: { cur, num, total, numPerPage } })
     }
 }
