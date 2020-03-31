@@ -12,6 +12,7 @@
     font-size: $--font-size-large;
     text-align: center;
     margin-bottom: 50px;
+    white-space: pre-wrap;
   }
 
   @include e(option) {

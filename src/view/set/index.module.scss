@@ -50,3 +50,11 @@ $--col-count: 3;
   right: 50%;
   transform: translateX(380px);
 }
+
+.mDialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  height: fit-content;
+}

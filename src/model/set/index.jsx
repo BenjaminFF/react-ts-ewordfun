@@ -1,5 +1,5 @@
 import createStore from '@model/statebox/createStore'
-import { listSets } from '@utils/api'
+import { listSets, updateSet } from '@utils/api'
 import Message, { Type } from '@components/message'
 import { isLearnByDate } from '@utils/util'
 
@@ -23,15 +23,17 @@ const getFilteredSets = (originSets, filterText) => {
 
 const states = {
     sets: [],
-    originSets: [],
     curSets: [],
+    originSets: [],
     filterText: '',
     page: {
         cur: 0,
         num: 0,
         total: 0,
         numPerPage: 9
-    }
+    },
+    uploading: false,
+    curSet: null
 }
 
 const actions = {
@@ -53,14 +55,35 @@ const actions = {
         const { value } = e.currentTarget
         store.setState({ filterText: value })
     },
-
     onEnterClick(store) {
         let { originSets, page, filterText } = store.states, { numPerPage } = page,
             sets = getFilteredSets(originSets, filterText)
         const total = sets.length, num = Math.ceil(total / numPerPage), cur = 0,
             curSets = sets.slice(cur * numPerPage, (cur + 1) * numPerPage)
-        console.log(curSets)
         store.setState({ sets, curSets, page: { cur, num, total, numPerPage } })
+    },
+    onOpenDialog(store, set, dialogRef) {
+        store.setState({ curSet: { ...set } })
+        dialogRef.current.setVisible(true)
+    },
+    onDialogInputChange(store, e, name) {
+        const { value } = e.currentTarget, { curSet } = store.states
+        store.setState({ curSet: { ...curSet, [name]: value } })
+    },
+    updateSetToServer(store, dialogRef) {
+        const { curSet, curSets } = store.states, { name, description, origin_id } = curSet
+        if (name === '' || description === '') {
+            Message({ type: Type.Error, message: '不能为空' })
+            return
+        }
+        store.setState({ uploading: true })
+        updateSet(JSON.stringify({ name, description, origin_id })).then((res) => {
+            let set = curSets.filter((set) => set.origin_id === origin_id)[0]
+            set.name = name
+            set.description = description
+            store.setState({ curSets: [...curSets], uploading: false })
+            dialogRef.current.setVisible(false)
+        })
     }
 }
 

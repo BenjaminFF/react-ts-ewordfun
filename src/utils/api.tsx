@@ -79,16 +79,18 @@ const validate = () => post('/api/validate')
 const listSets = () => get('/api/set/list')
 const acquireSet = (sid: number, origin_id: string) => get('/api/set/acquire', { sid, origin_id })
 const createSet = (name: string, description: string, terms: string) => post('/api/set/create', { name, description, terms })
+const updateSetRecord = (set: string) => post('/api/set/updateRecord', { set })
+const updateSet = (set: string) => post('/api/set/update', { set })
 
 //term
 const addTerm = (origin_id: string, term: string, definition: string) => post('/api/term/add', { origin_id, term, definition })
 const updateTerm = (tid: number, term: string, definition: string) => post('/api/term/update', { tid, term, definition })
-const updateSetRecord = (set: string) => post('/api/set/updateRecord', { set })
 const updateTermRecord = (termRecord: string) => post('/api/term/updateRecord', { termRecord })
 
 export {
     login,
     validate,
+    updateSet,
     listSets,
     createSet,
     acquireSet,
