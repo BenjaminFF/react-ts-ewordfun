@@ -18,6 +18,10 @@ const states = {
 const actions = {
     init(store, terms, modeProps, set) {
         const { setRecordProp, termRecordProp } = modeProps
+        if (terms.filter((term) => !term[termRecordProp]).length === 0) {
+            updateTermRecord(JSON.stringify({ sid: set.sid, [termRecordProp]: 0 }))
+            terms.forEach((term) => term[termRecordProp] = 0)
+        }
         let unLearnedTerms = [], learnedTerms = []
         terms.forEach((term) => {
             term[termRecordProp] ? learnedTerms.push(term) : unLearnedTerms.push(term)

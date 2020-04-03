@@ -8,6 +8,7 @@ import Button, { ButtonType } from '@components/button'
 import { useHistory } from 'react-router-dom'
 import Wordspell from '@components/pagecomps/wordspell'
 import Dialog from '@components/dialog'
+import Ripple from '@components/ripple'
 
 const Set = () => {
 
@@ -26,10 +27,13 @@ const Set = () => {
                 }}></Input>
                 <div className={style.container}>
                     {curSets && curSets.map((set, index) => (
-                        <div key={index} className={style.setContainer}
-                            // onClick={() => { history.push(`/user/learn/${set.origin_id}/${set.sid}`) }}
-                            onClick={() => { onOpenDialog(set, dialogRef) }}
-                        >{set.name}</div>
+                        <Ripple key={index}
+                            // onLongPress={() => { console.log('onLongPress') }}
+                            onLongClick={() => { onOpenDialog(set, dialogRef) }}
+                            onClick={() => { history.push(`/user/learn/${set.origin_id}/${set.sid}`) }}
+                        >
+                            <div className={style.setContainer}>{set.name}</div>
+                        </Ripple>
                     ))}
                 </div>
                 <Pagination num={page.num} cur={page.cur} style={{ marginTop: '40px' }} onCurChange={onCurChange}></Pagination>
@@ -40,7 +44,7 @@ const Set = () => {
                 {curSet && < Input style={{ marginTop: '20px', resize: 'none' }} placeholder={'set Info'} textarea row={2} value={curSet.description} onChange={(e) => { onDialogInputChange(e, 'description') }}></Input>}
                 <Button matchParent style={{ marginTop: '30px', marginBottom: '10px' }} type={ButtonType.Primary} onClick={() => { updateSetToServer(dialogRef) }} loading={uploading}>修改</Button>
             </Dialog>
-        </div >
+        </div>
     )
 }
 
