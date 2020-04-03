@@ -61,19 +61,19 @@ const actions = {
     },
     onInputFocus(store, cur, type) {
         const { terms } = store.states
-        terms.forEach((item) => { item.editable = [false, false] })
+        terms.forEach((item) => { item.editable = item.isNewTerm ? [true, true] : [false, false] })
         terms[cur].editable[type === 'term' ? 0 : 1] = true
         store.setState({ terms: [...terms] })
     },
     onInputBlur(store, cur, type, t) {
         const { terms, set, originTerms } = store.states, { tid, term, definition, isNewTerm, updating } = terms[cur],
             originItem = originTerms.filter((item) => item.tid === tid)[0], { originTerm, originDefinition } = originItem
-        terms[cur].editable[type === 'term' ? 0 : 1] = false
+        if (!isNewTerm) terms[cur].editable[type === 'term' ? 0 : 1] = false
         if (term === '' || definition === '') {
-            Message({ type: Type.Error, message: term === '' ? t('learn:termEmpty') : t('learn:defEmpty') })
             if (!isNewTerm) {
                 terms[cur].term = originTerm
                 terms[cur].definition = originDefinition
+                Message({ type: Type.Error, message: term === '' ? t('learn:termEmpty') : t('learn:defEmpty') })
             }
             store.setState({ terms: [...terms] })
             return
