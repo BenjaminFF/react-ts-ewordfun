@@ -45,6 +45,7 @@ const Learn = () => {
                     ))}
                 </Animlist>
             </div>
+            <div className={styles.tid}>{terms.length}</div>
             <div className={styles.buttonContainer}>
                 <Button type={ButtonType.Primary} matchParent shandow onClick={() => { addItem(0, listRef) }}>添加</Button>
             </div>

@@ -38,9 +38,14 @@ $--m-width: 500px;
     }
   }
 
-  .progress {
+  .progressBar {
     width: $--m-width;
     margin-right: 16px;
+  }
+
+  .progressText {
+    width: 32px;
+    padding-bottom: 4px;
   }
 }
 

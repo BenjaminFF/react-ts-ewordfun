@@ -1,4 +1,5 @@
 $--m-width: 500px;
+$--color-info: #909399;
 
 .learn {
   width: 100%;
@@ -19,9 +20,15 @@ $--m-width: 500px;
   align-items: center;
 }
 
+.tid {
+  font-size: 14px;
+  color: mix(#fff, $--color-info, 20%);
+  margin-top: 12px;
+}
+
 .buttonContainer {
   width: $--m-width;
-  margin-top: 32px;
+  margin-top: 12px;
 }
 
 .listContainer {
@@ -45,12 +52,6 @@ $--m-width: 500px;
       margin-top: 16px;
     }
   }
-  // .sn {
-  //   position: absolute;
-  //   bottom: 24px;
-  //   right: 8px;
-  //   font-size: 12px;
-  // }
 }
 
 .listContainer::-webkit-scrollbar {

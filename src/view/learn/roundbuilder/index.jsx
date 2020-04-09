@@ -50,8 +50,8 @@ const RoundBuilder = () => {
         }}>
             {!showRoundEnd && <div className={styles.toolbar}>
                 <i className={`ewordfun rte-close ${styles.close}`} onClick={() => { setPlay('', false) }}></i>
-                <Progress percentage={cur / total * 100} className={styles.progress}></Progress>
-                {cur + '/' + total}
+                <Progress percentage={cur / total * 100} className={styles.progressBar}></Progress>
+                <div className={styles.progressText}>{cur + '/' + total}</div>
             </div>}
             {!showRoundEnd && renderPlay()}
             {showRoundEnd && (

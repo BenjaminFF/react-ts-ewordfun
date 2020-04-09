@@ -103,6 +103,7 @@ const actions = {
             terms[cur].tid = tid
             terms[cur].isNewTerm = false
             terms[cur].updating = false
+            terms[cur].editable = [false, false]
             originItem.tid = tid
             originItem.originTerm = term
             originItem.originDefinition = definition
