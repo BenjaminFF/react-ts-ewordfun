@@ -124,6 +124,10 @@ const actions = {
         }
         store.setState({ uploading: true })
         dialogRef.current.setClickDisabled(true)
+        terms.forEach((item) => {
+            item.term = item.term.trim()
+            item.definition = item.definition.trim()
+        })
         createSet(name, description, JSON.stringify(terms)).then((res) => {
             const { errno, errmsg } = res.data
             if (errno === 0) {

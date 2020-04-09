@@ -66,7 +66,7 @@ const actions = {
         store.setState({ terms: [...terms] })
     },
     onInputBlur(store, cur, type, t) {
-        const { terms, set, originTerms } = store.states, { tid, term, definition, isNewTerm, updating } = terms[cur],
+        let { terms, set, originTerms } = store.states, { tid, term, definition, isNewTerm, updating } = terms[cur],
             originItem = originTerms.filter((item) => item.tid === tid)[0], { originTerm, originDefinition } = originItem
         if (!isNewTerm) terms[cur].editable[type === 'term' ? 0 : 1] = false
         if (term === '' || definition === '') {
@@ -93,6 +93,8 @@ const actions = {
             return
         }
         terms[cur].updating = true
+        term = term.trim()
+        definition = definition.trim()
         !isNewTerm ? updateTerm(tid, term, definition).then(() => {
             terms[cur].updating = false
             originItem.originTerm = term
