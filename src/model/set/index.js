@@ -1,7 +1,7 @@
 import createStore from '@model/statebox/createStore'
-import { listSets, updateSet } from '@utils/api'
+import { listSets, updateSet, updateSetRecord } from '@utils/api'
 import Message, { Type } from '@components/message'
-import { isLearnByDate } from '@utils/util'
+import { isLearnByDate, isValidPlanDate } from '@utils/util'
 
 const getFilteredSets = (originSets, filterText) => {
     let sets = []
@@ -63,7 +63,7 @@ const actions = {
         store.setState({ sets, curSets, page: { cur, num, total, numPerPage } })
     },
     onOpenDialog(store, set, dialogRef) {
-        store.setState({ curSet: { ...set } })
+        store.setState({ curSet: { ...set, date: new Intl.DateTimeFormat('en-US').format(set.startplantime) } })
         dialogRef.current.setVisible(true)
     },
     onDialogInputChange(store, e, name) {
@@ -71,18 +71,24 @@ const actions = {
         store.setState({ curSet: { ...curSet, [name]: value } })
     },
     updateSetToServer(store, dialogRef) {
-        let { curSet, curSets } = store.states, { name, description, origin_id } = curSet
+        let { curSet, curSets } = store.states, { name, description, origin_id, date, sid, startplantime } = curSet
         if (name === '') {
             Message({ type: Type.Error, message: '不能为空' })
+            return
+        }
+        if (!isValidPlanDate(date)) {
+            Message({ type: Type.Error, message: '日期格式不正确' })
             return
         }
         store.setState({ uploading: true })
         name = name.trim()
         description = description.trim()
-        updateSet(JSON.stringify({ name, description, origin_id })).then((res) => {
+        startplantime = new Date(date).getTime()
+        Promise.all([updateSet(JSON.stringify({ name, description, origin_id })), updateSetRecord(JSON.stringify({ sid, startplantime }))]).then((res, res2) => {
             let set = curSets.filter((set) => set.origin_id === origin_id)[0]
             set.name = name
             set.description = description
+            set.startplantime = startplantime
             store.setState({ curSets: [...curSets] })
             dialogRef.current.setVisible(false)
         }).finally(() => { store.setState({ uploading: false }) })

@@ -72,6 +72,15 @@ const isLearnToday = (latestlearntime: number): boolean => {
     return ((Date.now() - latestlearntime) / (3600 * 24 * 1000)) < 0.6
 }
 
+const isValidPlanDate = (dateStr: string): boolean => {
+    const isValidFormat = /^(0?[1-9]|1[012])[/-](0?[1-9]|[12][0-9]|3[01])[/-]\d{4}$/.test(dateStr)
+    if (!isValidFormat) return false
+    const date = new Date(dateStr), curDate = new Date(), month = date.getMonth(), curMonth = curDate.getMonth()
+    const isThisYear = date.getFullYear() === curDate.getFullYear()
+    if (!isThisYear) return false
+    return true
+}
+
 
 export {
     shuffle,
@@ -80,5 +89,6 @@ export {
     randomStr,
     getCookie,
     isLearnByDate,
-    isLearnToday
+    isLearnToday,
+    isValidPlanDate
 }

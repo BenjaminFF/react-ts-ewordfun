@@ -42,8 +42,11 @@ const Set = () => {
             </div>
             <Dialog className={style.mDialog} ref={dialogRef}>
                 {curSet && <Input style={{ marginTop: '30px' }} placeholder={'setName'} value={curSet.name} onChange={(e) => { onDialogInputChange(e, 'name') }}></Input>}
-                {curSet && < Input style={{ marginTop: '20px', resize: 'none' }} placeholder={'set Info'} textarea row={2} value={curSet.description} onChange={(e) => { onDialogInputChange(e, 'description') }}></Input>}
-                <Button matchParent style={{ marginTop: '30px', marginBottom: '10px' }} type={ButtonType.Primary} onClick={() => { updateSetToServer(dialogRef) }} loading={uploading}>修改</Button>
+                {curSet && < Input style={{ marginTop: '20px', resize: 'none' }} placeholder={'set Info'} textarea row={2} value={curSet.description}
+                    onChange={(e) => { onDialogInputChange(e, 'description') }}></Input>}
+                {curSet && <Input style={{ marginTop: '20px' }} placeholder={'date'} value={curSet.date} onChange={(e) => { onDialogInputChange(e, 'date') }}></Input>}
+                <Button matchParent style={{ marginTop: '30px', marginBottom: '10px' }} type={ButtonType.Primary}
+                    onClick={() => { updateSetToServer(dialogRef) }} loading={uploading}>修改</Button>
             </Dialog>
         </div>
     )
