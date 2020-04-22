@@ -54,7 +54,7 @@ const Form: FC<Props> = ({ model, rules, children }, ref) => {
     return (
         <FormContext.Provider value={{ model, rules, triggerValidate }}>
             <div className="ef-form"> {children}</div>
-        </FormContext.Provider >
+        </FormContext.Provider>
     )
 }
 

@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom'
 import Wordspell from '@components/pagecomps/wordspell'
 import Dialog from '@components/dialog'
 import Ripple from '@components/ripple'
+import { isLearnToday } from '@utils/util'
 
 const Set = () => {
 
@@ -32,7 +33,7 @@ const Set = () => {
                             onLongClick={() => { onOpenDialog(set, dialogRef) }}
                             onClick={() => { history.push(`/user/learn/${set.origin_id}/${set.sid}`) }}
                         >
-                            <div className={style.setContainer}>{set.name}</div>
+                            <div className={style.setContainer} style={{ backgroundColor: isLearnToday(set.latestlearntime) ? 'lightgray' : '' }}>{set.name}</div>
                         </Ripple>
                     ))}
                 </div>

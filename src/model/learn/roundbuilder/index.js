@@ -43,7 +43,7 @@ const actions = {
             curTerm[termRecordProp] = 1
             if (errTerms.length === 0 && cur === curTerms.length - 1) {
                 set[setRecordProp] = set[setRecordProp] + 1
-                updateSetRecord(JSON.stringify({ sid, [setRecordProp]: set[setRecordProp] }))
+                updateSetRecord(JSON.stringify({ sid, [setRecordProp]: set[setRecordProp], latestlearntime: Date.now() }))
             }
         } else {
             errTerms.push(curTerm)

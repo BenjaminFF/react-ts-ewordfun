@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router
 import React, { useEffect, useState } from 'react'
 import I18n, { I18nContext } from '@locale/I18n'
 import resource from '@locale/resource'
-import { getCookie } from '@utils/util'
 import { validate } from '@utils/api'
 require('@components/theme-chalk/index.scss')
 
@@ -16,7 +15,7 @@ const App = () => {
     const history = useHistory(), [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const uid = getCookie('uid'), { pathname } = history.location, isProtectedPage = pathname.indexOf('user') !== -1
+        const { pathname } = history.location, isProtectedPage = pathname.indexOf('user') !== -1
         validate().then((res) => {
             const { errno } = res.data
             if (errno !== 0 && isProtectedPage) history.replace('/login')

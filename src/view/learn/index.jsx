@@ -6,11 +6,8 @@ import Button, { ButtonType } from '@components/button'
 import Card from '@components/card'
 import Input from '@components/input'
 import { useTranslation } from '@locale/I18n'
-import Progress from '@components/progress'
-import Wordcomb from '@components/pagecomps/wordcomb'
 import Animlist, { AnimateType } from '@components/animlist'
 import RoundBuilder from './roundbuilder'
-import { isLearnByDate } from '@utils/util'
 
 
 const Learn = () => {

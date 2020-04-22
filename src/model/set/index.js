@@ -71,19 +71,21 @@ const actions = {
         store.setState({ curSet: { ...curSet, [name]: value } })
     },
     updateSetToServer(store, dialogRef) {
-        const { curSet, curSets } = store.states, { name, description, origin_id } = curSet
-        if (name === '' || description === '') {
+        let { curSet, curSets } = store.states, { name, description, origin_id } = curSet
+        if (name === '') {
             Message({ type: Type.Error, message: '不能为空' })
             return
         }
         store.setState({ uploading: true })
+        name = name.trim()
+        description = description.trim()
         updateSet(JSON.stringify({ name, description, origin_id })).then((res) => {
             let set = curSets.filter((set) => set.origin_id === origin_id)[0]
             set.name = name
             set.description = description
-            store.setState({ curSets: [...curSets], uploading: false })
+            store.setState({ curSets: [...curSets] })
             dialogRef.current.setVisible(false)
-        })
+        }).finally(() => { store.setState({ uploading: false }) })
     }
 }
 

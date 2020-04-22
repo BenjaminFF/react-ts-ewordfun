@@ -68,6 +68,10 @@ const isLearnByDate = (startTS: number): boolean => {
     return learnPlans.filter((item) => item === intervalDays).length > 0
 }
 
+const isLearnToday = (latestlearntime: number): boolean => {
+    return ((Date.now() - latestlearntime) / (3600 * 24 * 1000)) < 0.6
+}
+
 
 export {
     shuffle,
@@ -75,5 +79,6 @@ export {
     splitStr,
     randomStr,
     getCookie,
-    isLearnByDate
+    isLearnByDate,
+    isLearnToday
 }
