@@ -13,7 +13,8 @@ import { isLearnToday } from '@utils/util'
 
 const Set = () => {
 
-    const [states, actions] = useStore(), { sets, curSets, page, filterText, curSet, uploading } = states, { init, onCurChange, onInputChange, onEnterClick, onOpenDialog, onDialogInputChange, updateSetToServer } = actions,
+    const [states, actions] = useStore(), { sets, curSets, page, filterText, curSet, uploading } = states,
+        { init, onCurChange, onInputChange, onEnterClick, onOpenDialog, onDialogInputChange, updateSetToServer } = actions,
         history = useHistory(), dialogRef = useRef()
 
     useEffect(() => {
@@ -33,7 +34,9 @@ const Set = () => {
                             onLongClick={() => { onOpenDialog(set, dialogRef) }}
                             onClick={() => { history.push(`/user/learn/${set.origin_id}/${set.sid}`) }}
                         >
-                            <div className={style.setContainer} style={{ backgroundColor: isLearnToday(set.latestlearntime) ? 'lightgray' : '' }}>{set.name}</div>
+                            <div className={style.setContainer} style={{ backgroundColor: isLearnToday(set.latestlearntime) ? 'lightgray' : '' }}>
+                                <span style={{ padding: '10px', textAlign: "center" }}>{set.name}</span>
+                            </div>
                         </Ripple>
                     ))}
                 </div>

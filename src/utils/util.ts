@@ -69,7 +69,7 @@ const isLearnByDate = (startTS: number): boolean => {
 }
 
 const isLearnToday = (latestlearntime: number): boolean => {
-    return ((Date.now() - latestlearntime) / (3600 * 24 * 1000)) < 0.6
+    return ((Date.now() - latestlearntime) / (3600 * 24 * 1000)) < 0.5
 }
 
 const isValidPlanDate = (dateStr: string): boolean => {
